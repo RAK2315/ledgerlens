@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ledgerlens_ml"
+version = "2026.10.0"
+description = "LedgerLens matching and anomaly models for GST reconciliation"
+requires-python = ">=3.10,<3.13"
+
+[tool.setuptools]
+packages = ["ledgerlens_ml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

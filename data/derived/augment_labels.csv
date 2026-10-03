@@ -1,0 +1,817 @@
+issue_id,issue_type,issue_category,severity,entity_type,entity_id,related_entity_id,field_affected,expected_value,recorded_value,financial_impact_inr,description,is_benign,source
+AUG-0001,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN020-0001,,taxable_value,9247337,10232742,1773.73,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0002,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0001,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0003,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0001,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0004,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0001,,gstr2b_line,line present,no line,738.72,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0005,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0001,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0006,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0002,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0007,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0001,,gstr2b_line,line present,no line,16555.30,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0008,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0001,,gstr2b_line,line present,no line,1733.06,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0009,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0002,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0010,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0001,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0011,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0001,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0012,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0002,,gstr2b_line,line present,no line,9222.24,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0013,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0001,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0014,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0001,,gstr2b_line,line present,no line,23047.48,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0015,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0001,,gstr2b_line,line present,no line,2575.17,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0016,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0003,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0017,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0004,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0018,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0005,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0019,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0002,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0020,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0002,,gstr2b_line,line present,no line,356.55,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0021,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0002,,gstr2b_line,line present,no line,46365.18,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0022,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN050-0002,,taxable_value,19179785,20444556,2276.58,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0023,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0003,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0024,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0002,,gstr2b_line,line present,no line,39218.74,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0025,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0001,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0026,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN047-0001,,taxable_value,3603525,4058508,545.98,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0027,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0001,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0028,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0002,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0029,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN016-0009,,taxable_value,5983905,6204061,396.28,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0030,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0002,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0031,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0003,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0032,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN008-0003,,taxable_value,19090286,21327205,6263.37,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0033,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0001,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0034,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0002,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0035,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0003,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0036,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0003,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0037,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0003,,gstr2b_line,line present,no line,18452.72,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0038,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0004,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0039,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0004,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0040,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0005,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0041,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0003,,gstr2b_line,line present,no line,11947.78,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0042,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0003,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0043,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0005,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0044,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0004,,gstr2b_line,line present,no line,15842.01,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0045,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0004,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0046,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0006,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0047,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN045-0005,,taxable_value,1542227,1766408,403.52,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0048,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0002,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0049,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0003,,return_period,2025-04,2025-05,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0050,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0004,,gstr2b_line,line present,no line,2256.03,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0051,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0007,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0052,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0003,,gstr2b_line,line present,no line,7354.58,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0053,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0006,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0054,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0001,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0055,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0005,,gstr2b_line,line present,no line,73017.76,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0056,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0004,,gstr2b_line,line present,no line,1386.27,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0057,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0006,,gstr2b_line,line present,no line,57784.71,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0058,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0002,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0059,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0007,,gstr2b_line,line present,no line,50943.38,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0060,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0008,,gstr2b_line,line present,no line,29931.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0061,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0004,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0062,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0009,,gstr2b_line,line present,no line,8723.20,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0063,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0003,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0064,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0003,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0065,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0002,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0066,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN003-0007,,taxable_value,44795082,39995406,13439.12,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0067,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0008,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0068,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0009,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0069,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0010,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0070,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0007,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0071,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0002,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0072,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0010,,gstr2b_line,line present,no line,5696.12,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0073,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN012-0004,,taxable_value,5307790,4855777,1265.64,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0074,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0004,,gstr2b_line,line present,no line,26280.05,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0075,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN003-0008,,taxable_value,2588222,2926217,169.00,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0076,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN018-0006,,taxable_value,616963,578610,69.04,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0077,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0002,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0078,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0005,,gstr2b_line,line present,no line,4689.38,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0079,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0011,,gstr2b_line,line present,no line,23611.23,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0080,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0012,,gstr2b_line,line present,no line,17241.79,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0081,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0011,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0082,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0004,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0083,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0005,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0084,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0005,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0085,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0005,,gstr2b_line,line present,no line,25972.77,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0086,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0003,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0087,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0006,,gstr2b_line,line present,no line,11568.70,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0088,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0012,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0089,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0003,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0090,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0004,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0091,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0006,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0092,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0013,,gstr2b_line,line present,no line,17533.60,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0093,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0007,,gstr2b_line,line present,no line,9542.69,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0094,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN016-0013,,taxable_value,1968781,1765182,366.48,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0095,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0013,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0096,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0005,,gstr2b_line,line present,no line,1386.78,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0097,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0007,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0098,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0006,,gstr2b_line,line present,no line,4174.97,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0099,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0006,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0100,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0007,,gstr2b_line,line present,no line,11856.27,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0101,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0004,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0102,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0014,,gstr2b_line,line present,no line,8833.69,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0103,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN014-0003,,taxable_value,17682889,16306504,2477.49,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0104,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0008,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0105,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0008,,gstr2b_line,line present,no line,6104.92,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0106,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0009,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0107,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0004,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0108,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0009,,gstr2b_line,line present,no line,3445.80,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0109,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0015,,gstr2b_line,line present,no line,14149.79,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0110,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0008,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0111,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0008,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0112,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0016,,gstr2b_line,line present,no line,29211.05,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0113,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN007-0008,,return_period,2025-05,2025-06,,Supplier dated the invoice in the next month,False,augment
+AUG-0114,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0009,,gstr2b_line,line present,no line,3238.86,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0115,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0017,,gstr2b_line,line present,no line,8737.13,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0116,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0005,,return_period,2025-05,2025-06,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0117,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0006,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0118,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0005,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0119,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN002-0011,,taxable_value,2722704,3089189,1026.16,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0120,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0010,,gstr2b_line,line present,no line,29441.96,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0121,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0018,,gstr2b_line,line present,no line,1108.02,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0122,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0011,,gstr2b_line,line present,no line,30413.72,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0123,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0006,,gstr2b_line,line present,no line,7262.99,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0124,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0003,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0125,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0012,,gstr2b_line,line present,no line,30355.70,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0126,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0005,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0127,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0007,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0128,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0009,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0129,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0005,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0130,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0013,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0131,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0006,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0132,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0006,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0133,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0004,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0134,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0010,,gstr2b_line,line present,no line,27627.44,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0135,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0011,,gstr2b_line,line present,no line,7942.24,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0136,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0008,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0137,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0007,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0138,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0010,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0139,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0007,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0140,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0019,,gstr2b_line,line present,no line,4703.81,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0141,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0006,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0142,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN014-0007,,taxable_value,9612198,8981682,1134.93,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0143,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0010,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0144,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0011,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0145,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0014,,gstr2b_line,line present,no line,3470.91,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0146,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN013-0015,,return_period,2025-06,2025-07,,Supplier dated the invoice in the next month,False,augment
+AUG-0147,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0014,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0148,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0015,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0149,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0009,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0150,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0007,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0151,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0015,,gstr2b_line,line present,no line,5813.34,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0152,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0011,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0153,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0012,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0154,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0010,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0155,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0007,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0156,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0008,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0157,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0007,,gstr2b_line,line present,no line,26740.85,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0158,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0005,,return_period,2025-06,2025-07,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0159,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0008,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0160,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0004,,gstr2b_line,line present,no line,6874.42,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0161,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0008,,gstr2b_line,line present,no line,4281.79,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0162,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0005,,gstr2b_line,line present,no line,22539.87,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0163,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0009,,gstr2b_line,line present,no line,16087.65,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0164,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0010,,gstr2b_line,line present,no line,7330.64,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0165,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0006,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0166,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0016,,gstr2b_line,line present,no line,8409.56,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0167,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0016,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0168,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN024-0020,,taxable_value,789307,859375,126.12,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0169,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0020,,gstr2b_line,line present,no line,29458.54,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0170,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0006,,gstr2b_line,line present,no line,7016.58,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0171,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0008,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0172,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0021,,gstr2b_line,line present,no line,7878.96,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0173,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0017,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0174,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0011,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0175,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0012,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0176,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0009,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0177,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0008,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0178,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0009,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0179,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0011,,gstr2b_line,line present,no line,11705.53,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0180,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0013,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0181,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0012,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0182,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0007,,gstr2b_line,line present,no line,10912.07,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0183,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0007,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0184,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0013,,gstr2b_line,line present,no line,36222.54,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0185,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0010,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0186,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0022,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0187,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0018,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0188,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0008,,gstr2b_line,line present,no line,3454.10,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0189,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN043-0015,,taxable_value,12763445,13913431,2069.98,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0190,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0010,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0191,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0009,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0192,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN025-0012,,taxable_value,13996101,15332562,2405.63,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0193,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0012,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0194,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0012,,gstr2b_line,line present,no line,33180.27,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0195,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0017,,gstr2b_line,line present,no line,8675.59,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0196,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0019,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0197,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0014,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0198,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0023,,gstr2b_line,line present,no line,1208.88,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0199,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0009,,gstr2b_line,line present,no line,17637.18,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0200,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0013,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0201,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0011,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0202,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0020,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0203,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0014,,gstr2b_line,line present,no line,9901.80,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0204,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0011,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0205,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0010,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0206,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0010,,gstr2b_line,line present,no line,13019.73,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0207,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN050-0017,,return_period,2025-07,2025-08,,Supplier dated the invoice in the next month,False,augment
+AUG-0208,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0013,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0209,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0013,,gstr2b_line,line present,no line,28339.84,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0210,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0009,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0211,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0014,,gstr2b_line,line present,no line,30107.65,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0212,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0008,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0213,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0014,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0214,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0015,,gstr2b_line,line present,no line,6135.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0215,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0015,,gstr2b_line,line present,no line,29976.37,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0216,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0015,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0217,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0016,,gstr2b_line,line present,no line,29649.36,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0218,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0009,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0219,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0010,,return_period,2025-07,2025-08,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0220,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0016,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0221,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0017,,gstr2b_line,line present,no line,28976.61,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0222,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0016,,gstr2b_line,line present,no line,9693.47,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0223,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0006,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0224,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0011,,gstr2b_line,line present,no line,5134.17,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0225,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0015,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0226,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0010,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0227,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0018,,gstr2b_line,line present,no line,8677.79,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0228,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0017,,gstr2b_line,line present,no line,13816.38,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0229,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0018,,gstr2b_line,line present,no line,5358.72,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0230,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0011,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0231,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0021,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0232,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0007,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0233,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0012,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0234,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN034-0008,,taxable_value,1535625,1352660,329.34,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0235,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0019,,gstr2b_line,line present,no line,20011.32,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0236,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0016,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0237,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0012,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0238,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0017,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0239,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0024,,gstr2b_line,line present,no line,9554.29,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0240,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0017,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0241,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0012,,gstr2b_line,line present,no line,12647.70,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0242,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0018,,gstr2b_line,line present,no line,18735.62,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0243,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0008,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0244,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0018,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0245,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0013,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0246,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0022,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0247,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0013,,gstr2b_line,line present,no line,2130.91,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0248,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0014,,gstr2b_line,line present,no line,430.72,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0249,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0020,,gstr2b_line,line present,no line,20489.52,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0250,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0019,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0251,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0011,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0252,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0019,,gstr2b_line,line present,no line,39557.77,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0253,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN026-0020,,taxable_value,21256099,20708991,1531.90,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0254,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0019,,gstr2b_line,line present,no line,506.70,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0255,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0014,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0256,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0015,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0257,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0018,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0258,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0013,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0259,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0025,,gstr2b_line,line present,no line,2110.64,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0260,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0012,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0261,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0016,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0262,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0026,,gstr2b_line,line present,no line,29023.69,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0263,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0013,,return_period,2025-08,2025-09,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0264,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0014,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0265,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0027,,gstr2b_line,line present,no line,597.30,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0266,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0023,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0267,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0011,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0268,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0014,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0269,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0015,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0270,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0012,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0271,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0020,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0272,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0013,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0273,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0014,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0274,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0020,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0275,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN026-0021,,taxable_value,2324910,2649400,584.08,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0276,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0019,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0277,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0015,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0278,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0014,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0279,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN036-0022,,taxable_value,4333428,3837124,595.56,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0280,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0016,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0281,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0017,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0282,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN026-0023,,taxable_value,22072556,20183002,5290.75,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0283,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0012,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0284,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0020,,gstr2b_line,line present,no line,58480.23,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0285,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0024,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0286,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0015,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0287,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0021,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0288,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0025,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0289,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0013,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0290,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0026,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0291,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0021,,gstr2b_line,line present,no line,354.96,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0292,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0018,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0293,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0014,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0294,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0021,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0295,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN007-0023,,taxable_value,6116962,5274491,2358.92,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0296,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0028,,gstr2b_line,line present,no line,6170.18,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0297,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0015,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0298,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0020,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0299,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0016,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0300,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0015,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0301,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0009,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0302,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0027,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0303,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0015,,gstr2b_line,line present,no line,3993.92,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0304,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0016,,gstr2b_line,line present,no line,2247.49,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0305,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0016,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0306,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0016,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0307,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0021,,gstr2b_line,line present,no line,5296.40,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0308,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0029,,gstr2b_line,line present,no line,41594.19,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0309,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0022,,gstr2b_line,line present,no line,16277.61,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0310,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0022,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0311,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0023,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0312,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN042-0024,,taxable_value,327170,340565,6.70,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0313,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0024,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0314,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0025,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0315,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0026,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0316,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0027,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0317,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0028,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0318,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0029,,return_period,2025-09,2025-10,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0319,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0030,,gstr2b_line,line present,no line,1139.19,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0320,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0030,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0321,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0031,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0322,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0019,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0323,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0031,,gstr2b_line,line present,no line,1680.14,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0324,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0032,,gstr2b_line,line present,no line,24481.32,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0325,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0028,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0326,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0017,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0327,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0017,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0328,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN009-0022,,taxable_value,14092162,14520833,771.60,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0329,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0022,,gstr2b_line,line present,no line,410.71,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0330,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0021,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0331,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0018,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0332,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0020,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0333,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0018,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0334,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0022,,gstr2b_line,line present,no line,28631.83,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0335,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0023,,gstr2b_line,line present,no line,19661.50,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0336,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0032,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0337,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0029,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0338,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0022,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0339,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0019,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0340,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0017,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0341,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0024,,gstr2b_line,line present,no line,37999.22,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0342,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0016,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0343,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0033,,gstr2b_line,line present,no line,32668.04,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0344,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN012-0021,,taxable_value,16858761,15487047,2469.09,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0345,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN037-0016,,taxable_value,15673482,17461732,3218.85,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0346,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0033,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0347,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0025,,gstr2b_line,line present,no line,1621.37,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0348,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0034,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0349,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0023,,gstr2b_line,line present,no line,13018.90,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0350,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0010,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0351,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0035,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0352,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0011,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0353,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0030,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0354,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0036,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0355,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0037,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0356,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN032-0029,,taxable_value,4063776,3672719,195.53,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0357,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0020,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0358,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0034,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0359,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0023,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0360,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0019,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0361,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0018,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0362,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0038,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0363,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0021,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0364,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0017,,gstr2b_line,line present,no line,1169.67,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0365,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0017,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0366,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0026,,gstr2b_line,line present,no line,3253.22,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0367,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0017,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0368,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN016-0029,,taxable_value,1168208,1198324,15.06,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0369,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0018,,gstr2b_line,line present,no line,16013.62,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0370,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0027,,gstr2b_line,line present,no line,3014.36,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0371,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0021,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0372,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0022,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0373,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0024,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0374,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0024,,gstr2b_line,line present,no line,31908.66,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0375,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN019-0012,,taxable_value,2165472,2351129,334.18,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0376,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0012,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0377,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0031,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0378,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0039,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0379,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0022,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0380,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0035,,gstr2b_line,line present,no line,5286.88,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0381,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN018-0020,,taxable_value,780838,736801,22.02,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0382,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0019,,gstr2b_line,line present,no line,1120.01,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0383,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0013,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0384,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0028,,gstr2b_line,line present,no line,29009.97,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0385,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0040,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0386,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0025,,gstr2b_line,line present,no line,15087.97,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0387,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0025,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0388,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN015-0034,,taxable_value,939375,1067867,64.25,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0389,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0020,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0390,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0023,,gstr2b_line,line present,no line,726.18,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0391,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0021,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0392,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0041,,return_period,2025-10,2025-11,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0393,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0036,,gstr2b_line,line present,no line,326.22,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0394,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0023,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0395,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0018,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0396,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0019,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0397,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0023,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0398,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0026,,gstr2b_line,line present,no line,10942.16,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0399,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0029,,gstr2b_line,line present,no line,19854.67,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0400,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0024,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0401,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0025,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0402,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN034-0014,,taxable_value,912835,1027035,57.10,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0403,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0032,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0404,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0024,,gstr2b_line,line present,no line,12490.84,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0405,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0022,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0406,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0018,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0407,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0027,,gstr2b_line,line present,no line,16100.37,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0408,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0025,,gstr2b_line,line present,no line,799.72,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0409,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0019,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0410,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0026,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0411,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0042,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0412,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0020,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0413,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN021-0026,,taxable_value,2617156,2264209,176.47,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0414,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0026,,gstr2b_line,line present,no line,9505.23,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0415,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0030,,gstr2b_line,line present,no line,9942.81,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0416,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN028-0035,,taxable_value,9570574,8744613,0.00,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0417,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0020,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0418,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0031,,gstr2b_line,line present,no line,2723.75,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0419,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0043,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0420,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0020,,gstr2b_line,line present,no line,481.32,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0421,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0023,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0422,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0027,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0423,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0024,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0424,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0021,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0425,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0037,,gstr2b_line,line present,no line,2731.65,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0426,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0033,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0427,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0038,,gstr2b_line,line present,no line,11069.42,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0428,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0025,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0429,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0022,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0430,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0039,,gstr2b_line,line present,no line,44650.59,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0431,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0023,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0432,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0024,,return_period,2025-11,2025-12,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0433,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0021,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0434,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0034,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0435,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0019,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0436,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0044,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0437,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0040,,gstr2b_line,line present,no line,1978.60,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0438,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0020,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0439,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0035,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0440,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0024,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0441,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0025,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0442,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0021,,gstr2b_line,line present,no line,5959.10,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0443,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0026,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0444,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0027,,gstr2b_line,line present,no line,683.38,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0445,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0025,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0446,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0041,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0447,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0028,,gstr2b_line,line present,no line,2949.99,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0448,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN031-0028,,taxable_value,749877,822496,36.30,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0449,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0028,,gstr2b_line,line present,no line,2063.60,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0450,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0026,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0451,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0042,,gstr2b_line,line present,no line,8956.44,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0452,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0029,,gstr2b_line,line present,no line,2777.21,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0453,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0027,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0454,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0045,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0455,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0030,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0456,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0031,,gstr2b_line,line present,no line,7191.87,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0457,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0032,,gstr2b_line,line present,no line,752.17,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0458,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0014,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0459,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0026,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0460,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0027,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0461,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0032,,gstr2b_line,line present,no line,25815.43,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0462,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0028,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0463,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0026,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0464,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0022,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0465,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0028,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0466,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0029,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0467,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0023,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0468,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0043,,gstr2b_line,line present,no line,47206.28,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0469,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0044,,gstr2b_line,line present,no line,732.98,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0470,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0029,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0471,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0033,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0472,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0033,,gstr2b_line,line present,no line,1643.89,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0473,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0036,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0474,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0037,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0475,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0029,,gstr2b_line,line present,no line,3488.73,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0476,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0028,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0477,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0045,,gstr2b_line,line present,no line,33678.59,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0478,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0034,,gstr2b_line,line present,no line,1902.67,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0479,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0027,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0480,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0024,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0481,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0030,,gstr2b_line,line present,no line,25463.69,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0482,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0025,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0483,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0027,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0484,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0026,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0485,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0028,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0486,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0015,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0487,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0034,,gstr2b_line,line present,no line,8377.30,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0488,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0022,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0489,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN011-0029,,taxable_value,16996594,17477389,865.43,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0490,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN043-0030,,taxable_value,4025867,4187202,80.66,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0491,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0029,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0492,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0021,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0493,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0027,,return_period,2025-12,2026-01,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0494,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN020-0038,,taxable_value,75000000,67622850,13278.87,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0495,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0038,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0496,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0039,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0497,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0031,,gstr2b_line,line present,no line,264.12,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0498,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0035,,gstr2b_line,line present,no line,10394.76,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0499,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0030,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0500,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0028,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0501,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0023,,gstr2b_line,line present,no line,9306.74,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0502,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0035,,gstr2b_line,line present,no line,364.73,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0503,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0030,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0504,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN034-0017,,taxable_value,7484170,8321479,1507.16,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0505,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0036,,gstr2b_line,line present,no line,5743.93,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0506,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0029,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0507,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0031,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0508,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0029,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0509,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0036,,gstr2b_line,line present,no line,11473.56,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0510,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0046,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0511,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN001-0027,,taxable_value,458617,500583,20.98,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0512,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0040,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0513,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0032,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0514,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0031,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0515,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0030,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0516,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0030,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0517,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0046,,gstr2b_line,line present,no line,2179.77,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0518,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0032,,gstr2b_line,line present,no line,21919.43,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0519,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0022,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0520,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0047,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0521,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0048,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0522,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0041,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0523,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0033,,gstr2b_line,line present,no line,5633.09,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0524,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0047,,gstr2b_line,line present,no line,45888.70,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0525,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0048,,gstr2b_line,line present,no line,11986.94,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0526,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0033,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0527,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0031,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0528,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0031,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0529,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0030,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0530,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0016,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0531,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0024,,gstr2b_line,line present,no line,1039.36,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0532,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0025,,gstr2b_line,line present,no line,4140.25,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0533,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0034,,gstr2b_line,line present,no line,11474.08,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0534,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0032,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0535,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0032,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0536,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0033,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0537,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0033,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0538,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0023,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0539,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0037,,gstr2b_line,line present,no line,766.06,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0540,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0034,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0541,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0035,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0542,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0036,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0543,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0037,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0544,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0024,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0545,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0038,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0546,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0049,,gstr2b_line,line present,no line,2324.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0547,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0034,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0548,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0049,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0549,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0031,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0550,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0042,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0551,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0026,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0552,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0025,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0553,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0050,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0554,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN020-0043,,taxable_value,4171325,3677534,888.82,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0555,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0043,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0556,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0032,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0557,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0051,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0558,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0052,,return_period,2026-01,2026-02,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0559,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0028,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0560,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN042-0053,,taxable_value,4035947,4619261,291.66,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0561,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0053,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0562,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0033,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0563,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0034,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0564,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0017,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0565,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0032,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0566,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0018,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0567,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0044,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0568,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0035,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0569,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0050,,gstr2b_line,line present,no line,10497.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0570,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0026,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0571,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0037,,gstr2b_line,line present,no line,0.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0572,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0038,,gstr2b_line,line present,no line,1783.81,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0573,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0019,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0574,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0038,,gstr2b_line,line present,no line,5169.99,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0575,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN034-0022,,taxable_value,17777525,16131281,2963.24,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0576,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0039,,gstr2b_line,line present,no line,180000.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0577,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0035,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0578,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0040,,gstr2b_line,line present,no line,4329.44,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0579,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0054,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0580,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0055,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0581,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0056,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0582,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0039,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0583,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0040,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0584,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0033,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0585,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0045,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0586,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0046,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0587,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0057,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0588,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0047,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0589,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN028-0054,,return_period,2026-02,2026-03,,Supplier dated the invoice in the next month,False,augment
+AUG-0590,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0036,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0591,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0048,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0592,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0020,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0593,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0049,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0594,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0027,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0595,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0058,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0596,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0041,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0597,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN034-0024,,taxable_value,9434624,10265736,1496.00,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0598,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0028,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0599,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0050,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0600,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0027,,gstr2b_line,line present,no line,6052.58,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0601,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0051,,gstr2b_line,line present,no line,17125.15,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0602,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0037,,return_period,2026-02,2026-03,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0603,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN044-0039,,return_period,2026-02,2026-03,,Supplier dated the invoice in the next month,False,augment
+AUG-0604,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0039,,gstr2b_line,line present,no line,3861.09,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0605,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0040,,gstr2b_line,line present,no line,61440.19,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0606,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0029,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0607,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0030,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0608,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0031,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0609,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0032,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0610,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0033,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0611,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0034,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0612,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0035,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0613,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0036,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0614,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0037,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0615,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0038,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0616,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0039,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0617,MISSING_IN_2B,MISSING,High,INVOICE,VEN006-0052,,gstr2b_line,line present,no line,1241.40,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0618,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0041,,gstr2b_line,line present,no line,22030.49,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0619,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0051,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0620,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0028,,gstr2b_line,line present,no line,3247.05,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0621,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0034,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0622,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0042,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0623,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0043,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0624,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0029,,gstr2b_line,line present,no line,6454.13,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0625,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN029-0035,,taxable_value,15000012,13224167,3196.52,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0626,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0035,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0627,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0059,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0628,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0034,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0629,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0030,,gstr2b_line,line present,no line,8934.03,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0630,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0041,,gstr2b_line,line present,no line,3581.82,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0631,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0042,,gstr2b_line,line present,no line,2448.32,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0632,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0043,,gstr2b_line,line present,no line,432.78,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0633,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0044,,gstr2b_line,line present,no line,1597.03,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0634,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0045,,gstr2b_line,line present,no line,1337.65,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0635,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0046,,gstr2b_line,line present,no line,647.46,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0636,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0047,,gstr2b_line,line present,no line,184.31,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0637,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0048,,gstr2b_line,line present,no line,682.42,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0638,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN038-0050,,taxable_value,327267,371211,79.10,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0639,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN026-0050,,taxable_value,26703211,27489270,1414.91,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0640,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0036,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0641,MISSING_IN_2B,MISSING,High,INVOICE,VEN010-0049,,gstr2b_line,line present,no line,26235.69,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0642,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0037,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0643,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0035,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0644,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0040,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0645,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN020-0052,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0646,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN048-0036,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0647,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN024-0038,,taxable_value,611803,651818,72.02,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0648,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0060,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0649,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0035,,gstr2b_line,line present,no line,18399.51,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0650,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0029,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0651,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0041,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0652,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0038,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0653,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN042-0061,,taxable_value,2738365,2513886,404.06,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0654,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0061,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0655,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0036,,gstr2b_line,line present,no line,6960.70,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0656,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0039,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0657,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0042,,gstr2b_line,line present,no line,4834.88,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0658,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0037,,gstr2b_line,line present,no line,7955.94,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0659,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0038,,gstr2b_line,line present,no line,1023.51,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0660,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0042,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0661,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN025-0036,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0662,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0038,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0663,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0031,,gstr2b_line,line present,no line,6077.00,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0664,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0039,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0665,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0030,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0666,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0043,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0667,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0021,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0668,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0032,,gstr2b_line,line present,no line,668.82,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0669,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0033,,gstr2b_line,line present,no line,1975.74,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0670,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0039,,gstr2b_line,line present,no line,4558.04,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0671,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN033-0040,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0672,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0043,,gstr2b_line,line present,no line,21670.44,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0673,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0034,,gstr2b_line,line present,no line,469.70,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0674,MISSING_IN_2B,MISSING,High,INVOICE,VEN027-0040,,gstr2b_line,line present,no line,7892.53,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0675,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN049-0044,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0676,GSTR2B_VALUE_MISMATCH,MISSING,Medium,INVOICE,VEN023-0051,,taxable_value,894280,789347,188.88,Supplier reported a different taxable value in GSTR-2B than the invoice in the books,False,augment
+AUG-0677,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0040,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0678,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN047-0044,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0679,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0041,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0680,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN019-0022,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0681,MISSING_IN_2B,MISSING,High,INVOICE,VEN022-0035,,gstr2b_line,line present,no line,11168.57,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0682,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN029-0042,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0683,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN039-0031,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0684,MISSING_IN_2B,MISSING,High,INVOICE,VEN041-0044,,gstr2b_line,line present,no line,2291.22,"Supplier did not report this invoice in GSTR-1, so it is absent from GSTR-2B",False,augment
+AUG-0685,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0062,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0686,PERIOD_SHIFT,MISSING,Low,INVOICE,VEN042-0063,,return_period,2026-03,2026-04,,"Supplier filed late, so the line sits in the next Return period",False,augment
+AUG-0687,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000021,,invoice,invoice booked,no invoice,16939.47,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0688,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000058,,invoice,invoice booked,no invoice,20575.28,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0689,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000228,,invoice,invoice booked,no invoice,42615.82,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0690,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000246,,invoice,invoice booked,no invoice,1271.32,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0691,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000262,,invoice,invoice booked,no invoice,24840.72,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0692,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000274,,invoice,invoice booked,no invoice,686.59,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0693,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000294,,invoice,invoice booked,no invoice,28612.01,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0694,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000383,,invoice,invoice booked,no invoice,517.04,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0695,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000530,,invoice,invoice booked,no invoice,51305.57,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0696,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000627,,invoice,invoice booked,no invoice,12173.32,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0697,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000705,,invoice,invoice booked,no invoice,3944.67,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0698,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000722,,invoice,invoice booked,no invoice,25148.19,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0699,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000766,,invoice,invoice booked,no invoice,23674.00,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0700,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000774,,invoice,invoice booked,no invoice,2371.09,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0701,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000911,,invoice,invoice booked,no invoice,135.91,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0702,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000947,,invoice,invoice booked,no invoice,699.76,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0703,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-000992,,invoice,invoice booked,no invoice,0.00,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0704,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001014,,invoice,invoice booked,no invoice,27345.90,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0705,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001099,,invoice,invoice booked,no invoice,0.00,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0706,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001119,,invoice,invoice booked,no invoice,42835.34,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0707,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001147,,invoice,invoice booked,no invoice,26260.56,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0708,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001207,,invoice,invoice booked,no invoice,9231.71,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0709,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001221,,invoice,invoice booked,no invoice,291.56,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0710,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001241,,invoice,invoice booked,no invoice,42458.46,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0711,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001320,,invoice,invoice booked,no invoice,17096.06,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0712,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001374,,invoice,invoice booked,no invoice,1515.44,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0713,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001393,,invoice,invoice booked,no invoice,6169.03,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0714,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001444,,invoice,invoice booked,no invoice,10423.19,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0715,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001508,,invoice,invoice booked,no invoice,1051.01,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0716,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001517,,invoice,invoice booked,no invoice,5714.45,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0717,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001536,,invoice,invoice booked,no invoice,33228.69,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0718,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001607,,invoice,invoice booked,no invoice,2598.89,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0719,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001623,,invoice,invoice booked,no invoice,4336.92,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0720,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001678,,invoice,invoice booked,no invoice,2041.54,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0721,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001686,,invoice,invoice booked,no invoice,31743.95,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0722,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001698,,invoice,invoice booked,no invoice,11560.34,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0723,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001705,,invoice,invoice booked,no invoice,16116.05,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0724,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001714,,invoice,invoice booked,no invoice,586.17,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0725,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001745,,invoice,invoice booked,no invoice,1053.44,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0726,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001764,,invoice,invoice booked,no invoice,1251.76,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0727,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001794,,invoice,invoice booked,no invoice,31374.84,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0728,MISSING_IN_BOOKS,MISSING,Medium,GSTR2B_LINE,2B-001822,,invoice,invoice booked,no invoice,19467.50,Supplier reported this supply in GSTR-2B but no invoice for it is in the books,False,augment
+AUG-0729,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN028-0003,,payment,paid within 180 days,unpaid,5218.90,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0730,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN016-0003,,payment,paid within 180 days,unpaid,14693.52,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0731,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN048-0002,,payment,paid within 180 days,unpaid,70112.00,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0732,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN002-0006,,payment,paid within 180 days,unpaid,6945.22,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0733,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN005-0003,,payment,paid within 180 days,unpaid,7499.69,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0734,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN034-0004,,payment,paid within 180 days,unpaid,677.63,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0735,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN007-0006,,payment,paid within 180 days,unpaid,25233.74,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0736,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN026-0006,,payment,paid within 180 days,unpaid,37306.43,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0737,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN011-0009,,payment,paid within 180 days,unpaid,41001.84,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0738,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN028-0008,,payment,paid within 180 days,unpaid,2750.54,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0739,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN036-0008,,payment,paid within 180 days,unpaid,13447.38,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0740,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN002-0010,,payment,paid within 180 days,unpaid,1618.07,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0741,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN050-0010,,payment,paid within 180 days,unpaid,1210.75,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0742,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN046-0008,,payment,paid within 180 days,unpaid,53952.16,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0743,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN029-0008,,payment,paid within 180 days,unpaid,5304.10,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0744,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN035-0007,,payment,paid within 180 days,unpaid,1860.77,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0745,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN024-0015,,payment,paid within 180 days,unpaid,4967.45,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0746,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN020-0014,,payment,paid within 180 days,unpaid,22672.42,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0747,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN047-0007,,payment,paid within 180 days,unpaid,3581.69,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0748,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN041-0008,,payment,paid within 180 days,unpaid,4281.79,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0749,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN035-0011,,payment,paid within 180 days,unpaid,10734.28,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0750,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN033-0009,,payment,paid within 180 days,unpaid,959.63,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0751,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN022-0008,,payment,paid within 180 days,unpaid,3454.10,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0752,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN021-0013,,payment,paid within 180 days,unpaid,43235.58,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0753,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN027-0014,,payment,paid within 180 days,unpaid,9901.80,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0754,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN049-0010,,payment,paid within 180 days,unpaid,539.78,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0755,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN027-0016,,payment,paid within 180 days,unpaid,9693.47,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0756,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN008-0015,,payment,paid within 180 days,unpaid,75226.61,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0757,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN042-0016,,payment,paid within 180 days,unpaid,5535.72,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0758,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN014-0016,,payment,paid within 180 days,unpaid,16222.34,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0759,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN043-0018,,payment,paid within 180 days,unpaid,9584.25,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0760,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN026-0019,,payment,paid within 180 days,unpaid,47308.88,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0761,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN014-0019,,payment,paid within 180 days,unpaid,4793.04,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0762,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN014-0020,,payment,paid within 180 days,unpaid,11755.84,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0763,RULE_37_UNPAID_180,TAX,Critical,INVOICE,VEN014-0024,,payment,paid within 180 days,unpaid,1245.20,Supplier unpaid for more than 180 days as of 2026-03-31,False,augment
+AUG-0764,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0027,,party_gstin,active GSTIN,cancelled from 2025-09-02,597.30,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0765,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0028,,party_gstin,active GSTIN,cancelled from 2025-09-02,6170.18,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0766,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0029,,party_gstin,active GSTIN,cancelled from 2025-09-02,41594.19,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0767,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0030,,party_gstin,active GSTIN,cancelled from 2025-09-02,1139.19,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0768,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0031,,party_gstin,active GSTIN,cancelled from 2025-09-02,1680.14,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0769,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0032,,party_gstin,active GSTIN,cancelled from 2025-09-02,24481.32,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0770,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0033,,party_gstin,active GSTIN,cancelled from 2025-09-02,32668.04,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0771,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0034,,party_gstin,active GSTIN,cancelled from 2025-09-02,0.00,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0772,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0035,,party_gstin,active GSTIN,cancelled from 2025-09-02,5286.88,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0773,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0036,,party_gstin,active GSTIN,cancelled from 2025-09-02,326.22,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0774,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0037,,party_gstin,active GSTIN,cancelled from 2025-09-02,2731.65,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0775,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0038,,party_gstin,active GSTIN,cancelled from 2025-09-02,11069.42,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0776,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0039,,party_gstin,active GSTIN,cancelled from 2025-09-02,44650.59,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0777,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0040,,party_gstin,active GSTIN,cancelled from 2025-09-02,1978.60,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0778,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0041,,party_gstin,active GSTIN,cancelled from 2025-09-02,0.00,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0779,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0042,,party_gstin,active GSTIN,cancelled from 2025-09-02,8956.44,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0780,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0043,,party_gstin,active GSTIN,cancelled from 2025-09-02,47206.28,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0781,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0044,,party_gstin,active GSTIN,cancelled from 2025-09-02,732.98,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0782,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0045,,party_gstin,active GSTIN,cancelled from 2025-09-02,33678.59,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0783,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0046,,party_gstin,active GSTIN,cancelled from 2025-09-02,2179.77,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0784,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0047,,party_gstin,active GSTIN,cancelled from 2025-09-02,45888.70,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0785,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0048,,party_gstin,active GSTIN,cancelled from 2025-09-02,11986.94,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0786,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0049,,party_gstin,active GSTIN,cancelled from 2025-09-02,2324.00,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0787,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0050,,party_gstin,active GSTIN,cancelled from 2025-09-02,10497.00,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0788,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0051,,party_gstin,active GSTIN,cancelled from 2025-09-02,17125.15,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0789,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN006-0052,,party_gstin,active GSTIN,cancelled from 2025-09-02,1241.40,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0790,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0025,,party_gstin,active GSTIN,cancelled from 2025-10-29,15087.97,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0791,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0026,,party_gstin,active GSTIN,cancelled from 2025-10-29,10942.16,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0792,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0027,,party_gstin,active GSTIN,cancelled from 2025-10-29,16100.37,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0793,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0028,,party_gstin,active GSTIN,cancelled from 2025-10-29,2949.99,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0794,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0029,,party_gstin,active GSTIN,cancelled from 2025-10-29,2777.21,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0795,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0030,,party_gstin,active GSTIN,cancelled from 2025-10-29,0.00,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0796,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0031,,party_gstin,active GSTIN,cancelled from 2025-10-29,7191.87,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0797,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0032,,party_gstin,active GSTIN,cancelled from 2025-10-29,752.17,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0798,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0033,,party_gstin,active GSTIN,cancelled from 2025-10-29,1643.89,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0799,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0034,,party_gstin,active GSTIN,cancelled from 2025-10-29,1902.67,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0800,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0035,,party_gstin,active GSTIN,cancelled from 2025-10-29,364.73,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0801,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0036,,party_gstin,active GSTIN,cancelled from 2025-10-29,11473.56,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0802,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0037,,party_gstin,active GSTIN,cancelled from 2025-10-29,0.00,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0803,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0038,,party_gstin,active GSTIN,cancelled from 2025-10-29,5169.99,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0804,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0039,,party_gstin,active GSTIN,cancelled from 2025-10-29,3861.09,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0805,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0040,,party_gstin,active GSTIN,cancelled from 2025-10-29,61440.19,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0806,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0041,,party_gstin,active GSTIN,cancelled from 2025-10-29,22030.49,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0807,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0042,,party_gstin,active GSTIN,cancelled from 2025-10-29,2448.32,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0808,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0043,,party_gstin,active GSTIN,cancelled from 2025-10-29,432.78,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0809,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0044,,party_gstin,active GSTIN,cancelled from 2025-10-29,1597.03,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0810,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0045,,party_gstin,active GSTIN,cancelled from 2025-10-29,1337.65,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0811,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0046,,party_gstin,active GSTIN,cancelled from 2025-10-29,647.46,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0812,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0047,,party_gstin,active GSTIN,cancelled from 2025-10-29,184.31,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0813,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0048,,party_gstin,active GSTIN,cancelled from 2025-10-29,682.42,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0814,CANCELLED_GSTIN,TAX,Critical,INVOICE,VEN010-0049,,party_gstin,active GSTIN,cancelled from 2025-10-29,26235.69,Invoice dated on or after the day the supplier's GSTIN was cancelled,False,augment
+AUG-0815,PAN_LINKED_RING,ANOMALY,Critical,PARTY,VEN-009,CUS-007,pan,unrelated parties,QIKWC6704V,,Supplier and customer registrations carry the same PAN,False,augment
+AUG-0816,PAN_LINKED_RING,ANOMALY,Critical,PARTY,CUS-007,VEN-009,pan,unrelated parties,QIKWC6704V,,Supplier and customer registrations carry the same PAN,False,augment

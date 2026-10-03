@@ -1,0 +1,120 @@
+{
+  "seed": 42,
+  "source_sha256": "c49199eb35be2743ed9cdd9cf2db23996472c5194a01219fc49d01d0e084ab23",
+  "rates": {
+    "filing_behaviour": {
+      "reliable": 0.7,
+      "late": 0.2,
+      "non_filer": 0.1
+    },
+    "id_variant": 0.3,
+    "value_mismatch": 0.03,
+    "date_shift": 0.02,
+    "extra_lines": 0.02
+  },
+  "counts": {
+    "id_variants": 582,
+    "value_mismatches": 51,
+    "date_shifts": 48,
+    "purchase_invoices": 2120,
+    "gstr2b_lines": 1931,
+    "extra_lines": 42,
+    "labels": {
+      "CANCELLED_GSTIN": 51,
+      "GSTR2B_VALUE_MISMATCH": 51,
+      "MISSING_IN_2B": 220,
+      "MISSING_IN_BOOKS": 42,
+      "PAN_LINKED_RING": 2,
+      "PERIOD_SHIFT": 415,
+      "RULE_37_UNPAID_180": 35
+    }
+  },
+  "filing_behaviour": {
+    "VEN-001": "reliable",
+    "VEN-002": "reliable",
+    "VEN-003": "reliable",
+    "VEN-004": "reliable",
+    "VEN-005": "reliable",
+    "VEN-006": "non_filer",
+    "VEN-007": "reliable",
+    "VEN-008": "reliable",
+    "VEN-009": "reliable",
+    "VEN-010": "non_filer",
+    "VEN-011": "reliable",
+    "VEN-012": "reliable",
+    "VEN-013": "reliable",
+    "VEN-014": "reliable",
+    "VEN-015": "reliable",
+    "VEN-016": "reliable",
+    "VEN-017": "reliable",
+    "VEN-018": "reliable",
+    "VEN-019": "late",
+    "VEN-020": "late",
+    "VEN-021": "reliable",
+    "VEN-022": "non_filer",
+    "VEN-023": "reliable",
+    "VEN-024": "reliable",
+    "VEN-025": "late",
+    "VEN-026": "reliable",
+    "VEN-027": "non_filer",
+    "VEN-028": "reliable",
+    "VEN-029": "late",
+    "VEN-030": "reliable",
+    "VEN-031": "reliable",
+    "VEN-032": "reliable",
+    "VEN-033": "late",
+    "VEN-034": "reliable",
+    "VEN-035": "reliable",
+    "VEN-036": "reliable",
+    "VEN-037": "reliable",
+    "VEN-038": "reliable",
+    "VEN-039": "late",
+    "VEN-040": "reliable",
+    "VEN-041": "non_filer",
+    "VEN-042": "late",
+    "VEN-043": "reliable",
+    "VEN-044": "reliable",
+    "VEN-045": "reliable",
+    "VEN-046": "reliable",
+    "VEN-047": "late",
+    "VEN-048": "late",
+    "VEN-049": "late",
+    "VEN-050": "reliable"
+  },
+  "duplicate_invoices_skipped": [
+    "VEN003-0033",
+    "VEN005-0029",
+    "VEN005-0030",
+    "VEN017-0052",
+    "VEN021-0042",
+    "VEN026-0059",
+    "VEN036-0038",
+    "VEN036-0039",
+    "VEN037-0034",
+    "VEN039-0032",
+    "VEN041-0045"
+  ],
+  "cancelled_suppliers": [
+    {
+      "party_id": "VEN-006",
+      "gstin": "19XDLXY7219N2ZD",
+      "cancelled_from": "2025-09-02"
+    },
+    {
+      "party_id": "VEN-010",
+      "gstin": "09DXWYG2229O1Z5",
+      "cancelled_from": "2025-10-29"
+    }
+  ],
+  "pan_rings": [
+    {
+      "supplier_party_id": "VEN-009",
+      "customer_party_id": "CUS-007",
+      "shared_pan": "QIKWC6704V",
+      "old_pan": "XCRUN4998P",
+      "new_pan": "QIKWC6704V",
+      "old_gstin": "07XCRUN4998P2ZB",
+      "new_gstin": "07QIKWC6704V2ZR"
+    }
+  ]
+}

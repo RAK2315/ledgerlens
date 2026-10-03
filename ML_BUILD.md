@@ -155,9 +155,12 @@ All money is converted to integer paise in data.py (round half up). All dates be
 These shaped the design. Re-measure in the data profile step and update this table if anything differs.
 
 - Purchase invoices per month: 144 to 217. Median 43 purchase invoices per vendor.
-- 66.6 percent of bank narrations contain the invoice ID in some form, for example VEN001-0001, INV VEN002-0001, ven0420001.
-- 76.6 percent of bank counterparty names exactly equal a party_master name; the rest are truncated or reworded (EVERGREEN INFRA PRIVATE LIMITED vs Evergreen Infra & Co).
-- 99.2 percent of ledger invoice_ref values exist in invoices; the rest are planted typos.
+- 67.8 percent of bank narrations quote the invoice ID as written (VEN001-0001, INV VEN002-0001); 24.9 percent quote it in another form (ven0420001, inv252601229, or the serial alone such as 0035); 7.3 percent carry no reference.
+- 76.6 percent of bank counterparty names exactly equal a party_master name; the rest are truncated to 22 characters, written without spaces (BHARATSYSTEMSPVTLTD) or shortened (PRIME MEDIA).
+- 22 parties share a normalised name with another party (Evergreen Infra & Co and Evergreen Infra Private Limited), so a name alone cannot always pick the party. Every party uses exactly one counterparty_account, and no account is shared.
+- 99.5 percent of ledger invoice_ref values exist in invoices; the rest are planted typos.
+- Candidate recall on train (section 5.1 gate): booking 100.0 percent of 3,852 true pairs, payment 100.0 percent of 3,976.
+- Counterparty resolution (section 4.2) is correct on 100.0 percent of linked bank transactions; without the account step it is 98.6 percent.
 - Planted ledger ID typos include a wrong financial year (INV-2425-02759 for INV-2526-02759), letter O for zero (INV-2526-O2328), swapped digits (01978 for 01987) and dropped digits (INV-252-02921).
 - Payment lag from invoice date: minimum minus 30 days (planted payment-before-invoice), 5th percentile 4, median 25, 95th percentile 55, maximum 101 days.
 - For FULL links, payment amount divided by invoice total: median 1.0, minimum 0.903, maximum 1.048.
@@ -197,6 +200,18 @@ Steps, in order:
 GSTR-2B columns (mirror the GSTN B2B section; verify field names against the official GSTR-2B JSON schema before the demo and adjust names only): gstin_supplier, trade_name, invoice_number, invoice_type (R), invoice_date, invoice_value, place_of_supply, reverse_charge (N), rate, taxable_value, igst, cgst, sgst, cess, return_period (MMYYYY), itc_availability (Y, N), reason (nullable), source_invoice_id (hidden from the engine; used only by evaluation).
 
 augment_labels.csv has the same columns as the labels sheet plus source = augment, so evaluate.py treats both label sources the same way.
+
+Choices made while building augment.py (the steps above left them open):
+
+- Filing behaviour is an exact split (35 reliable, 10 late, 5 non_filer) by a seeded shuffle, not independent draws. The ring supplier is held reliable so the ring is not confused with a missing line.
+- A purchase invoice labelled DUPLICATE_INVOICE in the workbook gets no GSTR-2B line and no MISSING_IN_2B label: the supplier issued it once. The engine must report it as a duplicate only.
+- Every line of a late supplier is labelled PERIOD_SHIFT, as is a reliable supplier's line whose shifted date crosses a month. Date shifts go forward only and the return period is never more than one month after the invoice month, so the supplier-filing candidates (invoice month or the next) always reach the line.
+- gstr2b.csv carries a line_id column (2B-000001 onwards) and money in rupees with two decimals; data.py converts to paise on load.
+- New entity_type values: GSTR2B_LINE (MISSING_IN_BOOKS, entity_id is the line_id) and PARTY (PAN_LINKED_RING, entity_id is the party_id, related_entity_id the other party).
+- The ring supplier is the supplier behind the earliest CIRCULAR_FLOW label, so the ring has a round trip to show; the customer is a seeded pick. With seed 42: supplier VEN-009 Unity Infra Pvt Ltd (Rs 5,00,000 out on 30 Sep 2025, back on 2 Oct 2025) and customer CUS-007 Unity Motors Ltd.
+- Cancelled suppliers with seed 42: VEN-006 from 2025-09-02 and VEN-010 from 2025-10-29 (the date of each supplier's middle invoice).
+- data.load_dataset applies the manifest: party frames gain filing_behaviour, gstin_status and cancelled_from; the ring customer's PAN and GSTIN change in the party frame and on its invoices (planted invalid GSTINs on invoices are left alone).
+- Counts with seed 42: 1,931 lines (42 of them absent from the books); labels MISSING_IN_2B 220, PERIOD_SHIFT 415, GSTR2B_VALUE_MISMATCH 51, MISSING_IN_BOOKS 42, RULE_37_UNPAID_180 35, CANCELLED_GSTIN 51, PAN_LINKED_RING 2.
 
 ### 3.6 Splits
 
@@ -248,11 +263,14 @@ Implementation detail for VEN codes: strip leading zeros from the final numeric 
 
 normalise_party_name(raw) -> str: uppercase, replace & with AND, remove PVT, PRIVATE, LTD, LIMITED, LLP, CO, AND CO, punctuation, collapse spaces.
 
-resolve_counterparty(name, narration) -> (party_id or None, score, method):
+PartyResolver.resolve(name, narration, direction, account) -> (party_id or None, score, method); resolve_bank(bank, parties, invoices) runs it over the whole statement and adds resolved_party_id, resolve_score and resolve_method:
 
-1. If the narration contains a token whose normalised form equals a normalised invoice_id, return that invoice's party_id with score 100, method invoice_ref.
-2. Else rapidfuzz.process.extractOne on normalised names with scorer token_set_ratio; accept if score is at least 88, method name.
-3. Else None.
+1. If the narration contains a token whose normalised form equals a normalised invoice_id, return that invoice's party_id with score 100, method invoice_ref. Only purchase invoices are considered for a DEBIT and sales invoices for a CREDIT, because a bare supplier serial (0035) would otherwise read as sales invoice 35.
+2. Else if the counterparty_account was seen on rows resolved by step 1, return the party those rows point to, score 100, method account. Added during the build: same-named parties make the name step wrong on 12 percent of the rows it handles.
+3. Else the best normalised name by the higher of token_set_ratio and the ratio with spaces removed; ties go to the party type that fits the direction, then to the closer legal suffix. Accept if the score is at least 88, method name.
+4. Else None.
+
+A name scoring 95 or more overrides an invoice reference that points at a different party, unless the account agrees with the reference (a mistyped reference is likelier than a wrong name).
 
 Party resolution runs before candidate generation for the payment matcher. Its accuracy against links-derived truth is reported separately in the report.
 
@@ -491,7 +509,7 @@ Write each test, watch it fail, then implement. Do not write tests for glue or p
 | test_anomaly_rules.py | each rule fires on a planted fixture row and stays silent on a near miss |
 | test_augment.py | same seed gives byte-identical gstr2b.csv; label counts within 1 percent of configured rates; every generated GSTIN passes the check digit |
 
-A small fixture workbook (ml/tests/fixtures/mini.xlsx, about 200 invoices sampled with seed 7 by a one-off script) keeps tests under 10 seconds.
+A small fixture workbook (ml/tests/fixtures/mini.xlsx, written by ml/tests/fixtures/make_mini.py: every record of 3 suppliers and 3 customers picked with seed 7, 280 invoices) keeps most tests fast. test_augment.py loads the real workbook once (about 7 seconds) because the augmentation rates only mean something at full size; the whole suite runs in about 10 seconds.
 
 ## 11. Build order with done conditions
 

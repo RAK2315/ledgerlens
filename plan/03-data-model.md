@@ -23,7 +23,7 @@ erDiagram
 
 ## Tables
 
-Records (loaded once per dataset from ledgerlens_ml.load_dataset plus augmentation): datasets, parties, invoices, ledger_entries, bank_transactions, gstr2b_lines, tax_rates, filings. Columns and types: schema.sql. Mapping from workbook: workbook enums lowercased (PURCHASE becomes purchase, DEBIT becomes debit, VENDOR becomes supplier); money times 100 rounded half up into _paise; period is the first 7 characters of the record date; filings joins tax_filings and answer_key on period (true_net_paise from true_net_tax_liability). parties.gstin_status, cancelled_from and PAN changes come from the augmentation manifest. bank_transactions.resolved_party_id comes from ledgerlens_ml resolve_counterparty.
+Records (loaded once per dataset from ledgerlens_ml.load_dataset plus augmentation): datasets, parties, invoices, ledger_entries, bank_transactions, gstr2b_lines, tax_rates, filings. Columns and types: schema.sql. Mapping from workbook: workbook enums lowercased (PURCHASE becomes purchase, DEBIT becomes debit, VENDOR becomes supplier); money times 100 rounded half up into _paise; period is the first 7 characters of the record date; filings joins tax_filings and answer_key on period (true_net_paise from true_net_tax_liability). parties.gstin_status, cancelled_from and PAN changes come from the augmentation manifest. bank_transactions.resolved_party_id comes from ledgerlens_ml resolve_bank.
 
 Run outputs: runs, run_events, matches, findings, drafts, eval_results. A new Run for the same period deletes nothing; the frontend always shows the latest done Run per period.
 
