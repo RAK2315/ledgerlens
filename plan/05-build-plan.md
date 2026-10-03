@@ -28,7 +28,8 @@ After phase 7 the demo has a story (load and dashboard). After phase 8 it has th
 
 ## Progress
 
-- Phase 1 done (commit aabb24f). Phase 2 done (commit 3021f51). Next: phase 3.
+- Phases 1 to 5 done. Next: phase 6 (frontend).
+- Changes from the plan made while building the backend: all routes live in backend/app/routes/api.py; the engine analyses the whole year once (about 20 seconds, cached to backend/cache) and a Run reads its Return period from that, so a Run takes about 5 seconds; anomaly rules live in backend/app/engine/anomalies.py; Drafts use Groq (model openai/gpt-oss-120b), not Claude; GET /api/runs/latest was added so the frontend can find the last Run after a reload.
 
 ## Notes from phases 1 and 2 for the phases that follow
 
