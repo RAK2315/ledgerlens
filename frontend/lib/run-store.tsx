@@ -12,6 +12,7 @@ type Store = {
   loadError: string | null;
   dataset: DatasetInfo | null;
   period: string;
+  target: string;
   runId: string | null;
   summary: Summary | null;
   stages: StageEvent[];
@@ -31,6 +32,8 @@ export function RunProvider({ children }: { children: React.ReactNode }) {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [dataset, setDataset] = useState<DatasetInfo | null>(null);
   const [period, setPeriod] = useState(DEFAULT_PERIOD);
+  // The period being switched to; period itself only moves once that Run is on screen.
+  const [pending, setPending] = useState<string | null>(null);
   const [runId, setRunId] = useState<string | null>(null);
   const [summary, setSummary] = useState<Summary | null>(null);
   const [stages, setStages] = useState<StageEvent[]>([]);
@@ -64,8 +67,10 @@ export function RunProvider({ children }: { children: React.ReactNode }) {
   }, [adopt, attempt]);
 
   const launch = useCallback(
-    async (target?: string) => {
-      const wanted = target ?? period;
+    async (chosen?: string) => {
+      // A retry after a failed Run carries no argument and must redo the same month.
+      const wanted = chosen ?? pending ?? period;
+      setPending(wanted);
       setStages([]);
       setRunError(null);
       setRunState("loading");
@@ -105,8 +110,9 @@ export function RunProvider({ children }: { children: React.ReactNode }) {
           setRunState("failed");
           return false;
         }
-        setPeriod(wanted);
         await adopt(run_id);
+        setPeriod(wanted);
+        setPending(null);
         setRunState("done");
         return true;
       } catch (error) {
@@ -115,15 +121,20 @@ export function RunProvider({ children }: { children: React.ReactNode }) {
         return false;
       }
     },
-    [adopt, dataset, period],
+    [adopt, dataset, pending, period],
   );
 
   const choosePeriod = useCallback(
     async (next: string) => {
-      const { run } = await api.latest(next);
+      setPending(next);
+      const { run } = await api.latest(next).catch((error) => {
+        setPending(null);
+        throw error;
+      });
       if (run) {
-        setPeriod(next);
         await adopt(run.run_id);
+        setPeriod(next);
+        setPending(null);
       } else {
         await launch(next);
       }
@@ -136,8 +147,8 @@ export function RunProvider({ children }: { children: React.ReactNode }) {
   }, [runId]);
 
   const value = useMemo<Store>(
-    () => ({ ready, loadError, dataset, period, runId, summary, stages, runState, runError, launch, choosePeriod, setSummary, refresh, retry: () => setAttempt((n) => n + 1) }),
-    [ready, loadError, dataset, period, runId, summary, stages, runState, runError, launch, choosePeriod, refresh],
+    () => ({ ready, loadError, dataset, period, target: pending ?? period, runId, summary, stages, runState, runError, launch, choosePeriod, setSummary, refresh, retry: () => setAttempt((n) => n + 1) }),
+    [ready, loadError, dataset, period, pending, runId, summary, stages, runState, runError, launch, choosePeriod, refresh],
   );
   return <RunContext.Provider value={value}>{children}</RunContext.Provider>;
 }
