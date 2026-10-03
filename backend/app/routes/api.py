@@ -9,7 +9,7 @@ from fastapi import APIRouter, Query
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from .. import db, proof, settings
+from .. import db, proof, ring_view, settings
 from ..drafts import llm
 from ..engine import analyse, dataset_view, evaluate, findings as views, money, rings, run as runs
 from ..engine.labels import META
@@ -307,7 +307,21 @@ def dismiss_finding(finding_id: str, body: Note) -> dict:
 def run_graph(run_id: str) -> dict:
     run = _done_run(run_id)
     result, _ = analyse.analysis()
-    return rings.graph(analyse.books(), run["period"], [f for f in result.findings if f["period"] == run["period"]])
+    b = analyse.books()
+    flows = [f for f in result.findings if f["finding_type"] == "CIRCULAR_FLOW"]
+    return {**rings.graph(b, run["period"], [f for f in result.findings if f["period"] == run["period"]]),
+            "stories": ring_view.stories(b, run["period"], flows), "shared_accounts": ring_view.shared_accounts(b)}
+
+
+@router.get("/runs/{run_id}/parties/{party_id}")
+def run_party(run_id: str, party_id: str) -> dict:
+    run = _done_run(run_id)
+    view = ring_view.party(analyse.books(), run["period"], party_id)
+    if view is None:
+        raise ApiError(404, "party_not_found", f"No Party with id {party_id}")
+    names = _names(run)
+    mine = [f for f in db.findings_of(run_id) if f["party_id"] == party_id]
+    return {**view, "findings": [finding_row(f, names) for f in sorted(mine, key=lambda f: -f["impact_paise"])]}
 
 
 @router.get("/eval")

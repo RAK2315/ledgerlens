@@ -147,7 +147,17 @@ def test_matches_liability_graph_and_eval(client, run_id):
     assert set(liability["declared"]) == {"output_paise", "itc_paise", "net_paise", "filed_on", "due_on"} and liability["simplified_setoff"] is True
 
     graph = client.get(f"/api/runs/{run_id}/graph").json()
-    assert set(graph) == {"nodes", "edges", "rings"} and graph["nodes"][0]["kind"] == "company"
+    assert set(graph) == {"nodes", "edges", "rings", "stories", "shared_accounts"} and graph["nodes"][0]["kind"] == "company"
+    assert all({"volume_paise", "invoice_count"} <= set(node) for node in graph["nodes"])
+    for story in graph["stories"]:
+        assert {"ring_id", "pan", "supplier", "customer", "steps", "timeline"} == set(story)
+        assert all(step["kind"] in ("purchase", "sale", "out", "back") and step["text"] for step in story["steps"])
+    supplier = next(node["id"] for node in graph["nodes"] if node["kind"] == "supplier" and node["invoice_count"])
+    view = client.get(f"/api/runs/{run_id}/parties/{supplier}").json()
+    assert set(view) == {"party", "invoices", "payments", "findings"} and view["party"]["id"] == supplier
+    assert len(view["invoices"]) == next(node["invoice_count"] for node in graph["nodes"] if node["id"] == supplier)
+    assert all(FINDING_ROW <= set(row) for row in view["findings"])
+    assert client.get(f"/api/runs/{run_id}/parties/NOPE").status_code == 404
     assert {e["kind"] for e in graph["edges"]} <= {"trade", "same_pan", "same_bank", "same_address"}
 
     report = client.get("/api/eval").json()

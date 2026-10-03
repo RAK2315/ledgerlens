@@ -91,10 +91,30 @@ export type Liability = {
   simplified_setoff: boolean;
 };
 
-export type GraphNode = { id: string; label: string; kind: "company" | "supplier" | "customer"; risk: "clean" | "ring" | "cancelled" };
+export type GraphNode = { id: string; label: string; kind: "company" | "supplier" | "customer"; risk: "clean" | "ring" | "cancelled"; volume_paise: number; invoice_count: number };
 export type GraphEdge = { source: string; target: string; kind: "trade" | "same_pan" | "same_bank" | "same_address"; label: string };
 export type Ring = { id: string; members: string[]; reason: string; itc_at_risk_paise: number; invoice_count: number };
-export type Graph = { nodes: GraphNode[]; edges: GraphEdge[]; rings: Ring[] };
+export type RingStep = { kind: "purchase" | "sale" | "out" | "back"; party_id: string; date: string; until: string | null; amount_paise: number; records: string[]; text: string };
+export type RingMonth = { period: string; bought_paise: number; sold_paise: number; credit_paise: number; round_trip: boolean };
+export type RingStory = { ring_id: string; pan: string; supplier: { id: string; name: string }; customer: { id: string; name: string }; steps: RingStep[]; timeline: RingMonth[] };
+export type Graph = { nodes: GraphNode[]; edges: GraphEdge[]; rings: Ring[]; stories: RingStory[]; shared_accounts: { account: string; members: string[] }[] };
+export type PartyView = {
+  party: {
+    id: string;
+    name: string;
+    kind: "supplier" | "customer";
+    gstin: string;
+    pan: string;
+    state: string;
+    gstin_status: "active" | "cancelled";
+    cancelled_from: string | null;
+    filing_behaviour: string | null;
+    bank_account: string | null;
+  };
+  invoices: { id: string; date: string; doc_type: string; total_paise: number; tax_paise: number }[];
+  payments: { id: string; date: string; direction: "debit" | "credit"; amount_paise: number; narration: string }[];
+  findings: FindingRow[];
+};
 
 export type EvalRow = {
   finding_type: string;

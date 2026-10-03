@@ -6,8 +6,6 @@ import pandas as pd
 
 from .findings import Books, finding, period_of, py, rupees
 
-MAX_CLEAN_NODES = 40
-
 
 def pan_rings(b: Books) -> list[dict]:
     """Groups of Parties sharing a PAN that include at least one Supplier and one Customer."""
@@ -52,7 +50,7 @@ def check(b: Books) -> list[dict]:
 
 
 def graph(b: Books, period: str, findings: list[dict]) -> dict:
-    """Nodes, edges and rings for the network view of one Return period."""
+    """Nodes, edges and rings for the network view of one Return period. Every Party is a node; the page decides how many to draw."""
     month = b.inv[b.inv["invoice_date"].dt.strftime("%Y-%m") == period]
     volume = month.groupby("party_id")["invoice_total_paise"].sum().abs().sort_values(ascending=False)
     rings = pan_rings(b)
@@ -60,14 +58,16 @@ def graph(b: Books, period: str, findings: list[dict]) -> dict:
     cancelled = set(b.parties.index[(b.parties["gstin_status"] == "cancelled")
                                     & (b.parties["cancelled_from"] <= pd.Period(period).end_time)]) & set(volume.index)
     flow_parties = {f["party_id"] for f in findings if f["finding_type"] == "CIRCULAR_FLOW"}
-    keep = list(dict.fromkeys(list(ring_members) + sorted(cancelled) + sorted(flow_parties) + volume.index[:MAX_CLEAN_NODES].tolist()))
+    keep = list(dict.fromkeys(list(ring_members) + sorted(cancelled) + sorted(flow_parties) + volume.index.tolist() + b.parties.index.tolist()))
+    counts = month.groupby("party_id").size()
 
-    nodes = [{"id": "company", "label": "Your company", "kind": "company", "risk": "clean"}]
+    nodes = [{"id": "company", "label": "Your company", "kind": "company", "risk": "clean", "volume_paise": 0, "invoice_count": 0}]
     edges = []
     for party_id in keep:
         party = b.parties.loc[party_id]
         risk = "ring" if party_id in ring_members else "cancelled" if party_id in cancelled else "clean"
-        nodes.append({"id": party_id, "label": party["party_name"], "kind": "supplier" if party["party_type"] == "VENDOR" else "customer", "risk": risk})
+        nodes.append({"id": party_id, "label": party["party_name"], "kind": "supplier" if party["party_type"] == "VENDOR" else "customer", "risk": risk,
+                      "volume_paise": int(volume.get(party_id, 0)), "invoice_count": int(counts.get(party_id, 0))})
         edges.append({"source": "company", "target": party_id, "kind": "trade", "label": rupees(int(volume.get(party_id, 0)))})
     out_rings = []
     for n, ring in enumerate(rings, start=1):
