@@ -10,7 +10,8 @@ Vocabulary lives in CONTEXT.md. Use its terms in code, UI and docs.
 - Ideathon deck: done (deck/, see deck/NOTES.md). Team details on slide 3 are still placeholders.
 - Blueprint: complete. CONTEXT.md, this file, ML_BUILD.md, plan/00 to plan/06 and plan/schema.sql.
 - Code: plan/05-build-plan.md phases 1 and 2 done. ml package has the loader, augment, normalisers, counterparty resolver, candidates, features and the booking and payment matchers (artifacts and cards in ml/artifacts, both beat the baseline on the test split); commands profile, augment, train; 81 tests. Next step is phase 3, the backend scaffold and records load.
-- Dataset: data/source/tax_recon_dataset.xlsx (SHA-256 in ML_BUILD.md 3.1). GSTR-2B lines and augment labels are in data/derived, written by ml augment and committed; choices made there are in ML_BUILD.md 3.5. ML_BUILD.md is written to stand alone (it needs only the dataset) in simple language; keep it that way when editing.
+- Dataset: data/source/tax_recon_dataset.xlsx (SHA-256 in ML_BUILD.md 3.1). GSTR-2B lines and augment labels are in data/derived, written by ml augment and committed; choices made there are in ML_BUILD.md 3.5. ML_BUILD.md is a from-scratch recipe that stands alone (it needs only the dataset), in simple language and with no build status in it; keep it that way when editing.
+- Explainability and the USP come first everywhere (UI copy, video, deck): a first-time viewer must understand the problem and how LedgerLens solves it. USP: rupees first, evidence for every Finding, a Draft fix to approve, Supplier rings, measured accuracy.
 
 Update this section as phases land.
 
@@ -31,7 +32,7 @@ These apply to code comments, docs, commit messages, PR descriptions and any use
 
 - ML and engine: Python 3.10.11, packages pinned in ml/requirements.txt (numpy 2.2.6, pandas 2.3.3, scipy 1.15.3, scikit-learn 1.7.2, rapidfuzz 3.14.5, networkx 3.4.2, pydantic 2.13.5, pytest 9.1.1).
 - Backend API: FastAPI 0.142.2, uvicorn 0.54.0, SQLite through the standard library sqlite3 module (no ORM, no database server).
-- AI: Claude API through anthropic 1.11.0, model from LLM_MODEL (default claude-sonnet-5-5). Every response cached to backend/cache; template fallback when no key or the call fails. The demo makes no live calls.
+- AI: Groq API (OpenAI-compatible chat completions, called with httpx), key GROQ_API_KEY in backend/.env (never committed), model from LLM_MODEL. Every response cached to backend/cache; template fallback when no key or the call fails. The demo makes no live calls. The team has no Claude API key; plan files that say Claude or anthropic mean this Groq path.
 - Frontend: Next.js 16.3 App Router, TypeScript 7.0 (fall back to the latest 5.x if Next.js tooling rejects 7.0), Tailwind CSS 4.3, shadcn/ui, Recharts 3.10, Cytoscape.js 3.34, TanStack Table; pnpm 10.
 - UI is light theme, using the tokens in deck/index.html :root (cream, ink, orange, status colours).
 - Money is integer paise everywhere; format only at display, Indian grouping (Rs 4,20,000).

@@ -44,11 +44,11 @@ One rule runs through the whole project: code decides, AI explains. Every rupee 
 
 ### What is ML here and what is not
 
-| Part | Kind | Job | Status |
+| Part | Kind | Job | Build |
 |---|---|---|---|
-| A. Booking matcher | Trained classifier | Is this invoice and this ledger entry the same transaction? | Built |
-| B. Payment matcher | Trained classifier | Does this bank transaction pay this invoice? | Built |
-| C. Anomaly detector | Rules plus Isolation Forest | Flag unusual invoices and bank flows, with a reason | Not built yet |
+| A. Booking matcher | Trained classifier | Is this invoice and this ledger entry the same transaction? | First |
+| B. Payment matcher | Trained classifier | Does this bank transaction pay this invoice? | First |
+| C. Anomaly detector | Rules plus Isolation Forest | Flag unusual invoices and bank flows, with a reason | Second |
 | D. Supplier filing matcher | Trained classifier | Is this purchase invoice and this GSTR-2B line the same purchase? | Later |
 | E. Benford screen | Statistics | First-digit check over the whole Company | Optional |
 
@@ -129,8 +129,8 @@ ml/
     candidates.py   picks which pairs of records are worth scoring
     features.py     turns each pair into numbers
     matcher.py      trains, saves, loads and runs a matcher
-    anomaly.py      anomaly rules and Isolation Forest (not built yet)
-    evaluate.py     writes the results report (not built yet)
+    anomaly.py      anomaly rules and Isolation Forest
+    evaluate.py     writes the results report
     cli.py          the commands
     __main__.py     lets you run python -m ledgerlens_ml
   tests/            one test file per module, plus fixtures/mini.xlsx
@@ -179,7 +179,7 @@ What data.py does to every sheet:
 
 ### 3.3 Facts measured on this file
 
-The profile command prints these. They shaped the design.
+The profile command prints these. They shaped the design. If your numbers differ, something in data.py is off.
 
 - Purchase invoices per month: 144 to 217. Each Supplier has about 43 in the year.
 - All 120 party GSTINs pass the check-character test.
@@ -321,7 +321,7 @@ resolve_bank(bank, parties, invoices) adds three columns to the bank table: reso
 
 One more rule: if the name scores 95 or more and points to a different Party than the reference does, trust the name, unless the account agrees with the reference. A mistyped reference is more likely than a wrong name.
 
-Measured: 100.0 percent of bank lines that have a true match get the right Party. Without the account step it is 98.6 percent.
+What to expect: 100.0 percent of bank lines that have a true match get the right Party. Without the account step it is 98.6 percent.
 
 ### 4.3 Text similarity
 
@@ -347,7 +347,7 @@ Payment matcher, for each invoice (credit notes are skipped):
 - transaction date from 45 days before to 120 days after the invoice date,
 - at most 20 closest in amount, but a line that quotes the invoice is always kept.
 
-Hard check before training: at least 99.5 percent of the true pairs in train must be among the picked pairs. If not, widen the windows first. Measured: 100.0 percent for booking (3,852 true pairs) and 100.0 percent for payment (3,976).
+Hard check before training: at least 99.5 percent of the true pairs in train must be among the picked pairs. If not, widen the windows first. What to expect: 100.0 percent for booking (3,852 true pairs) and 100.0 percent for payment (3,976).
 
 ### 5.2 Features (features.py)
 
@@ -432,7 +432,7 @@ On the test split:
 
 These are targets, not claims. Report the real numbers whatever they are. If a target is missed, the report says so in its first lines.
 
-Results of the first run (3 October 2026, test split):
+What a correct build gets on the test split. Use it to check your own run; small differences are normal:
 
 | Measure | Booking | Payment |
 |---|---|---|
@@ -463,7 +463,7 @@ The same recipe as section 5, with these changes:
 
 Until this exists, the app matches purchase invoices to GSTR-2B lines with a rule score.
 
-## 7. Anomaly detector C (not built yet)
+## 7. Anomaly detector C
 
 Every flag must come with a reason a finance person accepts. So we use clear rules for the known patterns, and an Isolation Forest for what the rules miss.
 
@@ -538,7 +538,7 @@ class MatchResult(BaseModel):
     features: dict[str, float]
 ```
 
-Still to add with section 7:
+Added with section 7:
 
 ```python
 score_anomalies(ds, period=None) -> list[AnomalyResult]
@@ -557,18 +557,18 @@ If a model file is missing, score_pairs raises ModelNotTrainedError and the mess
 
 Run from the project folder. On Windows put ml\.venv\Scripts\ before python.
 
-| Command | What it does | Status |
-|---|---|---|
-| python -m ledgerlens_ml profile | checks the hash and columns, prints the facts in 3.3, the pair check in 5.1 and a summary of the features | works |
-| python -m ledgerlens_ml augment | writes the three files in data/derived | works |
-| python -m ledgerlens_ml train --model booking | trains the booking matcher, writes the model and card | works |
-| python -m ledgerlens_ml train --model payment | trains the payment matcher | works |
-| python -m ledgerlens_ml train --all | trains every model | works |
-| python -m pytest ml/tests -q | runs the tests | works |
-| python -m ledgerlens_ml train --model anomaly | fits the anomaly detector | to build |
-| python -m ledgerlens_ml evaluate | scores the test split, writes ml/reports/ML_REPORT.md and metrics.json | to build |
-| python -m ledgerlens_ml predict --period 2025-09 --out out/predictions_2025-09.json | runs every model on one month | to build |
-| python -m ledgerlens_ml train --model gstr2b | trains matcher D | to build |
+| Command | What it does |
+|---|---|
+| python -m ledgerlens_ml profile | checks the hash and columns, prints the facts in 3.3, the pair check in 5.1 and a summary of the features |
+| python -m ledgerlens_ml augment | writes the three files in data/derived |
+| python -m ledgerlens_ml train --model booking | trains the booking matcher, writes the model and card |
+| python -m ledgerlens_ml train --model payment | trains the payment matcher |
+| python -m ledgerlens_ml train --all | trains every model |
+| python -m pytest ml/tests -q | runs the tests |
+| python -m ledgerlens_ml train --model anomaly | fits the anomaly detector |
+| python -m ledgerlens_ml evaluate | scores the test split, writes ml/reports/ML_REPORT.md and metrics.json |
+| python -m ledgerlens_ml predict --period 2025-09 --out out/predictions_2025-09.json | runs every model on one month |
+| python -m ledgerlens_ml train --model gstr2b | trains matcher D |
 
 ML_REPORT.md layout: first a table of target against actual with pass or miss, then details per model, then the baseline comparison, then the known limits (including the Rule 37 clash in 3.4).
 
@@ -585,28 +585,28 @@ Write the test first, see it fail, then write the code. Test the logic, not the 
 | test_split.py | no invoice in two splits; averages read train months only |
 | test_matcher_contract.py | a saved model loads back; a changed feature list is refused; Confidence is 0 to 1; Band follows the thresholds; assignment is one to one |
 | test_augment.py | two runs give identical files; rates within 1 percent of the settings; every GSTIN passes the check character |
-| test_anomaly_rules.py | each rule fires on a planted row and stays quiet on a near miss (to write) |
+| test_anomaly_rules.py | each rule fires on a planted row and stays quiet on a near miss |
 
-ml/tests/fixtures/mini.xlsx is a small copy of the workbook: every record of 3 Suppliers and 3 Customers picked with seed 7 (280 invoices). ml/tests/fixtures/make_mini.py makes it. Most tests use it. test_augment.py loads the real workbook once (about 7 seconds) because the rates only mean something at full size. The whole suite has 81 tests and runs in about 12 seconds.
+ml/tests/fixtures/mini.xlsx is a small copy of the workbook: every record of 3 Suppliers and 3 Customers picked with seed 7 (280 invoices). ml/tests/fixtures/make_mini.py makes it. Most tests use it. test_augment.py loads the real workbook once (about 7 seconds) because the rates only mean something at full size. The whole suite should run in well under a minute.
 
 ## 11. Build order
 
 Each step ends with something you can run. Run the tests after every step.
 
-| Step | Build | Done when | Status |
-|---|---|---|---|
-| 1 | package, requirements, config, data.py | profile runs and the hash check passes | done |
-| 2 | augment.py | two runs give the same files | done |
-| 3 | normalise.py, parties.py | the 4.1 table and the Party tests pass | done |
-| 4 | candidates.py | the 99.5 percent check passes on train | done |
-| 5 | features.py | feature tables build with empty values only in id_ratio and id_dl_sim | done |
-| 6 | matcher.py, booking | card written, test numbers printed | done |
-| 7 | payment matcher | card written | done |
-| 8 | anomaly.py: rules, then the forest | card written, recall per rule printed | next |
-| 9 | evaluate.py | ML_REPORT.md exists with the targets table | to do |
-| 10 | predict command | a predictions file for 2025-09 is written | to do |
-| 11 | matcher D | gstr2b card written | later |
-| 12 | Benford screen | chart data in the predictions file | optional |
+| Step | Build | Done when |
+|---|---|---|
+| 1 | package, requirements, config, data.py | profile runs and the hash check passes |
+| 2 | augment.py | two runs give the same files |
+| 3 | normalise.py, parties.py | the 4.1 table and the Party tests pass |
+| 4 | candidates.py | the 99.5 percent check passes on train |
+| 5 | features.py | feature tables build with empty values only in id_ratio and id_dl_sim |
+| 6 | matcher.py, booking | card written, test numbers printed |
+| 7 | payment matcher | card written |
+| 8 | anomaly.py: rules, then the forest | card written, recall per rule printed |
+| 9 | evaluate.py | ML_REPORT.md exists with the targets table |
+| 10 | predict command | a predictions file for 2025-09 is written |
+| 11 | matcher D | gstr2b card written |
+| 12 | Benford screen | chart data in the predictions file |
 
 ## 12. Single-file program (optional)
 
@@ -638,3 +638,36 @@ The result is dist\ledgerlens-ml.exe, roughly 60 to 120 MB. The app does not nee
 - One payment for several invoices is solved by exact search, not by the model: it is an exact sum problem, and a wrong learned answer would be hard to explain.
 - The account step in Party resolution: same-named parties exist, and each Party has its own bank account.
 - Benford is for the whole Company only, with no verdict until the cut-offs are checked.
+
+## 15. Exporting the model and handing it over
+
+The model is exported the moment training finishes: train writes the files in section 5.6 (and 7.4) into ml/artifacts. Nothing else needs converting.
+
+Check the export before you hand it over:
+
+1. Delete ml/artifacts, run train --all, and see the files come back.
+2. Run the tests. All must pass.
+3. Open each card.json. The targets table should say pass, or the report must explain the miss.
+4. In Python, run this and see matches with reasons:
+
+```python
+from ledgerlens_ml import load_dataset, score_pairs
+ds = load_dataset()
+results = score_pairs("payment", ds, period="2025-09")
+print(len(results), results[0])
+```
+
+Hand over these, as one zip:
+
+- the whole ml folder, without ml/.venv (code, tests, artifacts, reports),
+- data/derived (gstr2b.csv, augment_labels.csv, augment_manifest.json).
+
+The app loads the model through the functions in section 9.1. So these must stay exactly as written here, or the app cannot use the model:
+
+- the function names and arguments in 9.1, and the fields of MatchResult,
+- the keys of the saved dict in 5.6 and the file names in ml/artifacts,
+- the feature names and their order in 5.2,
+- the column names in gstr2b.csv and augment_labels.csv,
+- the package versions in 1.2 (a model saved with one scikit-learn version may not load in another).
+
+Everything else is yours to change: the model settings, the windows, extra features (add them at the end of the list and retrain), the thresholds.
