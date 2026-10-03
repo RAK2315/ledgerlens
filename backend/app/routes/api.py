@@ -4,13 +4,12 @@ from __future__ import annotations
 import asyncio
 import json
 import threading
-from functools import lru_cache
 
 from fastapi import APIRouter, Query
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from .. import db, settings
+from .. import db, proof, settings
 from ..drafts import llm
 from ..engine import analyse, dataset_view, evaluate, findings as views, money, rings, run as runs
 from ..engine.labels import META
@@ -311,23 +310,8 @@ def run_graph(run_id: str) -> dict:
     return rings.graph(analyse.books(), run["period"], [f for f in result.findings if f["period"] == run["period"]])
 
 
-@lru_cache(maxsize=1)
-def _eval_rows() -> tuple[list[dict], str]:
-    from ledgerlens_ml import TEST_MONTHS
-    result, _ = analyse.analysis()
-    rows = [{**r, "label": META[r["finding_type"]][0], "source": "engine"} for r in evaluate.evaluate(analyse.dataset(), result.findings, TEST_MONTHS)
-            if r["planted"] or r["reported"]]
-    for kind, name in (("booking", "Invoice to ledger match"), ("payment", "Invoice to bank match")):
-        card = json.loads((settings.REPO_ROOT / "ml" / "artifacts" / f"matcher_{kind}.card.json").read_text(encoding="utf-8"))
-        pair = card["test"]["pair"]
-        auto = round(pair["positives"] * pair["recall"])
-        wrong = round(auto / pair["precision"] - auto) if pair["precision"] else 0
-        rows.append({"finding_type": f"MATCH_{kind.upper()}", "label": name, "planted": pair["positives"], "caught": auto, "reported": auto + wrong,
-                     "false_alarms": wrong, "on_benign_traps": 0, "catch_rate": pair["recall"], "false_alarm_rate": pair["false_auto_rate"], "source": "ml"})
-    return rows, db.now()
-
-
 @router.get("/eval")
-def get_eval() -> dict:
-    rows, generated_at = _eval_rows()
-    return {"split": "test", "rows": rows, "generated_at": generated_at}
+def get_eval(scope: str = "test") -> dict:
+    if scope not in ("test", "year"):
+        raise ApiError(400, "bad_scope", "scope is test or year")
+    return proof.report(scope)

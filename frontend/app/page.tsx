@@ -171,7 +171,7 @@ export default function StartPage() {
           flip
           title="Measured, not claimed"
           text="The demo data has mistakes planted on purpose and a list of every one, so catch rate and false alarms can be counted on months the matchers never trained on."
-          fact="February and March 2026: one planted outlier missed, 10 false alarms, all listed."
+          fact="February and March 2026: 287 of 288 planted mistakes caught, 8 false alarms, every one listed."
           src="/landing/proof.png"
           alt="Catch rate and false alarms for each kind of Finding"
         />

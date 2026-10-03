@@ -33,7 +33,7 @@ def _record_period(ds) -> dict[str, str]:
 
 
 def evaluate(ds, findings: list[dict], periods: tuple[str, ...] | None = None) -> list[dict]:
-    """One row per Finding type: planted, caught, false alarms and the two rates. periods limits both sides."""
+    """One row per Finding type: planted, caught, false alarms, the two rates and the records behind each miss. periods limits both sides."""
     where = _record_period(ds)
     labels = ds.labels[~ds.labels["issue_type"].isin(NOT_REPORTED)].copy()
     labels["period"] = labels["entity_id"].map(where)
@@ -64,6 +64,7 @@ def evaluate(ds, findings: list[dict], periods: tuple[str, ...] | None = None) -
         rows.append({
             "finding_type": finding_type, "planted": len(truth_ids), "caught": caught, "reported": int(len(got)),
             "false_alarms": false_alarms, "on_benign_traps": on_benign,
+            "missed": sorted(truth_ids - got_ids), "false_alarm_ids": got.loc[~got["entity_id"].isin(truth_ids | related), "entity_id"].tolist(),
             "catch_rate": caught / len(truth_ids) if truth_ids else None,
             "false_alarm_rate": false_alarms / len(got) if len(got) else None,
         })

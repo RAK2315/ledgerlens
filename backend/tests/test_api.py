@@ -153,3 +153,14 @@ def test_matches_liability_graph_and_eval(client, run_id):
     report = client.get("/api/eval").json()
     assert report["split"] == "test" and {"finding_type", "planted", "caught", "false_alarms", "catch_rate", "false_alarm_rate", "source"} <= set(report["rows"][0])
     assert {row["source"] for row in report["rows"]} == {"engine", "ml"}
+    assert set(report) == {"split", "months", "rows", "misses", "by_month", "matchers", "generated_at"}
+    assert all(set(m) == {"finding_type", "label", "kind", "entity_id", "detail", "expected", "recorded"} and m["kind"] in ("missed", "false_alarm") for m in report["misses"])
+    engine = [row for row in report["rows"] if row["source"] == "engine"]
+    assert sum(m["kind"] == "missed" for m in report["misses"]) == sum(row["planted"] - row["caught"] for row in engine)
+    assert sum(m["kind"] == "false_alarm" for m in report["misses"]) == sum(row["false_alarms"] for row in engine)
+    assert len(report["by_month"]) == 12 and set(report["by_month"][0]) == {"period", "unseen", "planted", "caught", "reported", "false_alarms"}
+    assert [m["kind"] for m in report["matchers"]] == ["booking", "payment"] and {"model", "baseline", "hard_cases"} <= set(report["matchers"][0])
+    year = client.get("/api/eval", params={"scope": "year"}).json()
+    assert year["split"] == "year" and {row["source"] for row in year["rows"]} == {"engine"}
+    assert sum(row["planted"] for row in year["rows"]) >= sum(row["planted"] for row in engine)
+    assert client.get("/api/eval", params={"scope": "decade"}).status_code == 400

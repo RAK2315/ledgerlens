@@ -131,4 +131,18 @@ export type DatasetOverview = {
 };
 export type RecordTable = "invoices" | "ledger_entries" | "bank_transactions" | "gstr2b_lines";
 export type RecordPage = { items: Record<string, FieldValue>[]; total: number };
-export type EvalReport = { split: string; rows: EvalRow[]; generated_at: string };
+export type EvalMiss = { finding_type: string; label: string; kind: "missed" | "false_alarm"; entity_id: string; detail: string | null; expected: string | null; recorded: string | null };
+export type EvalMonth = { period: string; unseen: boolean; planted: number; caught: number; reported: number; false_alarms: number };
+export type PairMetrics = { pairs: number; positives: number; precision: number; recall: number; f1: number; average_precision: number; false_auto_rate: number };
+export type MatcherCard = {
+  kind: "booking" | "payment";
+  name: string;
+  rows: { train: number; validation: number; test: number };
+  model: PairMetrics;
+  baseline: PairMetrics;
+  hard_cases: Record<string, { pairs: number; recall_auto: number; recall_review: number }>;
+  benign_traps: Record<string, { pairs: number; matched: number }>;
+  invoice_level: { invoices_with_a_true_partner: number; accuracy: number; invoices_without_a_true_partner: number; left_unmatched: number };
+};
+export type EvalScope = "test" | "year";
+export type EvalReport = { split: EvalScope; months: string[]; rows: EvalRow[]; misses: EvalMiss[]; by_month: EvalMonth[]; matchers: MatcherCard[]; generated_at: string };
