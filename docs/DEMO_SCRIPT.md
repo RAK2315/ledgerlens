@@ -15,19 +15,189 @@ The spoken lines come to about 360 words, which is about 2 minutes 25 seconds at
 
 ## The video, shot by shot
 
-| Time | On screen | Do | Say |
-|---|---|---|---|
-| 0:00 | Landing page, top | Hold for a moment, then scroll slowly to "Four records describe one purchase" | "Every month an Indian business has to make four records agree: its invoices, its books, its bank statement, and GSTR-2B, the statement of what its suppliers reported. When they disagree, input tax credit is lost or tax is overpaid, and today that is found late, by hand, in spreadsheets." |
-| 0:18 | Landing page, "Seven stages, one month" | Keep scrolling to the seven stages, pause | "LedgerLens reconciles the month end to end. It prices every mismatch in rupees, shows the evidence, and drafts the fix for you to approve. Code decides every number. The language model only words the explanation." |
-| 0:30 | Landing page, top | Scroll back up, click Run again (or Load demo company) | "This is one month of books for a demo company: September 2025, the month GST rates changed. These are real records going by: invoice numbers a supplier wrote differently, one payment settling two invoices, and each stage reporting what it found." |
-| 0:45 | Dashboard | Let it land. Move the pointer along the headline band, then down to Fix these first and Why credit is at risk | "Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable is 34.97 lakh. Below that: what to fix first, and why the credit is at risk." |
-| 1:00 | Finding drawer | Click the red line "2 invoices this month still use a GST rate that ended on 22 Sep 2025". Point at the two rates, then the reason, then the draft. Click Approve draft | "Open a Finding. This invoice was charged 28 percent three days after the rate became 18. Here is the record, what it should be, the rule, and a drafted credit note. I approve it, and excess tax drops from 24,117 rupees to 2,681." |
-| 1:17 | Dashboard, then the drawer again | Close the drawer. Click See why and fix under Start here. Click Approve draft. Close | (Cut 1 if long) "This supplier never reported our invoice, so its credit is at risk. The draft asks them to report it. Approved: credit at risk falls to 2.23 lakh." |
-| 1:27 | Workbench, Matches tab | Click Workbench, then Matches, open a row marked one-to-many | (Cut 2 if long) "Not everything odd is wrong. One payment settling two invoices is matched and left alone." |
-| 1:35 | Ring view | Click Ring view. Click the red supplier node, then scroll to Follow the money and on to the year chart | "The ring view shows who we trade with. This supplier and this customer share one PAN, so one owner sits on both sides. Five lakh rupees went out on 30 September with no invoice and came back on 2 October." |
-| 1:55 | Liability | Click Liability | "The filed return declared 32.15 lakh. LedgerLens shows what the month should cost, tax type by tax type, and the gap." |
-| 2:03 | Proof, then Data | Click Proof. Point at the four numbers, scroll to Every miss, by record. Click Data and scroll to the planted mistakes | "And it is measured, not claimed. The data has planted mistakes and an answer key. On two months the matchers never saw, LedgerLens caught 287 of 288 planted mistakes with 8 false alarms, and every miss is listed by record. The Data page shows exactly what was planted." |
-| 2:23 | Dashboard | Click Dashboard and hold | "LedgerLens: what it costs, why, and the fix." |
+Each shot has two parts. Do is what your hands and the screen do. Say is the exact words, read as written.
+
+### 0:00  The problem
+
+Screen: Landing page, top
+
+Do:
+
+1. Start on the landing page, scrolled to the top. Hold for two seconds.
+2. Scroll slowly down to the heading "Four records describe one purchase".
+3. Stop with the four record counts and the example on screen.
+
+Say:
+
+> Every month an Indian business has to make four records agree: its invoices, its books, its bank statement, and GSTR-2B, the statement of what its suppliers reported. When they disagree, input tax credit is lost or tax is overpaid, and today that is found late, by hand, in spreadsheets.
+
+### 0:18  The approach
+
+Screen: Landing page, "Seven stages, one month"
+
+Do:
+
+1. Keep scrolling to "Seven stages, one month".
+2. Pause with all seven stages on screen.
+
+Say:
+
+> LedgerLens reconciles the month end to end. It prices every mismatch in rupees, shows the evidence, and drafts the fix for you to approve. Code decides every number. The language model only words the explanation.
+
+### 0:30  The Run
+
+Screen: Landing page top, then the Run overlay
+
+Do:
+
+1. Scroll back to the top.
+2. Click Run again (it says Load demo company on a fresh install).
+3. Do nothing while the feed streams. Let the viewer read the lines.
+
+Say:
+
+> This is one month of books for a demo company: September 2025, the month GST rates changed. These are real records going by: invoice numbers a supplier wrote differently, one payment settling two invoices, and each stage reporting what it found.
+
+### 0:45  The dashboard
+
+Screen: Dashboard
+
+Do:
+
+1. The dashboard opens by itself when the Run ends.
+2. Move the pointer along the dark headline band, left to right, as you say each number.
+3. Move down to Fix these first, then across to Why credit is at risk.
+
+Say:
+
+> Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable is 34.97 lakh. Below that: what to fix first, and why the credit is at risk.
+
+### 1:00  A Finding, and the approval
+
+Screen: Finding drawer over the dashboard
+
+Do:
+
+1. Click the line with the red dot: "2 invoices this month still use a GST rate that ended on 22 Sep 2025".
+2. Point at 28% and 18% in the table, then at Why this was flagged, then at the drafted note.
+3. Click Approve draft.
+4. Point at the headline band: excess tax now reads Rs 2,681.
+5. Close the drawer.
+
+Say:
+
+> Open a Finding. This invoice was charged 28 percent three days after the rate became 18. Here is the record, what it should be, the rule, and a drafted credit note. I approve it, and excess tax drops from 24,117 rupees to 2,681.
+
+### 1:17  A second approval (cut 1 if long)
+
+Screen: Dashboard, then the drawer again
+
+Do:
+
+1. Click See why and fix under Start here in the headline band.
+2. Click Approve draft.
+3. Close the drawer. The headline now reads Rs 2.23 L.
+
+Say:
+
+> This supplier never reported our invoice, so its credit is at risk. The draft asks them to report it. Approved: credit at risk falls to 2.23 lakh.
+
+### 1:27  Matched, not flagged (cut 2 if long)
+
+Screen: Workbench, Matches tab
+
+Do:
+
+1. Click Workbench in the sidebar.
+2. Click Matches.
+3. Open a row marked One-to-many.
+4. Close it.
+
+Say:
+
+> Not everything odd is wrong. One payment settling two invoices is matched and left alone.
+
+### 1:35  The Supplier ring
+
+Screen: Ring view
+
+Do:
+
+1. Click Ring view in the sidebar.
+2. Click the red supplier node, Unity Infra Pvt Ltd. Its panel opens on the right.
+3. Scroll down to Follow the money. Pause on the arrows.
+4. Scroll on to The ring across the year.
+
+Say:
+
+> The ring view shows who we trade with. This supplier and this customer share one PAN, so one owner sits on both sides. Five lakh rupees went out on 30 September with no invoice and came back on 2 October.
+
+### 1:55  What the month should cost
+
+Screen: Liability
+
+Do:
+
+1. Click Liability in the sidebar.
+2. Point at Declared net payable, then at the LedgerLens figure and the gap.
+
+Say:
+
+> The filed return declared 32.15 lakh. LedgerLens shows what the month should cost, tax type by tax type, and the gap.
+
+### 2:03  Proof and the data
+
+Screen: Proof, then Data
+
+Do:
+
+1. Click Proof in the sidebar.
+2. Point at the four numbers at the top.
+3. Scroll to Every miss, by record.
+4. Click Data in the sidebar and scroll to Mistakes planted for LedgerLens to catch.
+
+Say:
+
+> And it is measured, not claimed. The data has planted mistakes and an answer key. On two months the matchers never saw, LedgerLens caught 287 of 288 planted mistakes with 8 false alarms, and every miss is listed by record. The Data page shows exactly what was planted.
+
+### 2:23  Close
+
+Screen: Dashboard
+
+Do:
+
+1. Click Dashboard in the sidebar.
+2. Hold on the headline band for three seconds, then stop recording.
+
+Say:
+
+> LedgerLens: what it costs, why, and the fix.
+
+## The words only
+
+The same lines in one block, for rehearsing or recording the voice separately.
+
+**0:00** Every month an Indian business has to make four records agree: its invoices, its books, its bank statement, and GSTR-2B, the statement of what its suppliers reported. When they disagree, input tax credit is lost or tax is overpaid, and today that is found late, by hand, in spreadsheets.
+
+**0:18** LedgerLens reconciles the month end to end. It prices every mismatch in rupees, shows the evidence, and drafts the fix for you to approve. Code decides every number. The language model only words the explanation.
+
+**0:30** This is one month of books for a demo company: September 2025, the month GST rates changed. These are real records going by: invoice numbers a supplier wrote differently, one payment settling two invoices, and each stage reporting what it found.
+
+**0:45** Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable is 34.97 lakh. Below that: what to fix first, and why the credit is at risk.
+
+**1:00** Open a Finding. This invoice was charged 28 percent three days after the rate became 18. Here is the record, what it should be, the rule, and a drafted credit note. I approve it, and excess tax drops from 24,117 rupees to 2,681.
+
+**1:17** This supplier never reported our invoice, so its credit is at risk. The draft asks them to report it. Approved: credit at risk falls to 2.23 lakh.
+
+**1:27** Not everything odd is wrong. One payment settling two invoices is matched and left alone.
+
+**1:35** The ring view shows who we trade with. This supplier and this customer share one PAN, so one owner sits on both sides. Five lakh rupees went out on 30 September with no invoice and came back on 2 October.
+
+**1:55** The filed return declared 32.15 lakh. LedgerLens shows what the month should cost, tax type by tax type, and the gap.
+
+**2:03** And it is measured, not claimed. The data has planted mistakes and an answer key. On two months the matchers never saw, LedgerLens caught 287 of 288 planted mistakes with 8 false alarms, and every miss is listed by record. The Data page shows exactly what was planted.
+
+**2:23** LedgerLens: what it costs, why, and the fix.
 
 ## If you run long
 
