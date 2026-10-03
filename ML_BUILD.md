@@ -500,6 +500,7 @@ Each step ends with something you can run and check. Typecheck is not applicable
 | Step | Build | Done when | Verify with |
 |---|---|---|---|
 | 1 | Package skeleton, requirements, config, data.py with hash and column checks | profile prints the 3.3 facts and they match | python -m ledgerlens_ml profile |
+| 1b | augment.py (tests first), because the MVP headline numbers (ITC at risk, ITC found) need GSTR-2B lines, matched by the baseline rule score until matcher D exists | gstr2b.csv and augment labels written, same bytes on rerun | augment, then pytest |
 | 2 | normalise.py, parties.py (tests first) | all 4.1 cases and resolver tests pass | pytest |
 | 3 | candidates.py (tests first) | candidate recall gate passes on full train | profile output adds candidate recall line |
 | 4 | features.py (tests first) | feature frame builds for train, no NaN except where allowed | pytest, plus a printed describe() |
@@ -508,7 +509,7 @@ Each step ends with something you can run and check. Typecheck is not applicable
 | 7 | anomaly.py rules then forest | card written; per-rule recall printed | train --model anomaly |
 | 8 | evaluate.py and report | ML_REPORT.md exists with targets table | evaluate |
 | 9 | predict command and API used by the backend | predictions JSON for 2025-09 loads in the backend | predict --period 2025-09 |
-| 10 | augment.py then gstr2b matcher (V2) | gstr2b card written | augment, then train --model gstr2b |
+| 10 | learned gstr2b matcher (V2) | gstr2b card written | train --model gstr2b |
 | 11 | Benford screen (stretch) | chart data in predictions JSON, labelled screening only | predict |
 
 Something demo-able exists after step 6: the backend can show matched, review and unmatched pairs with confidence and reasons for any month.
