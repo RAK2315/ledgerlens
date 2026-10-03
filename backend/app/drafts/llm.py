@@ -28,7 +28,12 @@ def _cache_path(prompt: str):
 def _keeps_the_facts(text: dict, facts: dict) -> bool:
     """Reject model output that lost the record number or the amount."""
     body = f"{text.get('subject', '')} {text.get('body', '')}"
-    return bool(text.get("subject")) and bool(text.get("body")) and facts["record"] in body and facts["amount"] in body and "—" not in body
+    return bool(text.get("subject")) and bool(text.get("body")) and facts["record"] in body and facts["amount"] in body
+
+
+def _plain(text: dict) -> dict:
+    """Subject and body with long dashes written as plain hyphens."""
+    return {key: str(text[key]).replace("\u2014", "-").replace("\u2013", "-") for key in ("subject", "body")}
 
 
 def _ask(prompt: str) -> dict:
@@ -53,11 +58,11 @@ def write(finding: dict, party_name: str | None) -> dict:
                          "plain_version_to_improve": base["body"]}, sort_keys=True)
     path = _cache_path(prompt)
     if path.exists():
-        return {**base, **json.loads(path.read_text(encoding="utf-8")), "source": "cache"}
+        return {**base, **_plain(json.loads(path.read_text(encoding="utf-8"))), "source": "cache"}
     if mode != "live":
         return {**base, "source": "template"}
     try:
-        text = _ask(prompt)
+        text = _plain(_ask(prompt))
     except (httpx.HTTPError, KeyError, ValueError):
         return {**base, "source": "template"}
     if not _keeps_the_facts(text, facts):
