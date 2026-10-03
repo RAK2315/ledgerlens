@@ -32,6 +32,19 @@ After phase 7 the demo has a story (load and dashboard). After phase 8 it has th
 - Frontend choices made for speed: plain Tailwind components instead of shadcn/ui, an SVG donut and CSS bars instead of Recharts, plain tables instead of TanStack Table. Cytoscape draws the ring view with hand-placed positions. TypeScript is 5.9 (the Next.js scaffold default). The Chrome extension was not connected, so browser checks use Playwright with the installed Chrome.
 - Changes from the plan made while building the backend: all routes live in backend/app/routes/api.py; the engine analyses the whole year once (about 20 seconds, cached to backend/cache) and a Run reads its Return period from that, so a Run takes about 5 seconds; anomaly rules live in backend/app/engine/anomalies.py; Drafts use Groq (model openai/gpt-oss-120b), not Claude; GET /api/runs/latest was added so the frontend can find the last Run after a reload.
 
+## Notes from phases 3 to 13
+
+- Groq key limits (read from the response headers on 3 Oct 2026): 8,000 tokens a minute and 1,000 requests a day for openai/gpt-oss-120b. One Draft costs about 700 tokens, so about 8 Drafts a minute. The precache command waits when the window is empty. When the limit is hit in the app, the Draft falls back to the template and says so.
+- backend/cache/drafts holds the cached Drafts (committed, no secrets). A Draft is cached by its prompt, so changing a Finding's title or reason needs a new precache run for that period.
+- The whole-year analysis cache (backend/cache/analysis_*.pkl) is keyed by the dataset hash, the two model files and the engine source, so any engine edit makes the next Run recompute for about 20 seconds. Run python -m app.warm from backend after engine changes and before a demo.
+- Each Run stores its own Findings, so approvals belong to that Run. Run again gives a fresh month with everything open, which is the reset before recording.
+- For September 2025 the gap between the filed return and LedgerLens (Rs 2,81,615) equals ITC at risk exactly, because the return matches the books and only the at-risk credit differs. Good line for the demo.
+- The answer_key comparison in phase 11 (engine liability against true_net_tax_liability) is not built. The liability screen compares against the filed return only.
+- The ML steps for anomaly model, evaluate report and predict command are not built in ml; anomaly rules and evaluation live in the backend engine.
+- The backend must be restarted after code changes (start.cmd does not use reload). Background servers started from a Claude session stop when the session ends.
+- Playwright drives the installed Chrome (channel chrome), so no browser download is needed: node frontend/scripts/shots.mjs <folder> for the journey, node frontend/scripts/guide.mjs <folder> for the presenter guide.
+- frontend/.env.local (not committed) sets NEXT_PUBLIC_DEMO=1 to show the presenter guide bar. Remove the line and rebuild to hide it.
+
 ## Notes from phases 1 and 2 for the phases that follow
 
 - Loading the workbook takes about 7 seconds (openpyxl). Do it once in POST /api/demo/load and keep Records in SQLite; a Run must not reload it. Scoring September 2025 takes about 2 seconds for booking and 3 for payment, so a Run fits the 5 to 10 second budget only if the engine stages stay light.
