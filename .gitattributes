@@ -1,2 +1,3 @@
 # Generated files must stay byte-identical to what ml augment writes.
 data/derived/* -text
+ml/artifacts/*.joblib binary

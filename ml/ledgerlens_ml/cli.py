@@ -11,8 +11,11 @@ from .augment import build_augmentation, write_augmentation
 from .candidates import booking_candidates, candidate_recall, payment_candidates, true_pairs
 from .data import Dataset, is_valid_gstin, load_dataset
 from .features import booking_features, invoice_split, payment_features
+from .matcher import save_artifact, train_matcher
 from .normalise import narration_id_tokens
 from .parties import resolve_bank
+
+MATCHER_KINDS = ("booking", "payment")
 
 
 def _pct(value: float) -> str:
@@ -95,11 +98,42 @@ def augment(_: argparse.Namespace) -> int:
     return 0
 
 
+def _print_card(card: dict) -> None:
+    test = card["test"]
+    print(f"\nmatcher_{card['kind']}: shipped {card['shipped']}, {card['best_iteration']} trees, thresholds {card['thresholds']}, rows {card['rows']}")
+    for row in card["targets"]:
+        actual = "n/a" if row["actual"] is None else f"{row['actual']:.4f}"
+        print(f"  {row['metric']:<20} target {row['target']:.2f}  actual {actual}  {'n/a' if row['met'] is None else 'pass' if row['met'] else 'miss'}")
+    print(f"  test pair level: {({k: round(v, 4) if isinstance(v, float) else v for k, v in test['pair'].items()})}")
+    print(f"  baseline F1 {test['baseline']['f1']:.4f}, model F1 {test['model']['f1']:.4f}, gain {test['f1_gain_over_baseline']:+.4f}")
+    print(f"  invoice level: {test['invoice_level']}")
+    print(f"  hard cases: {test['hard_cases']}")
+    print(f"  benign traps: {test['benign_traps']}")
+    print(f"  top features: {list(card['feature_importance'])[:5]}")
+
+
+def train(args: argparse.Namespace) -> int:
+    """Train matchers and write artifacts and cards to ml/artifacts."""
+    ds = load_dataset()
+    kinds = MATCHER_KINDS if args.all else (args.model,)
+    for kind in kinds:
+        artifact, card = train_matcher(kind, ds)
+        out_dir = save_artifact(artifact, card)
+        _print_card(card)
+        print(f"  wrote {out_dir / f'matcher_{kind}.joblib'} and its card")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="ledgerlens_ml", description="LedgerLens ML tools")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("profile", help="check the workbook and print dataset facts").set_defaults(run=profile)
     commands.add_parser("augment", help="generate GSTR-2B lines and augment labels").set_defaults(run=augment)
+    train_parser = commands.add_parser("train", help="train a model and write its artifact and card")
+    which = train_parser.add_mutually_exclusive_group(required=True)
+    which.add_argument("--model", choices=MATCHER_KINDS)
+    which.add_argument("--all", action="store_true")
+    train_parser.set_defaults(run=train)
     args = parser.parse_args(argv)
     return args.run(args)
 

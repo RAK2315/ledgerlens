@@ -380,6 +380,16 @@ Targets (targets, not claims; report the real numbers whatever they are):
 
 If a target is missed, the report says so in its first lines. Never tune on test.
 
+How matcher.py measures these (decided during the build):
+
+- Invoice-level accuracy counts an invoice as right when its assigned partner, at the review band or better, is one of its true partners. Invoices with no true partner are reported separately as the share left unmatched.
+- Hard-case recall is reported at both the auto and the review threshold; the target table uses review (the pair reaches a human or better).
+- A benign trap counts as matched when its true pairs score at the review threshold or above. A second payment of a partial pair, or the second invoice of a bundled payment, is left over by the one-to-one assignment on purpose and goes to the one-to-many search.
+- The auto threshold is the lowest of 0.90, 0.95, 0.98 with at most 1 percent false auto-matches on the validation month.
+- score_pairs for one period scores invoices from 120 days before to 60 days after the period so neighbours compete for the same records, and returns the period's invoices only.
+
+First run on 2026-10-03 (test split, numbers in the cards): booking shipped the model, pair F1 0.9989 against baseline 0.9819; payment shipped the model, pair F1 1.0000 against baseline 0.7495. The payment test split has 288 true pairs and no INVOICE_ID_MISMATCH pair, so that target is not measured there.
+
 ### 5.6 Artifacts
 
 - ml/artifacts/matcher_booking.joblib and ml/artifacts/matcher_payment.joblib: a dict with keys model (calibrated estimator or the baseline marker), features (list), thresholds (auto, review), frozen_aggregates (dict), model_version, trained_at, data_sha256.

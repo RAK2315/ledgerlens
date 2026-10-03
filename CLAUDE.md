@@ -8,7 +8,7 @@ Vocabulary lives in CONTEXT.md. Use its terms in code, UI and docs.
 
 - Ideathon deck: done (deck/, see deck/NOTES.md). Team details on slide 3 are still placeholders.
 - Blueprint: complete. CONTEXT.md, this file, ML_BUILD.md, plan/00 to plan/06 and plan/schema.sql.
-- Code: plan/05-build-plan.md phase 1 done (ml package: loader, augment, normalisers, counterparty resolver, candidates, features, profile and augment commands; 72 tests). Next step is phase 2, the booking and payment matchers.
+- Code: plan/05-build-plan.md phases 1 and 2 done. ml package has the loader, augment, normalisers, counterparty resolver, candidates, features and the booking and payment matchers (artifacts and cards in ml/artifacts, both beat the baseline on the test split); commands profile, augment, train; 81 tests. Next step is phase 3, the backend scaffold and records load.
 - Dataset: data/source/tax_recon_dataset.xlsx (SHA-256 in ML_BUILD.md 3.1). GSTR-2B lines and augment labels are in data/derived, written by ml augment and committed; choices made there are listed at the end of ML_BUILD.md 3.5.
 
 Update this section as phases land.

@@ -1,0 +1,238 @@
+{
+  "kind": "booking",
+  "features": [
+    "id_exact",
+    "id_norm_exact",
+    "id_serial_equal",
+    "id_ratio",
+    "id_dl_sim",
+    "id_missing",
+    "amt_rel_diff",
+    "amt_within_1",
+    "amt_ratio",
+    "amt_log_left",
+    "tax_rel_diff",
+    "taxable_rel_diff",
+    "date_diff_days",
+    "date_abs_diff",
+    "same_period",
+    "party_score",
+    "amt_rank",
+    "date_rank",
+    "n_candidates"
+  ],
+  "thresholds": {
+    "auto": 0.9,
+    "review": 0.7
+  },
+  "model_version": "2026.10.0",
+  "trained_at": "2026-10-03T13:03:34Z",
+  "data_sha256": "c49199eb35be2743ed9cdd9cf2db23996472c5194a01219fc49d01d0e084ab23",
+  "shipped": "model",
+  "best_iteration": 20,
+  "rows": {
+    "train": 55623,
+    "validation": 6488,
+    "test": 9194
+  },
+  "targets": [
+    {
+      "metric": "pair_f1",
+      "target": 0.97,
+      "actual": 0.9988623435722411,
+      "met": true
+    },
+    {
+      "metric": "invoice_accuracy",
+      "target": 0.98,
+      "actual": 0.9988610478359908,
+      "met": true
+    },
+    {
+      "metric": "id_mismatch_recall",
+      "target": 0.9,
+      "actual": 1.0,
+      "met": true
+    },
+    {
+      "metric": "benign_matched",
+      "target": 0.95,
+      "actual": 1.0,
+      "met": true
+    },
+    {
+      "metric": "false_auto_rate",
+      "target": 0.01,
+      "actual": 0.0022727272727272726,
+      "met": true
+    }
+  ],
+  "test": {
+    "pair": {
+      "pairs": 9194,
+      "positives": 878,
+      "precision": 0.9977272727272727,
+      "recall": 1.0,
+      "f1": 0.9988623435722411,
+      "average_precision": 0.9977272727272727,
+      "false_auto_rate": 0.0022727272727272726
+    },
+    "invoice_level": {
+      "invoices_with_a_true_partner": 878,
+      "accuracy": 0.9988610478359908,
+      "invoices_without_a_true_partner": 4,
+      "left_unmatched": 1.0
+    },
+    "hard_cases": {
+      "AMOUNT_MISMATCH": {
+        "pairs": 7,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "BUNDLED_PAYMENT": {
+        "pairs": 1,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "DATE_MISMATCH": {
+        "pairs": 4,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "INVOICE_ID_MISMATCH": {
+        "pairs": 3,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "PARTIAL_PAYMENT": {
+        "pairs": 17,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "PAYMENT_AMOUNT_MISMATCH": {
+        "pairs": 5,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "PAYMENT_BEFORE_INVOICE": {
+        "pairs": 2,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      }
+    },
+    "benign_traps": {
+      "PARTIAL_PAYMENT": {
+        "pairs": 17,
+        "matched": 1.0
+      },
+      "ROUNDING_NOISE": {
+        "pairs": 23,
+        "matched": 1.0
+      }
+    },
+    "baseline": {
+      "pairs": 9194,
+      "positives": 878,
+      "precision": 0.9731543624161074,
+      "recall": 0.9908883826879271,
+      "f1": 0.981941309255079,
+      "average_precision": 0.9953560167068645,
+      "false_auto_rate": 0.026845637583892617
+    },
+    "model": {
+      "pairs": 9194,
+      "positives": 878,
+      "precision": 0.9977272727272727,
+      "recall": 1.0,
+      "f1": 0.9988623435722411,
+      "average_precision": 0.9977272727272727,
+      "false_auto_rate": 0.0022727272727272726
+    },
+    "f1_gain_over_baseline": 0.016921034317162076
+  },
+  "validation": {
+    "pair": {
+      "pairs": 6488,
+      "positives": 436,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "average_precision": 1.0,
+      "false_auto_rate": 0.0
+    },
+    "invoice_level": {
+      "invoices_with_a_true_partner": 436,
+      "accuracy": 1.0,
+      "invoices_without_a_true_partner": 3,
+      "left_unmatched": 1.0
+    },
+    "hard_cases": {
+      "AMOUNT_MISMATCH": {
+        "pairs": 1,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "BUNDLED_PAYMENT": {
+        "pairs": 13,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "DATE_MISMATCH": {
+        "pairs": 2,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "INVOICE_ID_MISMATCH": {
+        "pairs": 4,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "PARTIAL_PAYMENT": {
+        "pairs": 25,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "PAYMENT_AMOUNT_MISMATCH": {
+        "pairs": 3,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      },
+      "PAYMENT_BEFORE_INVOICE": {
+        "pairs": 1,
+        "recall_auto": 1.0,
+        "recall_review": 1.0
+      }
+    },
+    "benign_traps": {
+      "PARTIAL_PAYMENT": {
+        "pairs": 25,
+        "matched": 1.0
+      },
+      "ROUNDING_NOISE": {
+        "pairs": 15,
+        "matched": 1.0
+      }
+    }
+  },
+  "feature_importance": {
+    "id_serial_equal": 0.6306015919623926,
+    "id_exact": 0.0,
+    "id_norm_exact": 0.0,
+    "id_ratio": 0.0,
+    "id_dl_sim": 0.0,
+    "id_missing": 0.0,
+    "amt_rel_diff": 0.0,
+    "amt_within_1": 0.0,
+    "amt_ratio": 0.0,
+    "amt_log_left": 0.0,
+    "tax_rel_diff": 0.0,
+    "taxable_rel_diff": 0.0,
+    "date_diff_days": 0.0,
+    "date_abs_diff": 0.0,
+    "same_period": 0.0,
+    "party_score": 0.0,
+    "amt_rank": 0.0,
+    "date_rank": 0.0,
+    "n_candidates": 0.0
+  }
+}
