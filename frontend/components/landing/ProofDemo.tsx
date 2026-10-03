@@ -18,12 +18,12 @@ export function ProofDemo({ proof }: { proof: DemoProof }) {
   const totals = proof[scope];
   const tallest = Math.max(1, ...proof.by_month.map((m) => m.planted));
   return (
-    <div className="rounded-[16px] bg-paper p-7 shadow-float">
+    <div className="rounded-surface bg-paper p-7 shadow-float">
       <div className="flex items-center justify-between gap-4">
         <p className="font-display text-[22px] font-bold">Planted mistakes, caught and missed</p>
-        <div className="flex rounded-[9px] border border-line bg-paper p-0.5" role="tablist" aria-label="Months to count">
+        <div className="flex rounded-control border border-line bg-paper p-0.5" role="tablist" aria-label="Months to count">
           {SCOPES.map((s) => (
-            <button key={s.id} role="tab" aria-selected={scope === s.id} onClick={() => setScope(s.id)} className={`rounded-[7px] px-4 py-1.5 font-semibold ${scope === s.id ? "bg-ink text-white" : "text-ink-2"}`}>
+            <button key={s.id} role="tab" aria-selected={scope === s.id} onClick={() => setScope(s.id)} className={`rounded-bar px-4 py-1.5 font-semibold ${scope === s.id ? "bg-ink text-white" : "text-ink-2"}`}>
               {s.label}
             </button>
           ))}
@@ -53,7 +53,7 @@ export function ProofDemo({ proof }: { proof: DemoProof }) {
             <span className="font-mono text-[11px]">
               {m.caught}/{m.planted}
             </span>
-            <span className="flex w-full flex-col overflow-hidden rounded-[4px]" style={{ height: `${(m.planted / tallest) * 90}px` }}>
+            <span className="flex w-full flex-col overflow-hidden rounded-bar" style={{ height: `${(m.planted / tallest) * 90}px` }}>
               <span className="bg-bad" style={{ flexGrow: m.planted - m.caught }} />
               <span className="bg-ok" style={{ flexGrow: m.caught }} />
             </span>
@@ -81,8 +81,8 @@ export function ProofDemo({ proof }: { proof: DemoProof }) {
               ).map(([name, value, colour]) => (
                 <span key={name} className="grid grid-cols-[84px_1fr_56px] items-center gap-3">
                   <span className="text-[13px] text-ink-2">{name}</span>
-                  <span className="h-2.5 rounded-full bg-line-2">
-                    <span className={`block h-full rounded-full ${colour}`} style={{ width: `${value * 100}%` }} />
+                  <span className="h-2.5 rounded-bar bg-line-2">
+                    <span className={`block h-full rounded-bar ${colour}`} style={{ width: `${value * 100}%` }} />
                   </span>
                   <span className="text-right font-mono">{percent(value, 1)}</span>
                 </span>

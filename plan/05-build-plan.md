@@ -66,7 +66,9 @@ The user is not sure which direction to take. So: use the impeccable skill, make
 
 ## Second round of requests from the user (3 Oct 2026, 11:40 PM)
 
-Asked for after seeing the rebuilt app. None of these is started. Do not push any of the look changes until the user has seen them locally.
+Asked for after seeing the rebuilt app. Items 2 and 3 are built and not yet committed or pushed (the user chose to do only these before the video); items 1 and 4 are not started. Do not push any of the look changes until the user has seen them locally.
+
+Notes on items 2 and 3: radii come from three sizes in globals.css (r-control 4px, r-surface 6px, r-bar 2px, used as rounded-control, rounded-surface and rounded-bar), so one edit there changes every screen; status dots stay round. Rows that open a Finding use the row-action class with a row-cta label inside: the row tints and the label fills orange on hover. Buttons get the pointer cursor from a rule in globals.css, because Tailwind 4 gives them the default cursor.
 
 1. README.md for people who are not technical: walk from the problem to the solution and the USP, using sentences from the organisers' problem statement (docs/PROBLEM_STATEMENT.md), with images. The seven capabilities the statement lists should each be answered by what LedgerLens does. It still needs the run steps and the hosted copy section, lower down.
 2. Dashboard buttons must look like buttons on hover. Today the action lines (Start here, Rate change), the Findings rows and the text links only underline or tint faintly.

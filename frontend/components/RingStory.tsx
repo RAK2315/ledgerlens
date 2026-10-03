@@ -108,7 +108,7 @@ export function RingStory({ story, period, creditAtRisk }: { story: Story; perio
           {story.timeline.map((m) => (
             <li key={m.period} className="flex flex-col items-center gap-1.5">
               <span className="font-mono text-[13px]">{rupeesShort(m.credit_paise).replace("Rs ", "")}</span>
-              <span className={`w-full rounded-[5px] ${m.period === period ? "bg-orange-deep" : "bg-orange/50"}`} style={{ height: `${Math.max(3, (m.credit_paise / tallest) * 140)}px` }} />
+              <span className={`w-full rounded-bar ${m.period === period ? "bg-orange-deep" : "bg-orange/50"}`} style={{ height: `${Math.max(3, (m.credit_paise / tallest) * 140)}px` }} />
               <span className={`text-[14px] ${m.period === period ? "font-bold" : "font-semibold"}`}>{periodName(m.period).slice(0, 3)}</span>
               <span className="h-4 text-[12px] font-semibold text-bad">{m.round_trip ? "round trip" : ""}</span>
             </li>

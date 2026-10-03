@@ -62,7 +62,7 @@ export function DemoGuide() {
         </p>
         <ol className="flex gap-1" aria-hidden>
           {steps.map((s, i) => (
-            <li key={s.path} className={`h-1.5 w-7 rounded-full ${i <= index ? "bg-orange-deep" : "bg-line"}`} />
+            <li key={s.path} className={`h-1.5 w-7 rounded-bar ${i <= index ? "bg-orange-deep" : "bg-line"}`} />
           ))}
         </ol>
         <p className="min-w-0 flex-1 text-[15px] leading-snug">

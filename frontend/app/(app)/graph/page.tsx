@@ -24,7 +24,7 @@ function PartyPanel({ view, period, onClose, onOpenFinding }: { view: PartyView 
   const { party, invoices, payments, findings } = view;
   const invoiced = invoices.reduce((sum, i) => sum + i.total_paise, 0);
   return (
-    <div className="rounded-xl border border-white/15 bg-[#2B211D] p-4 text-cream">
+    <div className="rounded-surface border border-white/15 bg-[#2B211D] p-4 text-cream">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="font-display text-[20px] font-bold leading-tight">{party.name}</p>
@@ -32,7 +32,7 @@ function PartyPanel({ view, period, onClose, onOpenFinding }: { view: PartyView 
             Your {party.kind}, {party.state}
           </p>
         </div>
-        <button onClick={onClose} aria-label="Close Party detail" className="rounded-lg p-1.5 hover:bg-white/10">
+        <button onClick={onClose} aria-label="Close Party detail" className="rounded-control p-1.5 hover:bg-white/10">
           <X className="size-4" aria-hidden />
         </button>
       </div>
@@ -293,9 +293,9 @@ export default function GraphPage() {
         />
 
         <div className="mb-4 flex flex-wrap items-center gap-x-6 gap-y-3 px-2">
-          <div className="flex rounded-[9px] border border-line bg-paper p-0.5" role="tablist" aria-label="Which Parties to show">
+          <div className="flex rounded-control border border-line bg-paper p-0.5" role="tablist" aria-label="Which Parties to show">
             {SIDES.map((s) => (
-              <button key={s.id} role="tab" aria-selected={side === s.id} onClick={() => setSide(s.id)} className={`rounded-[7px] px-4 py-1.5 font-semibold ${side === s.id ? "bg-ink text-white" : "text-ink-2"}`}>
+              <button key={s.id} role="tab" aria-selected={side === s.id} onClick={() => setSide(s.id)} className={`rounded-bar px-4 py-1.5 font-semibold ${side === s.id ? "bg-ink text-white" : "text-ink-2"}`}>
                 {s.label}
               </button>
             ))}
@@ -310,11 +310,11 @@ export default function GraphPage() {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Find a Party by name"
             aria-label="Find a Party by name"
-            className="ml-auto w-72 rounded-[9px] border border-line bg-paper px-3 py-2 text-[14px] placeholder:text-ink-2"
+            className="ml-auto w-72 rounded-control border border-line bg-paper px-3 py-2 text-[14px] placeholder:text-ink-2"
           />
         </div>
 
-        <div className="relative overflow-hidden rounded-xl bg-[#211815]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px)", backgroundSize: "48px 48px" }}>
+        <div className="relative overflow-hidden rounded-surface bg-[#211815]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px)", backgroundSize: "48px 48px" }}>
           {!graph ? (
             <Skeleton className="h-[640px] opacity-20" />
           ) : (
@@ -326,7 +326,7 @@ export default function GraphPage() {
               {partyId ? (
                 <PartyPanel view={party} period={period} onClose={() => setPartyId(null)} onOpenFinding={setOpenId} />
               ) : graph.rings.length === 0 ? (
-                <div className="rounded-xl border border-white/10 bg-[#2B211D] p-4 text-cream">No linked Parties in this period.</div>
+                <div className="rounded-surface border border-white/10 bg-[#2B211D] p-4 text-cream">No linked Parties in this period.</div>
               ) : (
                 graph.rings.map((r) => {
                   const active = r.id === ring?.id;
@@ -336,7 +336,7 @@ export default function GraphPage() {
                       key={r.id}
                       onClick={() => setSelected(r.id)}
                       aria-pressed={active}
-                      className={`rounded-xl border p-4 text-left text-cream ${active ? "border-[#F26D6D]/70 bg-[#2B211D]" : "border-white/10 bg-[#2B211D]/80 opacity-80 hover:opacity-100"}`}
+                      className={`rounded-surface border p-4 text-left text-cream ${active ? "border-[#F26D6D]/70 bg-[#2B211D]" : "border-white/10 bg-[#2B211D]/80 opacity-80 hover:opacity-100"}`}
                     >
                       <p className={`mb-1.5 flex items-center gap-2 font-display text-[18px] font-bold ${isRing ? "text-[#FF8A8A]" : "text-[#F2B85A]"}`}>
                         <ShieldAlert className="size-5" aria-hidden />

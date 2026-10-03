@@ -22,7 +22,7 @@ function Kpi({ label, value, note, colour = "", pair = false }: { label: string;
 /** The month's four money numbers, in the order they are read. */
 export function MoneyStrip({ money }: { money: Money }) {
   return (
-    <dl className="grid grid-cols-4 divide-x divide-white/15 rounded-[16px] bg-side text-cream">
+    <dl className="grid grid-cols-4 divide-x divide-white/15 rounded-surface bg-side text-cream">
       <Kpi label="ITC at risk" value={rupeesShort(money.itc_at_risk_paise)} colour="text-orange" note="Credit claimed that may be lost unless fixed" />
       <Kpi label="ITC found" value={rupeesShort(money.itc_found_paise)} colour="text-ok-soft" note="In GSTR-2B, not yet claimed in the books" />
       <Kpi label="Net payable" value={rupeesShort(money.net_payable_paise)} note="Output tax less eligible credit" />
@@ -44,7 +44,7 @@ export function MoneyStrip({ money }: { money: Money }) {
 export function CauseBar({ causes, total, columns = 4 }: { causes: Cause[]; total: number; columns?: 2 | 4 }) {
   return (
     <>
-      <div className="flex h-10 gap-0.5 overflow-hidden rounded-[8px]" role="img" aria-label={causes.map((cause) => `${cause.label}: ${rupees(cause.paise)}`).join(", ")}>
+      <div className="flex h-10 gap-0.5 overflow-hidden rounded-bar" role="img" aria-label={causes.map((cause) => `${cause.label}: ${rupees(cause.paise)}`).join(", ")}>
         {causes.map((cause, i) => (
           <span key={cause.finding_type} title={`${cause.label}: ${rupees(cause.paise)}`} style={{ flexGrow: cause.paise, background: shade(i), minWidth: 4 }} />
         ))}
@@ -52,7 +52,7 @@ export function CauseBar({ causes, total, columns = 4 }: { causes: Cause[]; tota
       <ol className={`mt-5 grid gap-x-10 gap-y-4 ${columns === 4 ? "grid-cols-4" : "grid-cols-2"}`}>
         {causes.map((cause, i) => (
           <li key={cause.finding_type} className="flex items-start gap-3">
-            <span className="mt-1.5 size-3 shrink-0 rounded-[3px]" style={{ background: shade(i) }} aria-hidden />
+            <span className="mt-1.5 size-3 shrink-0 rounded-bar" style={{ background: shade(i) }} aria-hidden />
             <span>
               <span className="block text-[15px] leading-snug">{cause.label}</span>
               <span className="font-mono text-[15px] font-semibold">{rupees(cause.paise)}</span> <span className="text-[13px] text-ink-2">{percent(cause.paise / (total || 1))}</span>

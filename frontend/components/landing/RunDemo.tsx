@@ -56,7 +56,7 @@ export function RunDemo({ stages, items }: { stages: StageEvent[]; items: FeedIt
   const seen = beats.slice(0, shown);
   const finished = shown >= beats.length;
   return (
-    <div ref={box} className="rounded-[16px] bg-paper px-8 py-6 shadow-float">
+    <div ref={box} className="rounded-surface bg-paper px-8 py-6 shadow-float">
       <div className="mb-2 flex items-center justify-between gap-4">
         <p className="font-display text-[22px] font-bold">Reconciling September 2025</p>
         <button

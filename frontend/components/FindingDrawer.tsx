@@ -22,7 +22,7 @@ const SOURCE_NOTE: Record<Draft["source"], string> = {
 
 function RecordCard({ record, labels }: { record: RecordView; labels: Record<string, string> }) {
   return (
-    <div className="rounded-xl border border-line p-3">
+    <div className="rounded-surface border border-line p-3">
       <p className="mb-2 text-[12px] font-semibold text-ink-3">
         {TABLE_NAMES[record.table] ?? record.table} <span className="font-mono text-ink">{record.id}</span>
       </p>
@@ -138,7 +138,7 @@ export function FindingBody({ findingId, onClose }: { findingId: string; onClose
       </div>
 
       {toast && (
-        <div role="status" className="flex items-center gap-2 rounded-xl bg-ok-soft px-3 py-2 font-semibold text-ok">
+        <div role="status" className="flex items-center gap-2 rounded-surface bg-ok-soft px-3 py-2 font-semibold text-ok">
           <Check className="size-4" aria-hidden /> {toast}
         </div>
       )}
@@ -175,7 +175,7 @@ export function FindingBody({ findingId, onClose }: { findingId: string; onClose
         </div>
       )}
 
-      <div className="rounded-[14px] bg-cream p-5">
+      <div className="rounded-surface bg-cream p-5">
         <p className="mb-1 flex items-center gap-2 font-semibold text-orange-deep">
           <Sparkles className="size-4" aria-hidden /> Why this was flagged
         </p>
@@ -207,13 +207,13 @@ export function FindingBody({ findingId, onClose }: { findingId: string; onClose
             </p>
             {editing ? (
               <textarea
-                className="mt-2 h-48 w-full rounded-lg border border-line p-3 text-[13px] leading-relaxed"
+                className="mt-2 h-48 w-full rounded-control border border-line p-3 text-[13px] leading-relaxed"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 aria-label="Draft text"
               />
             ) : (
-              <p className="mt-2 whitespace-pre-wrap rounded-lg bg-app-bg p-3 text-[13px] leading-relaxed">{draft.body}</p>
+              <p className="mt-2 whitespace-pre-wrap rounded-control bg-app-bg p-3 text-[13px] leading-relaxed">{draft.body}</p>
             )}
 
             {open ? (
@@ -244,7 +244,7 @@ export function FindingBody({ findingId, onClose }: { findingId: string; onClose
                 ) : dismissing ? (
                   <>
                     <input
-                      className="min-w-0 flex-1 rounded-[9px] border border-line px-3 py-2 text-[13px]"
+                      className="min-w-0 flex-1 rounded-control border border-line px-3 py-2 text-[13px]"
                       placeholder="Why is this not a problem?"
                       value={note}
                       onChange={(e) => setNote(e.target.value)}

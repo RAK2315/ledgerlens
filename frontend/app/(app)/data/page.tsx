@@ -122,7 +122,7 @@ function Browser() {
         </div>
         <label className="ml-auto flex items-center gap-2 text-[14px] text-ink-2">
           Period
-          <select className="rounded-[9px] border border-line bg-paper px-2.5 py-2 font-mono text-[13px] text-ink" value={period} onChange={(e) => (setPeriod(e.target.value), setPage(1))}>
+          <select className="rounded-control border border-line bg-paper px-2.5 py-2 font-mono text-[13px] text-ink" value={period} onChange={(e) => (setPeriod(e.target.value), setPage(1))}>
             <option value="">Whole year</option>
             {(run.dataset?.periods ?? []).map((p) => (
               <option key={p} value={p}>
@@ -137,7 +137,7 @@ function Browser() {
           onChange={(e) => (setQ(e.target.value), setPage(1))}
           placeholder="Search an ID, a name or a narration"
           aria-label="Search the records"
-          className="w-72 rounded-[9px] border border-line bg-paper px-3 py-2 text-[14px] placeholder:text-ink-2"
+          className="w-72 rounded-control border border-line bg-paper px-3 py-2 text-[14px] placeholder:text-ink-2"
         />
       </div>
 

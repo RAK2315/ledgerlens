@@ -39,7 +39,7 @@ function Moved({ label, before, after, approved }: { label: string; before: numb
 export function FindingDemo({ finding, excessPaise, netPayablePaise }: { finding: DemoFinding; excessPaise: number; netPayablePaise: number }) {
   const [approved, setApproved] = useState(false);
   return (
-    <div className="rounded-[16px] bg-paper p-7 shadow-float">
+    <div className="rounded-surface bg-paper p-7 shadow-float">
       <div className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-1">
         <Pill tone="bad">{finding.label}</Pill>
         <Pill tone="bad">
@@ -73,7 +73,7 @@ export function FindingDemo({ finding, excessPaise, netPayablePaise }: { finding
       </table>
       <p className="px-3 py-2 text-[12px] text-ink-2">Rule: {finding.rule_ref}</p>
 
-      <div className="mt-2 rounded-[14px] bg-cream p-5">
+      <div className="mt-2 rounded-surface bg-cream p-5">
         <p className="font-semibold text-orange-deep">Why this was flagged</p>
         <p className="mt-1 text-[15px] leading-relaxed">{finding.reason}</p>
         <p className="mt-2 font-semibold">What to do</p>
@@ -85,7 +85,7 @@ export function FindingDemo({ finding, excessPaise, netPayablePaise }: { finding
           <Mail className="size-4 text-miss" aria-hidden /> Drafted for you: {finding.draft.subject}
         </p>
         <p className="mt-0.5 text-[13px] text-ink-2">To: {finding.draft.recipient}. Worded by AI from the facts above.</p>
-        <p className="mt-2 max-h-40 overflow-y-auto whitespace-pre-wrap rounded-lg bg-app-bg p-3 text-[13px] leading-relaxed">{finding.draft.body}</p>
+        <p className="mt-2 max-h-40 overflow-y-auto whitespace-pre-wrap rounded-control bg-app-bg p-3 text-[13px] leading-relaxed">{finding.draft.body}</p>
         <div className="mt-3 flex items-center gap-3">
           {approved ? (
             <>

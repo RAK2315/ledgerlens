@@ -65,7 +65,7 @@ export function EmptyState({ title, hint, action }: { title: string; hint?: stri
 
 export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
   return (
-    <div role="alert" className="flex items-start gap-3 rounded-xl border border-bad/30 bg-bad-soft p-4 text-ink">
+    <div role="alert" className="flex items-start gap-3 rounded-surface border border-bad/30 bg-bad-soft p-4 text-ink">
       <AlertTriangle className="mt-0.5 size-5 shrink-0 text-bad" aria-hidden />
       <div className="flex-1">
         <p className="font-semibold">Something went wrong</p>

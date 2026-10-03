@@ -72,11 +72,11 @@ function TaxTypes({ liability }: { liability: Liability }) {
           <span className="font-display text-[22px] font-bold uppercase">{t.tax_type}</span>
           <span className="grid gap-1.5">
             <span className="flex items-center gap-3">
-              <span className="h-3 rounded-full bg-ink" style={{ width: `${(t.output_paise / largest) * 100}%` }} />
+              <span className="h-3 rounded-bar bg-ink" style={{ width: `${(t.output_paise / largest) * 100}%` }} />
               <span className="whitespace-nowrap font-mono text-[13px]">{rupeesShort(t.output_paise)} output</span>
             </span>
             <span className="flex items-center gap-3">
-              <span className="h-3 rounded-full bg-ok" style={{ width: `${Math.max(1, (t.eligible_itc_paise / largest) * 100)}%` }} />
+              <span className="h-3 rounded-bar bg-ok" style={{ width: `${Math.max(1, (t.eligible_itc_paise / largest) * 100)}%` }} />
               <span className="whitespace-nowrap font-mono text-[13px]">{rupeesShort(t.eligible_itc_paise)} credit</span>
             </span>
           </span>
@@ -108,7 +108,7 @@ export default function DashboardPage() {
   if (!summary)
     return (
       <div className="grid gap-8">
-        <Skeleton className="h-52 rounded-[16px]" />
+        <Skeleton className="h-52" />
         <Skeleton className="h-40" />
         <Skeleton className="h-80" />
       </div>
@@ -137,20 +137,20 @@ export default function DashboardPage() {
           <MoneyStrip money={summary} />
         </div>
 
-        <ul className="mt-3 divide-y divide-line border-b border-line px-2 text-[16px]">
+        <ul className="mt-3 divide-y divide-line border-b border-line text-[16px]">
           <li>
             {first ? (
-              <button onClick={() => setOpenId(first.id)} className="group flex w-full items-center gap-4 py-3.5 text-left">
+              <button onClick={() => setOpenId(first.id)} className="row-action flex w-full items-center gap-4 px-2 py-3 text-left">
                 <span className="w-28 shrink-0 whitespace-nowrap font-display text-[18px] font-bold leading-none text-orange-deep">Start here</span>
                 <span className="flex-1">
                   <b>{first.title}.</b> The evidence, the rule and a drafted fix are ready.
                 </span>
-                <span className="inline-flex items-center gap-1 font-semibold text-orange-deep group-hover:underline">
+                <span className="row-cta text-[15px]">
                   See why and fix <ArrowRight className="size-4" aria-hidden />
                 </span>
               </button>
             ) : (
-              <p className="flex items-center gap-4 py-3.5">
+              <p className="flex items-center gap-4 px-2 py-3.5">
                 <span className="w-28 shrink-0 whitespace-nowrap font-display text-[18px] font-bold leading-none text-ok">All clear</span>
                 Every Finding has been approved or dismissed.
               </p>
@@ -158,7 +158,7 @@ export default function DashboardPage() {
           </li>
           {rateChange.length > 0 && (
             <li>
-              <button onClick={() => setOpenId(rateChange[0].id)} className="group flex w-full items-center gap-4 py-3.5 text-left">
+              <button onClick={() => setOpenId(rateChange[0].id)} className="row-action flex w-full items-center gap-4 px-2 py-3 text-left">
                 <span className="w-28 shrink-0 whitespace-nowrap font-display text-[18px] font-bold leading-none text-bad">Rate change</span>
                 <span className="flex-1">
                   <b>
@@ -166,7 +166,7 @@ export default function DashboardPage() {
                   </b>{" "}
                   {rupees(rateChange.reduce((sum, f) => sum + f.impact_paise, 0))} in all. Largest: <span className="font-mono text-[14px]">{rateChange[0].record_refs[0]?.id}</span>.
                 </span>
-                <span className="inline-flex items-center gap-1 font-semibold text-orange-deep group-hover:underline">
+                <span className="row-cta text-[15px]">
                   See why and fix <ArrowRight className="size-4" aria-hidden />
                 </span>
               </button>
@@ -194,7 +194,7 @@ export default function DashboardPage() {
           <ol>
             {summary.top_findings.map((f, i) => (
               <li key={f.id} className="border-b border-line">
-                <button onClick={() => setOpenId(f.id)} className="group grid w-full grid-cols-[28px_170px_minmax(0,1fr)_120px_150px] items-center gap-4 py-4 text-left hover:bg-cream-2">
+                <button onClick={() => setOpenId(f.id)} className="row-action grid w-full grid-cols-[28px_170px_minmax(0,1fr)_120px_auto] items-center gap-4 py-3.5 pr-2 text-left">
                   <span className="pl-1 font-display text-[20px] font-bold text-ink-3">{i + 1}</span>
                   <span className="font-display text-[26px] font-bold leading-none">{f.impact_type === "none" ? "" : rupees(f.impact_paise)}</span>
                   <span>
@@ -205,7 +205,7 @@ export default function DashboardPage() {
                     </span>
                   </span>
                   <span className="text-[14px] text-ink-2">{percent(f.confidence)} sure</span>
-                  <span className="inline-flex items-center justify-end gap-1 pr-2 text-[15px] font-semibold text-orange-deep group-hover:underline">
+                  <span className="row-cta text-[15px]">
                     See why and fix <ArrowRight className="size-4" aria-hidden />
                   </span>
                 </button>
@@ -213,7 +213,7 @@ export default function DashboardPage() {
             ))}
           </ol>
         )}
-        <Link href="/workbench" className="mt-4 inline-flex items-center gap-1 text-[16px] font-semibold text-orange-deep hover:underline">
+        <Link href="/workbench" className="btn mt-5 text-[15px]">
           All {openFindings} Findings in the workbench <ArrowRight className="size-4" aria-hidden />
         </Link>
       </section>
@@ -233,7 +233,7 @@ export default function DashboardPage() {
               <li key={category} className="grid grid-cols-[110px_1fr] items-center gap-4">
                 <span className="text-[16px] font-semibold">{CATEGORY_NAME[category]}</span>
                 <span className="flex items-center gap-3">
-                  <span className="h-6 rounded-[5px] bg-ink" style={{ width: `${Math.max(1, (count / largestKind) * 50)}%` }} />
+                  <span className="h-6 rounded-bar bg-ink" style={{ width: `${Math.max(1, (count / largestKind) * 50)}%` }} />
                   <span className="font-display text-[22px] font-bold leading-none">{count}</span>
                   <span className="truncate text-[14px] text-ink-2">{CATEGORY_NOTE[category]}</span>
                 </span>
@@ -261,14 +261,14 @@ export default function DashboardPage() {
                     <span>The filed return declared</span>
                     <span className="font-display text-[24px] font-bold leading-none">{rupeesShort(declared.net_paise)}</span>
                   </div>
-                  <div className="mt-2 h-3 rounded-full bg-ink-3" style={{ width: `${filedWidth}%` }} />
+                  <div className="mt-2 h-3 rounded-bar bg-ink-3" style={{ width: `${filedWidth}%` }} />
                 </div>
                 <div>
                   <div className="flex items-baseline justify-between text-[16px]">
                     <span>LedgerLens works out</span>
                     <span className="font-display text-[24px] font-bold leading-none">{rupeesShort(summary.net_payable_paise)}</span>
                   </div>
-                  <div className="mt-2 h-3 rounded-full bg-ink" style={{ width: `${computedWidth}%` }} />
+                  <div className="mt-2 h-3 rounded-bar bg-ink" style={{ width: `${computedWidth}%` }} />
                 </div>
                 {liability.gap_paise !== null && (
                   <p className="text-[16px]">
@@ -276,7 +276,7 @@ export default function DashboardPage() {
                     {liability.gap_paise >= 0 ? "more to pay than the return said." : "less to pay than the return said."}
                   </p>
                 )}
-                <Link href="/liability" className="inline-flex items-center gap-1 text-[16px] font-semibold text-orange-deep hover:underline">
+                <Link href="/liability" className="btn justify-self-start text-[15px]">
                   See the working by tax type <ArrowRight className="size-4" aria-hidden />
                 </Link>
               </div>

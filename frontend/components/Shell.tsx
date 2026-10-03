@@ -21,7 +21,7 @@ const NAV = [
 
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
-    <span className={`flex size-10 items-center justify-center rounded-xl ${dark ? "bg-ink text-cream" : "bg-white/10 text-white"}`} aria-hidden>
+    <span className={`flex size-10 items-center justify-center rounded-surface ${dark ? "bg-ink text-cream" : "bg-white/10 text-white"}`} aria-hidden>
       <Search className="size-5" strokeWidth={2.6} />
     </span>
   );
@@ -52,8 +52,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
               key={href}
               href={href}
               aria-current={active ? "page" : undefined}
-              className={`flex w-[68px] flex-col items-center gap-1 rounded-xl py-2.5 text-[11px] font-semibold ${
-                active ? "bg-orange/20 text-orange" : "text-white/60 hover:bg-white/5 hover:text-white"
+              className={`flex w-[68px] flex-col items-center gap-1 rounded-surface py-2.5 text-[11px] font-semibold ${
+                active ? "bg-orange/20 text-orange" : "text-white/60 hover:bg-white/15 hover:text-white"
               }`}
             >
               <Icon className="size-5" aria-hidden />
@@ -76,7 +76,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <label className="flex items-center gap-2 text-[13px] text-ink-2">
               Return period
               <select
-                className="rounded-[9px] border border-line bg-paper px-2.5 py-2 font-mono text-[13px]"
+                className="rounded-control border border-line bg-paper px-2.5 py-2 font-mono text-[13px]"
                 value={run.target}
                 disabled={busy || !run.dataset}
                 onChange={(e) => run.choosePeriod(e.target.value)}

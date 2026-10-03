@@ -44,8 +44,8 @@ function Compare({ label, baseline, model, lowerIsBetter = false }: { label: str
         ].map(([name, value, colour]) => (
           <span key={name as string} className="grid grid-cols-[130px_1fr_64px] items-center gap-3">
             <span className="text-[13px] text-ink-2">{name}</span>
-            <span className="h-3 rounded-full bg-line-2">
-              <span className={`block h-full rounded-full ${colour}`} style={{ width: `${Math.max(0.5, (value as number) * 100)}%` }} />
+            <span className="h-3 rounded-bar bg-line-2">
+              <span className={`block h-full rounded-bar ${colour}`} style={{ width: `${Math.max(0.5, (value as number) * 100)}%` }} />
             </span>
             <span className={`text-right font-mono text-[14px] ${name === "Trained matcher" && better ? "font-semibold" : ""}`}>{percent(value as number, 1)}</span>
           </span>
@@ -133,9 +133,9 @@ export default function ProofPage() {
           title="Proof"
           lead="The data has mistakes planted on purpose and a list of every one. This page counts what LedgerLens caught, what it missed and what it flagged wrongly, and names each record."
           right={
-            <div className="flex rounded-[9px] border border-line bg-paper p-0.5" role="tablist" aria-label="Months to count">
+            <div className="flex rounded-control border border-line bg-paper p-0.5" role="tablist" aria-label="Months to count">
               {SCOPES.map((s) => (
-                <button key={s.id} role="tab" aria-selected={scope === s.id} onClick={() => setScope(s.id)} className={`rounded-[7px] px-4 py-1.5 font-semibold ${scope === s.id ? "bg-ink text-white" : "text-ink-2"}`}>
+                <button key={s.id} role="tab" aria-selected={scope === s.id} onClick={() => setScope(s.id)} className={`rounded-bar px-4 py-1.5 font-semibold ${scope === s.id ? "bg-ink text-white" : "text-ink-2"}`}>
                   {s.label}
                 </button>
               ))}
@@ -163,7 +163,7 @@ export default function ProofPage() {
               <span className="font-mono text-[13px]">
                 {m.caught}/{m.planted}
               </span>
-              <span className="flex w-full flex-col overflow-hidden rounded-[5px]" style={{ height: `${(m.planted / tallest) * 150}px` }}>
+              <span className="flex w-full flex-col overflow-hidden rounded-bar" style={{ height: `${(m.planted / tallest) * 150}px` }}>
                 <span className="bg-bad" style={{ flexGrow: m.planted - m.caught }} />
                 <span className="bg-ok" style={{ flexGrow: m.caught }} />
               </span>
@@ -282,8 +282,8 @@ export default function ProofPage() {
                 </td>
                 <td className="px-3 py-2">
                   <span className="flex items-center gap-3">
-                    <span className="h-2.5 flex-1 rounded-full bg-line-2">
-                      <span className={`block h-full rounded-full ${(row.catch_rate ?? 0) >= 0.9 ? "bg-ok" : "bg-dup"}`} style={{ width: `${(row.catch_rate ?? 0) * 100}%` }} />
+                    <span className="h-2.5 flex-1 rounded-bar bg-line-2">
+                      <span className={`block h-full rounded-bar ${(row.catch_rate ?? 0) >= 0.9 ? "bg-ok" : "bg-dup"}`} style={{ width: `${(row.catch_rate ?? 0) * 100}%` }} />
                     </span>
                     <span className="w-12 font-mono font-semibold">{percent(row.catch_rate)}</span>
                   </span>

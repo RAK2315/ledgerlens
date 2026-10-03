@@ -108,7 +108,7 @@ function MatchPanel({ matchId, onClose }: { matchId: string; onClose: () => void
               <Side title={detail.left_all.length > 1 ? "Invoices" : "Invoice"} records={detail.left_all} />
               <Side title={TABLE_NAMES[detail.right[0]?.table] ?? KIND_NAME[detail.match.kind]} records={detail.right} />
             </div>
-            <div className="rounded-[14px] bg-cream p-5">
+            <div className="rounded-surface bg-cream p-5">
               <p className="mb-1 font-semibold text-orange-deep">Why these belong together</p>
               <ul className="list-disc pl-5">
                 {detail.match.reasons.map((reason) => (
@@ -171,9 +171,9 @@ export default function WorkbenchPage() {
         title="Workbench"
         lead="Every Finding and every Match for the period. Open a row to see the records side by side, the reason and the drafted fix."
         right={
-          <div className="flex rounded-[9px] border border-line bg-paper p-0.5" role="tablist">
+          <div className="flex rounded-control border border-line bg-paper p-0.5" role="tablist">
             {(["findings", "matches"] as const).map((t) => (
-              <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)} className={`rounded-[7px] px-4 py-1.5 font-semibold ${tab === t ? "bg-ink text-white" : "text-ink-2"}`}>
+              <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)} className={`rounded-bar px-4 py-1.5 font-semibold ${tab === t ? "bg-ink text-white" : "text-ink-2"}`}>
                 {t === "findings" ? "Findings" : "Matches"}
               </button>
             ))}
@@ -192,7 +192,7 @@ export default function WorkbenchPage() {
             ))}
             <label className="ml-auto flex items-center gap-2 text-[13px] text-ink-2">
               Status
-              <select className="rounded-[9px] border border-line bg-paper px-2.5 py-1.5" value={status} onChange={(e) => setStatus(e.target.value)}>
+              <select className="rounded-control border border-line bg-paper px-2.5 py-1.5" value={status} onChange={(e) => setStatus(e.target.value)}>
                 <option value="open">Open</option>
                 <option value="approved">Approved</option>
                 <option value="dismissed">Dismissed</option>

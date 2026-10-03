@@ -22,6 +22,9 @@
   --dup-soft: #fbefd2;
   --miss: #6957d6;
   --miss-soft: #e6e2fb;
+  --r-control: 4px;
+  --r-surface: 6px;
+  --r-bar: 2px;
 }
 
 @theme inline {
@@ -50,6 +53,9 @@
   --font-display: var(--font-spartan), var(--font-inter), sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
   --shadow-float: 0 20px 40px -20px rgba(80, 30, 10, 0.35);
+  --radius-control: var(--r-control);
+  --radius-surface: var(--r-surface);
+  --radius-bar: var(--r-bar);
 }
 
 body {
@@ -68,23 +74,35 @@ body {
 /* A surface that floats over the page: the Run overlay. */
 .panel {
   background: var(--paper);
-  border-radius: 16px;
+  border-radius: var(--r-surface);
+}
+
+/* Tailwind 4 gives buttons the default cursor, which hides that they can be clicked. */
+button:not(:disabled),
+[role="tab"],
+select:not(:disabled) {
+  cursor: pointer;
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border-radius: 9px;
+  border-radius: var(--r-control);
   padding: 8px 14px;
   font-weight: 600;
   border: 1px solid var(--line);
   background: var(--paper);
   color: var(--ink);
   cursor: pointer;
+  transition: background-color 0.12s, border-color 0.12s, color 0.12s;
 }
-.btn:hover {
-  background: var(--cream-2);
+.btn:hover:not(:disabled) {
+  background: var(--cream);
+  border-color: var(--ink);
+}
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
 }
 .btn:disabled {
   opacity: 0.55;
@@ -95,8 +113,42 @@ body {
   border-color: var(--orange-deep);
   color: #fff;
 }
-.btn-primary:hover {
-  background: #bb5415;
+.btn-primary:hover:not(:disabled) {
+  background: #a84a10;
+  border-color: #a84a10;
+}
+
+/* A row that opens something: the whole row tints and its call to action fills. */
+.row-action {
+  cursor: pointer;
+  transition: background-color 0.12s;
+}
+.row-action:hover {
+  background: var(--cream);
+}
+.row-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  border-radius: var(--r-control);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 6px 12px;
+  font-weight: 600;
+  color: var(--orange-deep);
+  transition: background-color 0.12s, border-color 0.12s, color 0.12s;
+}
+.row-cta svg {
+  transition: transform 0.12s;
+}
+.row-action:hover .row-cta {
+  background: var(--orange-deep);
+  border-color: var(--orange-deep);
+  color: #fff;
+}
+.row-action:hover .row-cta svg {
+  transform: translateX(3px);
 }
 .btn:focus-visible,
 a:focus-visible,
@@ -111,7 +163,7 @@ textarea:focus-visible {
   background: linear-gradient(90deg, var(--line-2), var(--line), var(--line-2));
   background-size: 200% 100%;
   animation: shimmer 1.4s linear infinite;
-  border-radius: 8px;
+  border-radius: var(--r-control);
 }
 @keyframes shimmer {
   to {

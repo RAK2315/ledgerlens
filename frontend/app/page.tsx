@@ -49,7 +49,7 @@ export default function StartPage() {
       </section>
 
       <div className={`-mt-52 ${WIDE}`}>
-        <div className="rounded-[20px] bg-app-bg p-8 shadow-float">
+        <div className="rounded-surface bg-app-bg p-8 shadow-float">
           <div className="flex items-baseline justify-between gap-6">
             <p className="font-display text-[26px] font-extrabold leading-none">September 2025</p>
             <p className="text-[15px] text-ink-2">
