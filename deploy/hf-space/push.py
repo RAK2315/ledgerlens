@@ -25,6 +25,8 @@ with tempfile.TemporaryDirectory() as folder:
     for name in ("Dockerfile", "README.md"):
         shutil.copy(Path(__file__).with_name(name), stage / name)
     api = HfApi()
-    api.create_repo(SPACE, repo_type="space", space_sdk="docker", exist_ok=True)
+    # Creating a Docker Space needs a paid plan on some accounts; an existing Space is reused as it is.
+    if not api.repo_exists(SPACE, repo_type="space"):
+        api.create_repo(SPACE, repo_type="space", space_sdk="docker")
     api.upload_folder(repo_id=SPACE, repo_type="space", folder_path=stage, commit_message="Deploy the LedgerLens backend", delete_patterns=["*"])
     print("pushed to", f"https://huggingface.co/spaces/{SPACE}")
