@@ -1,34 +1,70 @@
-# ML build spec: LedgerLens models
+# LedgerLens ML build guide
 
-This file is the complete recipe for building, testing and shipping the LedgerLens machine learning models. A builder (human or agent) should be able to follow it top to bottom and end with trained model files, a metrics report and a command-line tool the backend can call, without asking questions.
+This guide tells you how to build, test and run the machine learning part of LedgerLens. You need only two things: this file and the dataset file tax_recon_dataset.xlsx. Everything else is explained here.
 
-Read CONTEXT.md first for vocabulary. Where this file and the deck disagree, this file wins for the build.
+If you follow it from top to bottom you end with trained model files, a results report and a command-line tool.
 
-## 0. What is ML here, and what is not
+## 0. The project in one minute
 
-LedgerLens follows one rule: code decides, AI explains. Every rupee figure comes from deterministic, tested code. The ML models only do two jobs where rules alone are brittle:
+LedgerLens helps an Indian business check its GST records for one month. It compares four sets of records and reports every mismatch in rupees:
 
-| Component | Type | Job | Ships in |
+- the invoices the business raised or received,
+- the entries in its accounting books,
+- the lines on its bank statement,
+- what its suppliers reported to the GST portal.
+
+One rule runs through the whole project: code decides, AI explains. Every rupee number comes from plain, tested code. Machine learning is used only where simple rules break easily, which is deciding whether two records are the same thing when they are written a little differently.
+
+### Words used in this guide
+
+| Word | Meaning |
+|---|---|
+| Company | The business whose books we check. In our data: Sharma Traders Pvt Ltd, Delhi. |
+| Party | Any business the Company trades with. |
+| Supplier | A Party the Company buys from. The dataset calls it VENDOR. |
+| Customer | A Party the Company sells to. |
+| Invoice | A tax invoice in the Company's books. A purchase invoice comes from a Supplier. A sales invoice goes to a Customer. |
+| Credit note | A document that lowers the value and tax of an earlier invoice. |
+| Ledger entry | One line in the Company's accounting books. A booking entry records an invoice. A payment or receipt entry records money moving. |
+| Bank transaction | One debit or credit line on the bank statement. |
+| GSTIN | The 15-character GST registration number: 2-digit state code, the owner's 10-character PAN, one entity character, the letter Z, and one check character. |
+| PAN | The 10-character tax ID of the owner. Two GSTINs with the same PAN have the same owner. |
+| HSN code | The code on an invoice that says what was sold. It decides the GST rate. |
+| CGST, SGST, IGST | The three kinds of GST. A sale inside one state has CGST plus SGST. A sale across states has IGST. |
+| ITC (input tax credit) | GST the Company paid on purchases. It can subtract this from the GST it owes on sales. |
+| GSTR-2B line | One purchase that a Supplier reported against the Company's GSTIN, as shown in the Company's monthly GSTR-2B statement. |
+| Return period | The calendar month a GST return covers. |
+| Match | A link between two records that describe the same event, for example an invoice and its bank payment. |
+| Confidence | How sure we are that a Match is right, from 0 to 1. |
+| Band | Where a Match lands by Confidence: auto (accepted), review (a person checks it), unmatched. |
+| Finding | One problem the system reports, with its rupee effect and a reason. |
+| Planted error | A mistake put into the dataset on purpose, listed in the labels sheet. |
+| Benign trap | A record that looks wrong but is fine, for example an invoice paid in two parts. Reporting it is a false alarm. |
+| Paise | 1 rupee is 100 paise. All money in code is whole paise, never decimals. |
+
+### What is ML here and what is not
+
+| Part | Kind | Job | Status |
 |---|---|---|---|
-| A. Booking matcher | Supervised classifier | Scores how likely an invoice and a ledger booking are the same transaction | MVP |
-| B. Payment matcher | Supervised classifier | Scores how likely an invoice and a bank transaction belong together | MVP |
-| C. Anomaly detector | Rules plus Isolation Forest | Flags unusual invoices and bank flows, with a reason | MVP |
-| D. Supplier filing matcher | Supervised classifier | Scores how likely a purchase invoice and a GSTR-2B line are the same supply | V2 (needs the GSTR-2B augmentation in section 3.5) |
-| E. Benford screen | Statistical test | Company-level first-digit check | Stretch |
+| A. Booking matcher | Trained classifier | Is this invoice and this ledger entry the same transaction? | Built |
+| B. Payment matcher | Trained classifier | Does this bank transaction pay this invoice? | Built |
+| C. Anomaly detector | Rules plus Isolation Forest | Flag unusual invoices and bank flows, with a reason | Not built yet |
+| D. Supplier filing matcher | Trained classifier | Is this purchase invoice and this GSTR-2B line the same purchase? | Later |
+| E. Benford screen | Statistics | First-digit check over the whole Company | Optional |
 
-Not ML, and out of scope for this file: tax rule checks (rate, tax type, arithmetic, Rule 37, Section 17(5)), duplicate rules, one-to-many payment search (deterministic subset-sum), liability maths, and the Claude explainer. Those live in the backend engine. The models here return scores and reasons; the engine turns them into findings.
+Not ML, and not covered here: tax rate checks, duplicate checks, the search for one payment covering several invoices, and the tax owed for the month. Those are plain rules in the rest of the app. The models here only return scores and reasons.
 
-## 1. Requirements
+## 1. What you need
 
-### 1.1 Machine
+### 1.1 Computer
 
-- Windows 11, macOS or Linux, 8 GB RAM is enough. No GPU. Full training run takes under 5 minutes on a laptop.
-- Python 3.10.11 exactly (the version on the build laptop). Python 3.11 or 3.12 also work with the same pins except networkx, see note below.
-- Git.
+- Windows 11, macOS or Linux. 8 GB RAM is enough. No GPU.
+- Python 3.10.11. Python 3.11 or 3.12 also work.
+- A full training run takes under 5 minutes.
 
-### 1.2 Pinned packages
+### 1.2 Packages
 
-Create ml/requirements.txt with exactly this content. These are the newest releases that install on Python 3.10, checked with pip index on 2026-10-03.
+Create the file ml/requirements.txt with exactly these lines:
 
 ```
 numpy==2.2.6
@@ -43,23 +79,18 @@ pydantic==2.13.5
 pytest==9.1.1
 ```
 
-Optional, only for the single-file executable in section 11:
+Notes:
 
-```
-pyinstaller==6.22.3
-```
+- Keep networkx at 3.4.2 on Python 3.10. Newer versions need Python 3.11.
+- We use scikit-learn's HistGradientBoostingClassifier, not LightGBM or XGBoost. It is just as good for a table this small, needs no extra install, and accepts missing values.
+- rapidfuzz gives fast text similarity scores.
+- No deep learning. The data is a few thousand rows. A neural network would be slower, harder to explain and no better.
 
-Note: networkx 3.5 and later need Python 3.11. Stay on 3.4.2 while the build runs on 3.10.
+### 1.3 Setup
 
-Why these and not others:
+Put the dataset at data/source/tax_recon_dataset.xlsx. Then, from the project folder:
 
-- scikit-learn HistGradientBoostingClassifier instead of LightGBM or XGBoost: same accuracy class for tabular data of this size, no extra native dependency to install on demo laptops, and it handles missing values natively.
-- rapidfuzz for string similarity: fast C implementation, MIT licence, gives Levenshtein, Damerau-Levenshtein and token-set ratios in one package.
-- No deep learning. The data is a few thousand tabular rows; a neural network would be slower to train, harder to explain and no more accurate.
-
-### 1.3 Setup commands
-
-From the repo root, PowerShell:
+Windows PowerShell:
 
 ```
 python -m venv ml\.venv
@@ -68,506 +99,542 @@ ml\.venv\Scripts\python -m pip install -r ml\requirements.txt
 ml\.venv\Scripts\python -m pip install -e ml
 ```
 
-Bash (macOS, Linux, Git Bash):
+macOS or Linux:
 
 ```
 python -m venv ml/.venv
-ml/.venv/bin/python -m pip install --upgrade pip   # Windows Git Bash: ml/.venv/Scripts/python
+ml/.venv/bin/python -m pip install --upgrade pip
 ml/.venv/bin/python -m pip install -r ml/requirements.txt
 ml/.venv/bin/python -m pip install -e ml
 ```
 
-ml/pyproject.toml declares the package name ledgerlens_ml, Python requires ">=3.10,<3.13", and no runtime dependencies beyond the requirements file.
+The file ml/pyproject.toml names the package ledgerlens_ml and asks for Python 3.10 or newer, below 3.13.
 
-## 2. Repo layout for the ML package
+## 2. Folder layout
 
 ```
+data/
+  source/tax_recon_dataset.xlsx   the dataset
+  derived/                        files made by the augment command (section 3.5)
 ml/
   pyproject.toml
   requirements.txt
   ledgerlens_ml/
-    __init__.py          public API: load_dataset, score_pairs, score_anomalies, MODEL_VERSION
-    config.py            seeds, windows, thresholds, split months, file paths
-    data.py              load and validate the workbook, convert to typed frames
-    augment.py           generate the GSTR-2B sheet and extra labels (section 3.5)
-    normalise.py         invoice ID, party name, amount and date normalisers
-    parties.py           resolve bank counterparties to party_id
-    candidates.py        candidate pair generation (blocking) for each matcher
-    features.py          pair features and anomaly features
-    matcher.py           train, calibrate, save, load and score a matcher
-    anomaly.py           rule detectors and Isolation Forest
-    benford.py           stretch: company-level first-digit test
-    evaluate.py          metrics against labels, writes the report
-    cli.py               python -m ledgerlens_ml ... entry points
-    __main__.py          dispatches to cli
-  tests/
-    test_normalise.py
-    test_parties.py
-    test_candidates.py
-    test_features.py
-    test_split.py
-    test_matcher_contract.py
-    test_anomaly_rules.py
-    test_augment.py
-  artifacts/             written by training, committed for the demo
-  reports/               written by evaluation, committed
+    __init__.py     the functions other code may import (section 9.1)
+    config.py       all fixed numbers: seed, date windows, thresholds, split months, paths
+    data.py         reads the workbook, checks it, returns clean tables
+    augment.py      makes the GSTR-2B lines and extra labels
+    normalise.py    cleans invoice numbers and party names
+    parties.py      works out which Party a bank line belongs to
+    candidates.py   picks which pairs of records are worth scoring
+    features.py     turns each pair into numbers
+    matcher.py      trains, saves, loads and runs a matcher
+    anomaly.py      anomaly rules and Isolation Forest (not built yet)
+    evaluate.py     writes the results report (not built yet)
+    cli.py          the commands
+    __main__.py     lets you run python -m ledgerlens_ml
+  tests/            one test file per module, plus fixtures/mini.xlsx
+  artifacts/        trained model files and their result cards
+  reports/          the results report
 ```
 
-Seams, and why they exist:
+Four rules keep the code easy to change:
 
-- data.py is the only module that reads the workbook. Everything else receives typed DataFrames. This keeps the column contract in one place, so a renamed column breaks one function, not ten.
-- features.py is pure: frames in, feature frame out, no file or model access. That makes every feature unit-testable and identical between training and inference.
-- matcher.py and anomaly.py own model objects. No other module calls scikit-learn directly. If we swap the model type later, only these files change.
-- The backend imports only from ledgerlens_ml/__init__.py. Internal modules can change freely.
+- Only data.py reads the workbook. Every other module is given tables. If a column is renamed, one file breaks, not ten.
+- features.py never touches files or models. Tables in, table out. So every feature can be tested, and training and live scoring always compute the same thing.
+- Only matcher.py and anomaly.py use scikit-learn. To change the model type you change only those files.
+- Other code imports only from ledgerlens_ml/__init__.py.
 
-## 3. Dataset of choice
+## 3. The dataset
 
 ### 3.1 The file
 
-- Path: data/source/tax_recon_dataset.xlsx (committed to the repo).
+- Path: data/source/tax_recon_dataset.xlsx
 - SHA-256: c49199eb35be2743ed9cdd9cf2db23996472c5194a01219fc49d01d0e084ab23
-- data.py must check the hash on load and fail loudly if it differs, so a model card always names the exact data it was trained on.
-- What it is: one financial year (2025-04-01 to 2026-03-31) of books for a fictional Delhi trading company (state code 07), with errors planted on purpose and an answer key. All 120 party GSTINs pass the check-digit test.
-- Why this dataset: it is the only candidate that has all four record types linked by ground truth, an effective-dated tax rate table that includes the GST 2.0 change of 22 Sep 2025, and benign traps that let us measure false alarms. Alternatives checked and rejected on 2026-10-03: github.com/AnujSureshkumar/synthetic-finance-data (60 invoices, too small; we borrow only its GSTR-2B JSON shape), github.com/R3n0va/synthetic-accounting-data-generator (German VAT, not GST).
+- data.py checks this hash every time it loads the file and stops with an error if it differs. That way every result names the exact data it came from.
+- It holds one financial year (1 April 2025 to 31 March 2026) of records for a made-up trading company in Delhi (state code 07). Mistakes were put in on purpose, and the file lists every one of them.
+- The workbook does not name the company. config.py sets the name Sharma Traders Pvt Ltd and the GSTIN 07AAACS1234F1ZU.
 
-The demo company is Sharma Traders Pvt Ltd, GSTIN 07AAACS1234F1ZU (valid check digit). The workbook does not name the company; config.py sets these two values.
+### 3.2 Sheets and columns
 
-### 3.2 Sheets and column contract
+data.py loads each sheet with exactly these columns. A missing or unknown column is an error.
 
-data.py loads each sheet with these exact columns and types. Unknown extra columns are an error.
-
-| Sheet | Rows | Columns (type) | Used for |
+| Sheet | Rows | Columns | Used for |
 |---|---|---|---|
-| invoices | 5,197 | invoice_id (str), doc_type (INVOICE, CREDIT_NOTE), invoice_type (SALES, PURCHASE), invoice_date (date), due_date (date), party_id (str), party_name (str), party_gstin (str), party_state_code (int), place_of_supply (int), hsn_sac (int), category (str), taxable_value (float), tax_rate_pct (int), cgst, sgst, igst, total_tax, invoice_total (float), currency (str), original_invoice_id (str, nullable) | Left side of every matcher, anomaly features |
-| bank_transactions | 4,690 | txn_id, txn_date (date), value_date (date), bank_account, direction (DEBIT, CREDIT), amount (float), currency, counterparty_name, counterparty_account, payment_mode (CHEQUE, NEFT, RTGS, IMPS, UPI), utr, narration (str), closing_balance (float) | Right side of payment matcher, circular-flow rule |
-| accounting_ledger | 9,948 | entry_id, voucher_no, posting_date (date), fiscal_period (YYYY-MM), voucher_type (SALES, PURCHASE, PAYMENT, RECEIPT, CREDIT_NOTE, JOURNAL, TAX_PAYMENT), ledger_account, party_id, party_name, invoice_ref (str, nullable), taxable_amount, cgst, sgst, igst, total_tax, total_amount, debit, credit (float), utr_ref (nullable), narration, entered_by, entry_timestamp | Right side of booking matcher |
-| tax_rates | 15 | category_code, category, hsn_sac (int), supply_type, gst_rate_pct, cgst_pct, sgst_pct, igst_pct, effective_from (date), effective_to (date, nullable), is_exempt (bool) | Expected-rate feature, effective-dated |
-| party_master | 120 | party_id, party_name, party_type (CUSTOMER 70, VENDOR 50), gstin, pan, state_code, state, payment_terms_days | Party resolution, PAN links |
-| tax_filings | 12 | period, return_type, due_date, filing_date, outward_taxable_value, output_cgst, output_sgst, output_igst, total_output_tax, itc_cgst, itc_sgst, itc_igst, total_itc_claimed, net_tax_payable, status | Not used by ML (engine uses it) |
-| answer_key | 12 | period, true_outward_taxable_value, true_output_tax, true_eligible_itc, itc_blocked_invalid_supplier_gstin, true_net_tax_liability, declared_total_output_tax, declared_total_itc, declared_net_tax_payable, liability_gap_inr | Not used by ML (engine tests use it) |
-| labels | 2,149 | issue_id, issue_type, issue_category, severity, entity_type (INVOICE, BANK_TRANSACTION, LEDGER_ENTRY, TAX_FILING), entity_id, related_entity_id (nullable), field_affected, expected_value, recorded_value, financial_impact_inr, description, is_benign (bool) | Evaluation, and hard-case weighting |
-| links | 5,519 | invoice_id, booking_entry_id (nullable, 43 null), txn_id (nullable, 819 null), receipt_entry_id (nullable), allocated_amount (float), link_type (FULL 3,898, UNPAID_OPEN 722, PARTIAL 629, BUNDLED 180, CREDIT_NOTE 60, DUPLICATE_INVOICE_UNPAID 17, DUPLICATE_PAYMENT_EXCESS 13) | Training labels for matchers A and B |
+| invoices | 5,197 | invoice_id, doc_type (INVOICE, CREDIT_NOTE), invoice_type (SALES, PURCHASE), invoice_date, due_date, party_id, party_name, party_gstin, party_state_code, place_of_supply, hsn_sac, category, taxable_value, tax_rate_pct, cgst, sgst, igst, total_tax, invoice_total, currency, original_invoice_id (can be empty) | Left side of every matcher |
+| bank_transactions | 4,690 | txn_id, txn_date, value_date, bank_account, direction (DEBIT, CREDIT), amount, currency, counterparty_name, counterparty_account, payment_mode, utr, narration, closing_balance | Right side of the payment matcher |
+| accounting_ledger | 9,948 | entry_id, voucher_no, posting_date, fiscal_period, voucher_type (SALES, PURCHASE, PAYMENT, RECEIPT, CREDIT_NOTE, JOURNAL, TAX_PAYMENT), ledger_account, party_id, party_name, invoice_ref (can be empty), taxable_amount, cgst, sgst, igst, total_tax, total_amount, debit, credit, utr_ref, narration, entered_by, entry_timestamp | Right side of the booking matcher |
+| tax_rates | 15 | category_code, category, hsn_sac, supply_type, gst_rate_pct, cgst_pct, sgst_pct, igst_pct, effective_from, effective_to (can be empty), is_exempt | The correct rate for a date |
+| party_master | 120 | party_id, party_name, party_type (CUSTOMER 70, VENDOR 50), gstin, pan, state_code, state, payment_terms_days | Finding the Party |
+| tax_filings | 12 | period, return_type, due_date, filing_date, outward_taxable_value, output_cgst, output_sgst, output_igst, total_output_tax, itc_cgst, itc_sgst, itc_igst, total_itc_claimed, net_tax_payable, status | Not used by ML |
+| answer_key | 12 | period, true_outward_taxable_value, true_output_tax, true_eligible_itc, itc_blocked_invalid_supplier_gstin, true_net_tax_liability, declared_total_output_tax, declared_total_itc, declared_net_tax_payable, liability_gap_inr | Not used by ML |
+| labels | 2,149 | issue_id, issue_type, issue_category, severity, entity_type, entity_id, related_entity_id, field_affected, expected_value, recorded_value, financial_impact_inr, description, is_benign | The list of planted errors and benign traps |
+| links | 5,519 | invoice_id, booking_entry_id (43 empty), txn_id (819 empty), receipt_entry_id, allocated_amount, link_type (FULL 3,898, UNPAID_OPEN 722, PARTIAL 629, BUNDLED 180, CREDIT_NOTE 60, DUPLICATE_INVOICE_UNPAID 17, DUPLICATE_PAYMENT_EXCESS 13) | The true matches, used to train A and B |
 
-All money is converted to integer paise in data.py (round half up). All dates become datetime64 at day precision. IDs are kept raw; normalised forms live in separate columns.
+What data.py does to every sheet:
 
-### 3.3 Facts measured on this file (2026-10-03)
+- Money becomes whole paise (rupees times 100, rounded half up). The column name gets _paise at the end: taxable_value becomes taxable_value_paise, amount becomes amount_paise, financial_impact_inr becomes financial_impact_paise.
+- Dates become real date values.
+- IDs are kept exactly as written.
 
-These shaped the design. Re-measure in the data profile step and update this table if anything differs.
+### 3.3 Facts measured on this file
 
-- Purchase invoices per month: 144 to 217. Median 43 purchase invoices per vendor.
-- 67.8 percent of bank narrations quote the invoice ID as written (VEN001-0001, INV VEN002-0001); 24.9 percent quote it in another form (ven0420001, inv252601229, or the serial alone such as 0035); 7.3 percent carry no reference.
-- 76.6 percent of bank counterparty names exactly equal a party_master name; the rest are truncated to 22 characters, written without spaces (BHARATSYSTEMSPVTLTD) or shortened (PRIME MEDIA).
-- 22 parties share a normalised name with another party (Evergreen Infra & Co and Evergreen Infra Private Limited), so a name alone cannot always pick the party. Every party uses exactly one counterparty_account, and no account is shared.
-- 99.5 percent of ledger invoice_ref values exist in invoices; the rest are planted typos.
-- Candidate recall on train (section 5.1 gate): booking 100.0 percent of 3,852 true pairs, payment 100.0 percent of 3,976.
-- Counterparty resolution (section 4.2) is correct on 100.0 percent of linked bank transactions; without the account step it is 98.6 percent.
-- Planted ledger ID typos include a wrong financial year (INV-2425-02759 for INV-2526-02759), letter O for zero (INV-2526-O2328), swapped digits (01978 for 01987) and dropped digits (INV-252-02921).
-- Payment lag from invoice date: minimum minus 30 days (planted payment-before-invoice), 5th percentile 4, median 25, 95th percentile 55, maximum 101 days.
-- For FULL links, payment amount divided by invoice total: median 1.0, minimum 0.903, maximum 1.048.
-- At most 2 bank transactions per invoice (partial payments) and at most 2 invoices per bank transaction (bundled payments).
+The profile command prints these. They shaped the design.
 
-### 3.4 Labels: what counts as truth
+- Purchase invoices per month: 144 to 217. Each Supplier has about 43 in the year.
+- All 120 party GSTINs pass the check-character test.
+- Purchase invoice numbers look like VEN001-0001. Sales invoice numbers look like INV-2526-00001. Credit notes look like CN-2526-0038. All 60 credit notes are sales credit notes.
+- Bank narrations look like NEFT/UTR/NAME/REFERENCE. 67.8 percent quote the invoice number as written. 24.9 percent quote it in another form (ven0420001, inv252601229, or only the serial such as 0035). 7.3 percent have no reference.
+- 76.6 percent of bank names equal a name in party_master. The rest are cut at 22 characters, written without spaces (BHARATSYSTEMSPVTLTD) or shortened (PRIME MEDIA).
+- 22 parties share a cleaned name with another party (Evergreen Infra & Co and Evergreen Infra Private Limited). So a name alone cannot always pick the Party.
+- Every Party uses exactly one counterparty_account, and no account is shared.
+- 99.5 percent of ledger invoice_ref values exist in invoices. The rest are planted typos: wrong year (INV-2425-02759 for INV-2526-02759), letter O for zero (INV-2526-O2328), swapped digits, dropped digits (INV-252-02921).
+- Days from invoice to payment: lowest minus 30 (planted, paid before the invoice), median 25, highest 101.
+- For fully paid invoices, payment divided by invoice total runs from 0.903 to 1.048, median 1.0.
+- An invoice has at most 2 bank transactions (paid in parts). A bank transaction covers at most 2 invoices (bundled).
 
-- Matchers A and B: a pair (invoice, ledger entry) is positive if links has that invoice_id with that booking_entry_id. A pair (invoice, bank transaction) is positive if links has that invoice_id with that txn_id. Every other candidate pair is negative.
-- Anomaly detector: unsupervised. Labels with issue_category ANOMALY are used only to choose thresholds on validation and to report recall and precision on test.
-- Benign traps (is_benign true: BUNDLED_PAYMENT, CREDIT_NOTE, LEGIT_OPEN_INVOICE, NON_INVOICE_TXN, PARTIAL_PAYMENT, ROUNDING_NOISE) must not produce a finding. Any finding on a benign-trap entity counts as a false alarm in the report.
-- Known conflict to handle, not hide: an open purchase invoice older than 180 days is labelled LEGIT_OPEN_INVOICE in the workbook, but under Rule 37 it is a real ITC risk. The engine reports it as a Rule 37 finding; evaluate.py scores Rule 37 against the augmentation labels (section 3.5) and excludes those entities from the benign false-alarm count. Write this in the report so nobody thinks we are gaming the metric.
+### 3.4 What counts as the truth
 
-### 3.5 Augmentation: GSTR-2B and extra labels
+- Booking matcher: a pair (invoice, ledger entry) is a true match if the links sheet has that invoice_id with that booking_entry_id.
+- Payment matcher: a pair (invoice, bank transaction) is a true match if the links sheet has that invoice_id with that txn_id.
+- Every other pair we score is a non-match.
+- Anomaly detector: it is not trained on labels. Labels with issue_category ANOMALY are used only to pick thresholds and to report results.
+- Benign traps (is_benign is true: BUNDLED_PAYMENT, CREDIT_NOTE, LEGIT_OPEN_INVOICE, NON_INVOICE_TXN, PARTIAL_PAYMENT, ROUNDING_NOISE) must not be reported. Any report on one is a false alarm.
+- One known clash, stated openly: a purchase invoice left unpaid for more than 180 days is marked LEGIT_OPEN_INVOICE (benign) in the workbook. But under Rule 37 the credit on a purchase is at risk when the Supplier is not paid within 180 days. So we treat it as a real problem, score it against our own labels from section 3.5, and leave those invoices out of the false alarm count. The report must say this.
 
-The workbook has no supplier filing data, but the core USP (ITC at risk and ITC found) needs it. augment.py generates it, deterministically, seed 42.
+### 3.5 Augmentation: making the GSTR-2B lines
 
-Command: python -m ledgerlens_ml augment
+The workbook has no data on what Suppliers reported to the GST portal. The product needs it, so augment.py makes it. The result is the same every time (seed 42).
 
-Writes data/derived/gstr2b.csv, data/derived/augment_labels.csv, and data/derived/augment_manifest.json (seed, rates, source hash, row counts).
+Command:
+
+```
+python -m ledgerlens_ml augment
+```
+
+It writes three files in data/derived:
+
+- gstr2b.csv: the GSTR-2B lines
+- augment_labels.csv: the extra planted errors
+- augment_manifest.json: seed, rates, the workbook hash, counts, and the choices listed below
 
 Steps, in order:
 
-1. Assign each of the 50 vendors a filing behaviour: reliable 70 percent, late 20 percent, non_filer 10 percent, chosen with numpy default_rng(42) over vendors sorted by party_id.
-2. For each PURCHASE invoice with doc_type INVOICE:
-   - reliable: one GSTR-2B line in the same return period (invoice month).
-   - late: one line in the next month's period.
-   - non_filer: no line. Label MISSING_IN_2B with financial_impact = total_tax.
-3. Supplier-side variation on generated lines, each drawn independently:
-   - 30 percent: invoice number written in a supplier format: digits only (VEN001-0001 becomes 1), slash form (VEN/001/0001), or INV prefix (INV-0001). Not an error; the matcher must still match.
-   - 3 percent: taxable value differs by 2 to 15 percent. Label GSTR2B_VALUE_MISMATCH with impact = tax difference.
-   - 2 percent: invoice date shifted by 1 to 10 days. Not an error unless it crosses a month boundary, then label PERIOD_SHIFT.
-4. Add GSTR-2B-only lines equal to 2 percent of purchase invoices: plausible supplies from existing vendors with fresh invoice numbers that are absent from the books. Label MISSING_IN_BOOKS with impact = tax (this is ITC found).
-5. Rule 37: every PURCHASE invoice whose links row is UNPAID_OPEN and whose invoice date is more than 180 days before 2026-03-31 gets a label RULE_37_UNPAID_180 with impact = total_tax.
-6. Cancelled suppliers: mark 2 vendors (the two non_filers with the most invoices) as GSTIN cancelled from a date in the middle of their invoices. Invoices dated after that get CANCELLED_GSTIN labels.
-7. PAN rings: pick one vendor and one customer, and rewrite the customer's PAN and GSTIN characters 3 to 12 to equal the vendor's PAN, recomputing the check digit. Label both PAN_LINKED_RING. This is the round-trip shown in the deck.
+1. Pick the ring Supplier: the Supplier behind the earliest CIRCULAR_FLOW label (money sent out and returned). Pick one Customer at random with the seed.
+2. Give each of the 50 Suppliers a filing behaviour by a seeded shuffle: 35 reliable, 10 late, 5 non_filer. The ring Supplier is always reliable.
+3. For each purchase invoice:
+   - reliable Supplier: one line in the invoice month.
+   - late Supplier: one line in the next month. Label PERIOD_SHIFT.
+   - non_filer Supplier: no line. Label MISSING_IN_2B, impact = the invoice's total tax.
+   - an invoice the workbook labels DUPLICATE_INVOICE gets no line and no label, because the Supplier issued it only once.
+4. Change some lines the way real Suppliers do. Each change is drawn separately:
+   - 30 percent: the invoice number is written in the Supplier's own style. VEN001-0001 becomes 1, or VEN/001/0001, or INV-0001. This is not an error. The matcher must still match it.
+   - 3 percent: the taxable value differs by 2 to 15 percent, and the tax with it. Label GSTR2B_VALUE_MISMATCH, impact = the tax difference.
+   - 2 percent: the date moves 1 to 10 days later. If that crosses into the next month, label PERIOD_SHIFT.
+5. Add extra lines equal to 2 percent of purchase invoices (42 lines). Each copies the shape of a real invoice from a filing Supplier, with a new invoice number that is not in the books. Label MISSING_IN_BOOKS, impact = the tax. This is credit the Company could claim but has not.
+6. Rule 37: every purchase invoice that links marks UNPAID_OPEN and that is dated more than 180 days before 31 March 2026 gets the label RULE_37_UNPAID_180, impact = total tax.
+7. Cancelled Suppliers: the two non_filers with the most invoices are marked as having a cancelled GSTIN from the date of their middle invoice. Invoices on or after that date get the label CANCELLED_GSTIN.
+8. The ring: the chosen Customer's PAN, and characters 3 to 12 of its GSTIN, are replaced by the ring Supplier's PAN. The check character is recomputed. Both parties get the label PAN_LINKED_RING.
 
-GSTR-2B columns (mirror the GSTN B2B section; verify field names against the official GSTR-2B JSON schema before the demo and adjust names only): gstin_supplier, trade_name, invoice_number, invoice_type (R), invoice_date, invoice_value, place_of_supply, reverse_charge (N), rate, taxable_value, igst, cgst, sgst, cess, return_period (MMYYYY), itc_availability (Y, N), reason (nullable), source_invoice_id (hidden from the engine; used only by evaluation).
+gstr2b.csv columns: line_id (2B-000001 onwards), gstin_supplier, trade_name, invoice_number, invoice_type (always R), invoice_date, invoice_value, place_of_supply, reverse_charge (always N), rate, taxable_value, igst, cgst, sgst, cess, return_period (MMYYYY), itc_availability (Y), reason, source_invoice_id.
 
-augment_labels.csv has the same columns as the labels sheet plus source = augment, so evaluate.py treats both label sources the same way.
+- Money in the CSV is in rupees with two decimals. data.py turns it into paise when loading.
+- source_invoice_id is the answer (which invoice the line came from). It is only for measuring results. Never use it as a feature.
 
-Choices made while building augment.py (the steps above left them open):
+augment_labels.csv has the same columns as the labels sheet plus source = augment. Two new entity_type values appear: GSTR2B_LINE (entity_id is the line_id) and PARTY (entity_id is the party_id).
 
-- Filing behaviour is an exact split (35 reliable, 10 late, 5 non_filer) by a seeded shuffle, not independent draws. The ring supplier is held reliable so the ring is not confused with a missing line.
-- A purchase invoice labelled DUPLICATE_INVOICE in the workbook gets no GSTR-2B line and no MISSING_IN_2B label: the supplier issued it once. The engine must report it as a duplicate only.
-- Every line of a late supplier is labelled PERIOD_SHIFT, as is a reliable supplier's line whose shifted date crosses a month. Date shifts go forward only and the return period is never more than one month after the invoice month, so the supplier-filing candidates (invoice month or the next) always reach the line.
-- gstr2b.csv carries a line_id column (2B-000001 onwards) and money in rupees with two decimals; data.py converts to paise on load.
-- New entity_type values: GSTR2B_LINE (MISSING_IN_BOOKS, entity_id is the line_id) and PARTY (PAN_LINKED_RING, entity_id is the party_id, related_entity_id the other party).
-- The ring supplier is the supplier behind the earliest CIRCULAR_FLOW label, so the ring has a round trip to show; the customer is a seeded pick. With seed 42: supplier VEN-009 Unity Infra Pvt Ltd (Rs 5,00,000 out on 30 Sep 2025, back on 2 Oct 2025) and customer CUS-007 Unity Motors Ltd.
-- Cancelled suppliers with seed 42: VEN-006 from 2025-09-02 and VEN-010 from 2025-10-29 (the date of each supplier's middle invoice).
-- data.load_dataset applies the manifest: party frames gain filing_behaviour, gstin_status and cancelled_from; the ring customer's PAN and GSTIN change in the party frame and on its invoices (planted invalid GSTINs on invoices are left alone).
-- Counts with seed 42: 1,931 lines (42 of them absent from the books); labels MISSING_IN_2B 220, PERIOD_SHIFT 415, GSTR2B_VALUE_MISMATCH 51, MISSING_IN_BOOKS 42, RULE_37_UNPAID_180 35, CANCELLED_GSTIN 51, PAN_LINKED_RING 2.
+What you get with seed 42:
 
-### 3.6 Splits
+- 1,931 lines, 42 of them not in the books.
+- Labels: MISSING_IN_2B 220, PERIOD_SHIFT 415, GSTR2B_VALUE_MISMATCH 51, MISSING_IN_BOOKS 42, RULE_37_UNPAID_180 35, CANCELLED_GSTIN 51, PAN_LINKED_RING 2.
+- Ring: Supplier VEN-009 Unity Infra Pvt Ltd and Customer CUS-007 Unity Motors Ltd. The round trip is Rs 5,00,000 out on 30 Sep 2025 and back on 2 Oct 2025.
+- Cancelled: VEN-006 from 2 Sep 2025, VEN-010 from 29 Oct 2025.
 
-Temporal, by invoice date, because the real product will always be scoring a month it has never seen:
+When the derived files exist, load_dataset uses them. The parties table gains three columns (filing_behaviour, gstin_status, cancelled_from), the ring Customer gets its new PAN and GSTIN in the parties table and on its invoices, and the extra labels are added to the labels table.
 
-| Split | Months | Purpose |
+If the lines look too clean, raise the rates in config.py and run augment again. Never edit the CSV by hand.
+
+### 3.6 Train, validation and test months
+
+We split by invoice date, because the real product always scores a month it has not seen.
+
+| Split | Months | Used for |
 |---|---|---|
-| train | 2025-04 to 2025-12 | fit models |
-| validation | 2026-01 | choose thresholds, early stopping, calibration check |
-| test | 2026-02 to 2026-03 | final numbers in the report; touched once per release |
+| train | April to December 2025 | fitting the models |
+| validation | January 2026 | picking thresholds, when to stop training, calibration |
+| test | February and March 2026 | the final numbers in the report |
 
-Rules: a candidate pair belongs to the split of its invoice. Party medians and other aggregate features are computed from train months only and frozen into the artifact. test_split.py asserts no invoice ID appears in two splits and no aggregate feature reads test rows.
+Rules:
 
-The demo month, September 2025, sits inside train. That is fine for a demo but the report must quote test-split numbers, never demo-month numbers.
+- A pair belongs to the split of its invoice.
+- Averages such as a Party's usual invoice size are computed from train months only and saved with the model.
+- Never tune anything on test.
+- Quote only test numbers as accuracy.
 
-## 4. Shared preprocessing (normalise.py, parties.py)
+## 4. Cleaning (normalise.py, parties.py)
 
-### 4.1 Invoice ID normaliser
+### 4.1 Invoice numbers
 
-normalise_invoice_id(raw: str) -> str, applied identically to invoices.invoice_id, ledger invoice_ref, tokens from bank narrations and GSTR-2B invoice_number:
+normalise_invoice_id(raw) turns different spellings of one invoice number into the same text. It is used on invoice IDs, ledger invoice_ref values, references in bank narrations and GSTR-2B invoice numbers.
 
-1. Uppercase, strip whitespace.
-2. Map look-alike letters in digit positions: O to 0, I and L to 1, S to 5, only when the character sits between two digits or at the start of a digit run.
-3. Remove leading document prefixes: INV, BILL, NO, TAX INVOICE, followed by optional separators.
-4. Remove separators: slash, hyphen, underscore, dot, space.
-5. Remove one financial-year token when the remaining string still has at least 3 digits: 2526, 2425, FY26, FY2526, 25-26 (already de-separated to 2526).
-6. Strip leading zeros from the final numeric run only.
+Steps:
 
-Keep the raw value too. Also expose id_serial(raw) -> str: the final numeric run without leading zeros.
+1. Uppercase and trim.
+2. Fix look-alike letters inside numbers: O becomes 0, I and L become 1, S becomes 5. Only when the letter is followed by a digit and is not preceded by a letter.
+3. Remove a leading INV, INVOICE, TAX INVOICE, BILL or NO, when followed by a separator or a digit.
+4. Split on separators: space, slash, hyphen, underscore, dot.
+5. A code written without separators is split too: VEN0420001 becomes VEN042 and 0001, and 252601229 becomes 2526 and 01229.
+6. Remove one financial-year part (2526, 2425, FY26, FY2526) if at least 3 digits remain.
+7. Remove leading zeros from the last number only, then join the parts.
 
-Test cases (write these first, all must pass):
+id_serial(raw) returns only that last number without leading zeros.
+
+These cases must pass (write them as tests first):
 
 | Input | normalise_invoice_id | id_serial |
 |---|---|---|
 | INV-2526-02759 | 2759 | 2759 |
 | INV-2425-02759 | 2759 | 2759 |
 | INV-2526-O2328 | 2328 | 2328 |
-| INV-252-02921 | 2522921 or 2921, see note | 2921 |
+| INV-252-02921 | 2522921 | 2921 |
 | VEN042-0001 | VEN0421 | 1 |
 | ven0420001 | VEN0421 | 1 |
 | INV VEN002-0001 | VEN0021 | 1 |
 | VEN/001/0001 | VEN0011 | 1 |
+| inv252601229 | 1229 | 1229 |
+| CN-2526-0038 | CN38 | 38 |
 
-Note on INV-252-02921: 252 is not a valid year token, so it stays and the normalised forms differ. That is intended; the fuzzy features (4.3) catch it. The test asserts id_serial equality and a Damerau-Levenshtein distance of 1 on the raw strings.
+About INV-252-02921: 252 is not a year, so it stays and the cleaned forms differ. That is fine. The serial still matches, and the raw text is only one edit away from the right one. The similarity features in section 5.2 catch it.
 
-Implementation detail for VEN codes: strip leading zeros from the final numeric run only, so VEN042-0001 becomes VEN042 + 1 = VEN0421. The vendor prefix keeps its zeros because it is not the final run.
+narration_id_tokens(narration) returns the invoice references in a bank narration: the part after the third slash, split on commas, keeping only pieces that look like a reference. So NEFT/U/ACME/INV-2526-00001,INV-2526-00002 gives two references, and NEFT/U/HDFC BANK/BANK CHARGES gives none.
 
-### 4.2 Party name normaliser and resolution
+### 4.2 Party names and finding the Party for a bank line
 
-normalise_party_name(raw) -> str: uppercase, replace & with AND, remove PVT, PRIVATE, LTD, LIMITED, LLP, CO, AND CO, punctuation, collapse spaces.
+normalise_party_name(raw): uppercase, turn & into AND, drop punctuation, drop the legal words at the end (PVT, PRIVATE, LTD, LIMITED, LLP, CO, AND). A name with no spaces loses a glued-on ending such as PVTLTD.
 
-PartyResolver.resolve(name, narration, direction, account) -> (party_id or None, score, method); resolve_bank(bank, parties, invoices) runs it over the whole statement and adds resolved_party_id, resolve_score and resolve_method:
+resolve_bank(bank, parties, invoices) adds three columns to the bank table: resolved_party_id, resolve_score (0 to 100) and resolve_method. For each bank line it tries, in order:
 
-1. If the narration contains a token whose normalised form equals a normalised invoice_id, return that invoice's party_id with score 100, method invoice_ref. Only purchase invoices are considered for a DEBIT and sales invoices for a CREDIT, because a bare supplier serial (0035) would otherwise read as sales invoice 35.
-2. Else if the counterparty_account was seen on rows resolved by step 1, return the party those rows point to, score 100, method account. Added during the build: same-named parties make the name step wrong on 12 percent of the rows it handles.
-3. Else the best normalised name by the higher of token_set_ratio and the ratio with spaces removed; ties go to the party type that fits the direction, then to the closer legal suffix. Accept if the score is at least 88, method name.
-4. Else None.
+1. invoice_ref: a reference in the narration, once cleaned, equals a cleaned invoice ID. Use that invoice's Party, score 100. A DEBIT is checked only against purchase invoices and a CREDIT only against sales invoices. Otherwise a bare Supplier serial such as 0035 would be read as sales invoice 35.
+2. account: the bank account on this line was seen on lines solved by step 1. Use the Party those lines point to, score 100. This step exists because of the same-named parties in section 3.3. Without it the name step is wrong on about 12 percent of the lines it handles.
+3. name: the closest cleaned name, using the higher of rapidfuzz token_set_ratio and the plain ratio with spaces removed. Accept only at 88 or above. On a tie prefer a Supplier for a DEBIT and a Customer for a CREDIT, then the closer legal ending.
+4. Otherwise no Party (bank charges, salaries, tax payments).
 
-A name scoring 95 or more overrides an invoice reference that points at a different party, unless the account agrees with the reference (a mistyped reference is likelier than a wrong name).
+One more rule: if the name scores 95 or more and points to a different Party than the reference does, trust the name, unless the account agrees with the reference. A mistyped reference is more likely than a wrong name.
 
-Party resolution runs before candidate generation for the payment matcher. Its accuracy against links-derived truth is reported separately in the report.
+Measured: 100.0 percent of bank lines that have a true match get the right Party. Without the account step it is 98.6 percent.
 
-### 4.3 String similarity primitives
+### 4.3 Text similarity
 
-From rapidfuzz: fuzz.ratio, fuzz.partial_ratio, fuzz.token_set_ratio, distance.DamerauLevenshtein.normalized_similarity. All return 0 to 100 or 0 to 1; features store them as floats in 0 to 1.
+From rapidfuzz: fuzz.ratio, fuzz.token_set_ratio and DamerauLevenshtein.normalized_similarity. Features store them as numbers from 0 to 1.
 
-## 5. Matchers A and B (booking and payment)
+## 5. Matchers A and B
 
-### 5.1 Candidate generation (candidates.py)
+### 5.1 Picking pairs to score (candidates.py)
 
-Booking matcher A, for each invoice:
-- Ledger entries with voucher_type PURCHASE when invoice_type is PURCHASE, SALES when SALES, CREDIT_NOTE when doc_type is CREDIT_NOTE.
-- Same party_id.
-- posting_date within minus 45 to plus 75 days of invoice_date.
-- Cap: keep the 20 candidates with the smallest absolute amount difference.
+We cannot score every invoice against every record. So for each invoice we keep only pairs that could be right.
 
-Payment matcher B, for each invoice:
-- Bank direction DEBIT for PURCHASE, CREDIT for SALES.
-- Resolved party_id equals the invoice's party_id, or the narration contains the invoice's normalised ID.
-- txn_date within minus 45 to plus 120 days of invoice_date.
-- Cap: 20 by smallest absolute amount difference, but always keep any candidate whose narration contains the invoice ID.
+Booking matcher, for each invoice:
 
-Recall check, a hard gate: on train, at least 99.5 percent of true pairs from links must survive candidate generation. If not, widen windows before training. test_candidates.py asserts this on a fixed fixture.
+- ledger entries with voucher_type PURCHASE for a purchase invoice, SALES for a sales invoice, CREDIT_NOTE for a credit note,
+- the same party_id,
+- posting date from 45 days before to 75 days after the invoice date,
+- at most 20, keeping those closest in amount.
+
+Payment matcher, for each invoice (credit notes are skipped):
+
+- bank DEBIT for a purchase invoice, CREDIT for a sales invoice,
+- the bank line's resolved Party equals the invoice's Party, or the narration quotes the invoice,
+- transaction date from 45 days before to 120 days after the invoice date,
+- at most 20 closest in amount, but a line that quotes the invoice is always kept.
+
+Hard check before training: at least 99.5 percent of the true pairs in train must be among the picked pairs. If not, widen the windows first. Measured: 100.0 percent for booking (3,852 true pairs) and 100.0 percent for payment (3,976).
 
 ### 5.2 Features (features.py)
 
-One row per candidate pair. All numeric, missing values allowed (HistGradientBoosting handles NaN).
+One row per pair. All numbers. Empty values are allowed.
 
-| Feature | Definition | A | B |
+| Feature | Meaning | Booking | Payment |
 |---|---|---|---|
-| id_exact | raw IDs equal (1, 0) | yes | narration contains raw ID |
-| id_norm_exact | normalised IDs equal | yes | narration token normalised equal |
-| id_serial_equal | id_serial equal | yes | yes |
-| id_ratio | fuzz.ratio on normalised IDs, 0 to 1 | yes | best over narration tokens |
-| id_dl_sim | Damerau-Levenshtein normalized similarity on raw uppercase IDs | yes | best over narration tokens |
-| id_missing | right side has no ID (1, 0) | yes | yes |
-| amt_rel_diff | abs(left minus right) divided by max(left, right), on totals in paise | yes | yes |
-| amt_within_1 | abs difference at most 100 paise | yes | yes |
-| amt_ratio | right divided by left | yes | yes |
-| amt_log_left | log10 of invoice total in rupees | yes | yes |
-| tax_rel_diff | same as amt_rel_diff on total_tax | yes | no |
-| taxable_rel_diff | same on taxable value | yes | no |
-| date_diff_days | right date minus invoice date, signed | yes | yes |
-| date_abs_diff | absolute value of the above | yes | yes |
-| same_period | same YYYY-MM | yes | no |
-| party_score | 1.0 for same party_id in A; resolver score divided by 100 in B | yes | yes |
-| party_method_ref | resolver used invoice_ref (1, 0) | no | yes |
-| amt_rank | rank of amt_rel_diff among this invoice's candidates, 1 is closest | yes | yes |
-| date_rank | rank of date_abs_diff among this invoice's candidates | yes | yes |
-| n_candidates | candidate count for this invoice | yes | yes |
-| right_open_amount_ratio | for B: bank amount divided by invoice amount still unallocated after higher-ranked matches (computed in a second pass, set NaN in first pass) | no | V2 |
+| id_exact | the two IDs are identical | yes | the narration contains the invoice ID |
+| id_norm_exact | cleaned IDs are equal | yes | for any reference in the narration |
+| id_serial_equal | serials are equal | yes | yes |
+| id_ratio | fuzz.ratio on cleaned IDs, 0 to 1 | yes | best over the references |
+| id_dl_sim | Damerau-Levenshtein similarity on raw uppercase IDs | yes | best over the references |
+| id_missing | the other side has no ID | yes | yes |
+| amt_rel_diff | difference in totals divided by the larger total | yes | yes |
+| amt_within_1 | totals differ by at most Rs 1 | yes | yes |
+| amt_ratio | other side's amount divided by the invoice total | yes | yes |
+| amt_log_left | log10 of the invoice total in rupees | yes | yes |
+| tax_rel_diff | like amt_rel_diff, on total tax | yes | no |
+| taxable_rel_diff | like amt_rel_diff, on taxable value | yes | no |
+| date_diff_days | other side's date minus invoice date | yes | yes |
+| date_abs_diff | the same without the sign | yes | yes |
+| same_period | same calendar month | yes | no |
+| party_score | 1.0 for booking; resolve_score divided by 100 for payment, 0 if the Party differs | yes | yes |
+| party_method_ref | the Party was found from the invoice reference | no | yes |
+| amt_rank | 1 = closest in amount among this invoice's pairs | yes | yes |
+| date_rank | 1 = closest in date among this invoice's pairs | yes | yes |
+| n_candidates | how many pairs this invoice has | yes | yes |
 
-Feature list order is fixed in config.py as MATCHER_FEATURES_A and MATCHER_FEATURES_B and saved into the model card. Inference refuses to run if the artifact's feature list differs from the code's.
+Notes:
+
+- Amounts are compared by size, so a credit note (negative in invoices, positive in the ledger) compares correctly.
+- When the other side has no ID, id_ratio and id_dl_sim are empty and the other ID features are 0.
+- The feature order is fixed in config.py (MATCHER_FEATURES_A and MATCHER_FEATURES_B) and saved with the model. Scoring refuses to run if the saved list differs from the code's list.
 
 ### 5.3 Model and training (matcher.py)
 
 ```
 HistGradientBoostingClassifier(
     learning_rate=0.08,
-    max_iter=400,
     max_leaf_nodes=31,
     min_samples_leaf=20,
     l2_regularization=1.0,
-    early_stopping=False,       # we stop on the validation month ourselves, see step 3
-    warm_start=True,
+    early_stopping=False,
     class_weight="balanced",
     random_state=42,
 )
 ```
 
-Training procedure:
+Steps:
 
-1. Build candidates and features for train and validation.
-2. Sample weights: weight 3.0 for positive pairs whose invoice or ledger entry carries a hard-case label (INVOICE_ID_MISMATCH, AMOUNT_MISMATCH, DATE_MISMATCH, PAYMENT_AMOUNT_MISMATCH, PAYMENT_BEFORE_INVOICE, PARTIAL_PAYMENT, BUNDLED_PAYMENT), 1.0 otherwise. Reason: these are rare and they are exactly what the demo shows.
-3. Fit on train in a loop: set max_iter to 20, 40, 60 and so on up to 400, calling fit each time (warm_start keeps earlier trees). After each step compute average precision on the validation month. Stop after 3 steps without improvement and refit to the best iteration count.
-4. Calibrate on the validation month: CalibratedClassifierCV(FrozenEstimator(fitted_model), method="isotonic") then fit(X_val, y_val). FrozenEstimator comes from sklearn.frozen; the older cv="prefit" form is deprecated in scikit-learn 1.7. The calibrated probability is the confidence shown in the UI.
-5. Baseline: a rule score, 0.45 x id_dl_sim + 0.30 x (1 minus min(amt_rel_diff x 10, 1)) + 0.15 x (1 minus min(date_abs_diff / 60, 1)) + 0.10 x party_score. Report it next to the model. Ship the model only if its test F1 beats the baseline by at least 0.01; otherwise ship the baseline as the matcher (same interface) and say so in the report. This is the demo-safe fallback.
+1. Build pairs and features. Mark each pair as a true match or not (section 3.4). Give it the split of its invoice.
+2. Weights: a true pair gets weight 3.0 if its invoice or its other record has one of these hard-case labels: INVOICE_ID_MISMATCH, AMOUNT_MISMATCH, DATE_MISMATCH, PAYMENT_AMOUNT_MISMATCH, PAYMENT_BEFORE_INVOICE, PARTIAL_PAYMENT, BUNDLED_PAYMENT. Everything else gets 1.0. These cases are rare and they are what matters most.
+3. Train with 20 trees, then 40, 60 and so on up to 400 (warm_start=True keeps the earlier trees). After each step measure average precision on the validation month. Stop after 3 steps with no gain. Then train a fresh model with the best tree count.
+4. Calibrate on the validation month, so the score can be read as a probability: CalibratedClassifierCV(FrozenEstimator(model), method="isotonic").fit(X_val, y_val). FrozenEstimator is in sklearn.frozen. The older cv="prefit" option is deprecated in scikit-learn 1.7. The calibrated score is the Confidence.
+5. Baseline, a simple rule score to compare against: 0.45 x id_dl_sim + 0.30 x (1 minus min(amt_rel_diff x 10, 1)) + 0.15 x (1 minus min(date_abs_diff / 60, 1)) + 0.10 x party_score. An empty id_dl_sim counts as 0.
+6. Ship the model only if its F1 on test beats the baseline by at least 0.01. Otherwise ship the baseline through the same functions and say so in the card. Either way the rest of the app works.
 
 ### 5.4 From scores to matches
 
-Per party block, after scoring:
+1. Assignment. Each invoice gets at most one partner and each record is used at most once. Build groups of invoices and records connected by pairs scoring at least 0.30. In each group run scipy.optimize.linear_sum_assignment on cost = 1 minus Confidence. Pairs under 0.30 are never used.
+2. Bands. Confidence 0.90 or more is auto. 0.70 to 0.90 is review. Below 0.70 is unmatched. The auto threshold is the lowest of 0.90, 0.95 and 0.98 that gives at most 1 percent wrong auto matches on the validation month.
+3. Leftovers. An invoice paid in two parts, or a payment covering two invoices, cannot be fully solved one to one. The second half is left unmatched on purpose. A separate rule-based search in the app (same Party, 60-day window, exact sum on paise) picks those up. The matcher does not try to learn it.
+4. Reasons. Every match carries up to three plain sentences built from its feature values: one about the invoice number, one about the amount, one about the date. Examples: "Invoice number matches after removing prefix and year", "Amount differs by Rs 1.40", "Paid 3 days after the invoice date".
+5. Scoring one month. score_pairs(kind, ds, period) also scores invoices from 120 days before to 60 days after the month, so neighbours compete for the same records. It returns only that month's invoices.
 
-1. Assignment: scipy.optimize.linear_sum_assignment on cost 1 minus calibrated probability, over invoices x candidates in the block. Pairs below 0.30 are given cost 10 so they are never forced.
-2. Bands: confidence at least 0.90 is auto-matched, 0.70 to 0.90 goes to the review queue, below 0.70 is unmatched. Put these numbers in config.py; tune them on validation for at most 1 percent false auto-matches.
-3. Payment matcher only: after one-to-one assignment, leftover bank transactions and leftover invoice balances go to the deterministic one-to-many search in the backend (same party, 60-day window, at most 15 open invoices, exact subset-sum on paise within 100 paise tolerance, prefer fewest invoices then oldest). That search is not ML; it is listed here so the matcher does not try to learn it.
-4. Every returned match carries reasons: the top 3 features by contribution. Use sklearn.inspection.permutation_importance once at training time to rank features globally, then at inference give plain reasons from feature values with fixed templates, for example "Invoice number matches after removing prefix and year", "Amount differs by Rs 1.40", "Paid 3 days after invoice". Templates live in matcher.py, one per feature.
+### 5.5 What we measure, and the targets
 
-### 5.5 Metrics and acceptance gates
+On the test split:
 
-Report on the test split:
+- Pair level: precision, recall and F1 at the auto threshold, and average precision.
+- Invoice level: the share of invoices whose assigned partner (review band or better) is one of its true partners. Invoices with no true partner are reported separately as the share left unmatched.
+- Hard cases: for each hard-case label, the share of its true pairs reaching auto, and reaching review.
+- Benign traps: the share of PARTIAL_PAYMENT, BUNDLED_PAYMENT and ROUNDING_NOISE true pairs that reach review or better.
 
-- Pair level: precision, recall, F1 at the auto-match threshold, and average precision.
-- Invoice level after assignment: share of invoices whose assigned partner equals links truth.
-- Hard cases: recall on positive pairs carrying each hard-case label (5.3 step 2).
-- Benign traps: share of PARTIAL_PAYMENT, BUNDLED_PAYMENT and ROUNDING_NOISE entities that end up matched rather than flagged.
-
-Targets (targets, not claims; report the real numbers whatever they are):
-
-| Metric | Booking A | Payment B |
+| Measure | Booking target | Payment target |
 |---|---|---|
-| Pair F1 at auto threshold | 0.97 | 0.95 |
-| Invoice-level link accuracy | 0.98 | 0.95 |
-| Recall on INVOICE_ID_MISMATCH pairs | 0.90 | 0.85 |
-| Benign traps matched, not flagged | 0.95 | 0.95 |
-| False auto-matches (precision complement) | at most 1 percent | at most 1 percent |
+| Pair F1 at the auto threshold | 0.97 | 0.95 |
+| Invoice-level accuracy | 0.98 | 0.95 |
+| INVOICE_ID_MISMATCH pairs reaching review | 0.90 | 0.85 |
+| Benign traps matched | 0.95 | 0.95 |
+| Wrong auto matches | at most 1 percent | at most 1 percent |
 
-If a target is missed, the report says so in its first lines. Never tune on test.
+These are targets, not claims. Report the real numbers whatever they are. If a target is missed, the report says so in its first lines.
 
-How matcher.py measures these (decided during the build):
+Results of the first run (3 October 2026, test split):
 
-- Invoice-level accuracy counts an invoice as right when its assigned partner, at the review band or better, is one of its true partners. Invoices with no true partner are reported separately as the share left unmatched.
-- Hard-case recall is reported at both the auto and the review threshold; the target table uses review (the pair reaches a human or better).
-- A benign trap counts as matched when its true pairs score at the review threshold or above. A second payment of a partial pair, or the second invoice of a bundled payment, is left over by the one-to-one assignment on purpose and goes to the one-to-many search.
-- The auto threshold is the lowest of 0.90, 0.95, 0.98 with at most 1 percent false auto-matches on the validation month.
-- score_pairs for one period scores invoices from 120 days before to 60 days after the period so neighbours compete for the same records, and returns the period's invoices only.
-
-First run on 2026-10-03 (test split, numbers in the cards): booking shipped the model, pair F1 0.9989 against baseline 0.9819; payment shipped the model, pair F1 1.0000 against baseline 0.7495. The payment test split has 288 true pairs and no INVOICE_ID_MISMATCH pair, so that target is not measured there.
-
-### 5.6 Artifacts
-
-- ml/artifacts/matcher_booking.joblib and ml/artifacts/matcher_payment.joblib: a dict with keys model (calibrated estimator or the baseline marker), features (list), thresholds (auto, review), frozen_aggregates (dict), model_version, trained_at, data_sha256.
-- ml/artifacts/matcher_booking.card.json and matcher_payment.card.json: the same metadata plus all metrics from 5.5, feature importances and the baseline comparison.
-
-## 6. Matcher D (supplier filing, V2)
-
-Same pipeline as 5, with:
-
-- Left: PURCHASE invoices. Right: data/derived/gstr2b.csv lines.
-- Candidates: same supplier GSTIN exactly (never fuzzy-match a GSTIN), return period equal to invoice month or the next month, cap 10.
-- Extra features: period_offset (0 or 1), rate_equal, igst_vs_cgst_pattern_equal (both inter-state or both intra-state).
-- Labels: source_invoice_id in gstr2b.csv. That column is dropped before features are built.
-- Outputs feed the engine's MISSING_IN_2B, MISSING_IN_BOOKS and GSTR2B_VALUE_MISMATCH findings.
-- Targets: pair F1 0.97; recall on supplier-format ID variants 0.95.
-- Artifact: ml/artifacts/matcher_gstr2b.joblib plus card.
-
-## 7. Anomaly detector C
-
-Anomalies must come with a reason a finance judge accepts. So: explicit rule detectors for each known pattern, plus an Isolation Forest that catches what the rules miss and ranks severity. Each flag says which rule fired or which features drove the score.
-
-### 7.1 Rule detectors (anomaly.py, deterministic)
-
-| Rule | Fires when | Maps to label |
+| Measure | Booking | Payment |
 |---|---|---|
-| outlier_amount | taxable value at least 10 times the party's train median, or at least 10 times the category median when the party has fewer than 5 train invoices | OUTLIER_AMOUNT |
-| round_amount_spike | taxable value at least Rs 1,00,000 and divisible by Rs 10,000 | ROUND_AMOUNT_SPIKE |
-| threshold_splitting | 3 or more invoices from one vendor within 4 days, each between 90 and 100 percent of the Rs 2,00,000 approval limit | THRESHOLD_SPLITTING |
-| vendor_burst | 6 or more invoices from one vendor within 3 days, each below the vendor's train median | VENDOR_BURST |
-| weekend_large | invoice dated Sunday and taxable value above the 95th percentile of train | WEEKEND_LARGE_TXN |
-| circular_flow | a bank DEBIT to a party with an amount divisible by Rs 50,000 and no linked invoice, followed within 10 days by a CREDIT from the same resolved party of the same amount | CIRCULAR_FLOW |
+| Shipped | model | model |
+| Pair F1, model | 0.9989 | 1.0000 |
+| Pair F1, baseline | 0.9819 | 0.7495 |
+| Invoice-level accuracy | 0.9989 | 0.9964 |
+| Wrong auto matches | 0.23 percent | 0 percent |
+| Hard cases and benign traps reaching review | all | all |
 
-The approval limit (Rs 2,00,000) and all constants live in config.py. Thresholds above are starting points; tune on validation, then freeze.
+Limits to state with these numbers: the payment test split has only 288 true pairs and no INVOICE_ID_MISMATCH pair, so that target is not measured there. The data is synthetic, so real books will be harder.
+
+### 5.6 Files written by training
+
+- ml/artifacts/matcher_booking.joblib and matcher_payment.joblib: a dict with kind, model (the calibrated model, or the word baseline), features, thresholds (auto, review), frozen_aggregates, model_version, trained_at, data_sha256.
+- ml/artifacts/matcher_booking.card.json and matcher_payment.card.json: the same details plus every measure from 5.5, the feature importances and the baseline comparison.
+
+## 6. Matcher D: supplier filing (later)
+
+The same recipe as section 5, with these changes:
+
+- Left side: purchase invoices. Right side: the lines in data/derived/gstr2b.csv.
+- Pairs to score: the Supplier GSTIN must be exactly equal (never fuzzy-match a GSTIN), the line's Return period is the invoice month or the next month, at most 10 per invoice.
+- Extra features: period_offset (0 or 1), rate_equal, and whether both sides are IGST or both are CGST plus SGST.
+- Truth: source_invoice_id in gstr2b.csv. Drop that column before building features.
+- Targets: pair F1 0.97, and 0.95 recall on lines whose invoice number is written in the Supplier's own style.
+- Output: ml/artifacts/matcher_gstr2b.joblib and its card.
+
+Until this exists, the app matches purchase invoices to GSTR-2B lines with a rule score.
+
+## 7. Anomaly detector C (not built yet)
+
+Every flag must come with a reason a finance person accepts. So we use clear rules for the known patterns, and an Isolation Forest for what the rules miss.
+
+### 7.1 Rules (anomaly.py)
+
+| Rule | Fires when | Label it should catch |
+|---|---|---|
+| outlier_amount | taxable value is at least 10 times the Party's train median (or the category median when the Party has fewer than 5 train invoices) | OUTLIER_AMOUNT |
+| round_amount_spike | taxable value is at least Rs 1,00,000 and divisible by Rs 10,000 | ROUND_AMOUNT_SPIKE |
+| threshold_splitting | 3 or more invoices from one Supplier within 4 days, each between 90 and 100 percent of the Rs 2,00,000 approval limit | THRESHOLD_SPLITTING |
+| vendor_burst | 6 or more invoices from one Supplier within 3 days, each below that Supplier's train median | VENDOR_BURST |
+| weekend_large | dated on a Sunday and taxable value above the 95th percentile of train | WEEKEND_LARGE_TXN |
+| circular_flow | a bank DEBIT to a Party, divisible by Rs 50,000, with no invoice, followed within 10 days by a CREDIT of the same amount from the same Party | CIRCULAR_FLOW |
+
+All numbers live in config.py. They are starting points. Tune them on validation, then fix them. features.train_aggregates already gives the train medians and the 95th percentile.
 
 ### 7.2 Isolation Forest
 
-Fit on PURCHASE and SALES invoices in train months:
+Fit on train-month invoices:
 
 ```
 IsolationForest(n_estimators=300, max_samples="auto", contamination="auto", random_state=42)
 ```
 
-Features: log10 taxable value, ratio to party train median, ratio to category train median, z-score within category, is_round_10000, day_of_week, is_sunday, day_of_month, invoices from same party in previous 3 days, invoices from same party in previous 7 days, days since party's first invoice, tax_rate_pct, is_interstate.
+Features: log10 of taxable value, ratio to the Party's train median, ratio to the category's train median, z-score inside the category, divisible by Rs 10,000, day of week, is Sunday, day of month, invoices from the same Party in the last 3 days, and in the last 7 days, days since the Party's first invoice, tax rate, across states or not.
 
-Score: score_samples, negated so higher is more unusual. Threshold: choose on validation the score at which precision against ANOMALY labels is at least 0.5, then freeze it. Explanation: for a flagged invoice, report the 2 features with the largest absolute z-score against the train distribution, with templates like "15 times this supplier's usual invoice" or "Dated on a Sunday".
+- Score: score_samples with the sign flipped, so higher means more unusual.
+- Threshold: on validation, the score at which at least half the flags are labelled anomalies. Then fix it.
+- Reason: the two features furthest from normal, in plain words, for example "15 times this supplier's usual invoice" or "Dated on a Sunday".
 
-### 7.3 Metrics and targets
+### 7.3 Targets
 
-Per anomaly label type on test: recall, precision, and number of flags. Overall false alarm rate on benign-trap entities. Targets: rule detectors recall 0.90 on their own label type; combined precision 0.50; benign false alarms at most 2 percent. Report real numbers.
+On test, per anomaly label: recall, precision and number of flags. Targets: each rule catches 0.90 of its own label, overall precision 0.50, false alarms on benign traps at most 2 percent. Report the real numbers.
 
-### 7.4 Artifacts
+### 7.4 Files
 
-ml/artifacts/anomaly_invoice.joblib (forest, features, frozen medians and percentiles, threshold, rule constants) and anomaly_invoice.card.json.
+ml/artifacts/anomaly_invoice.joblib (forest, feature list, saved medians, threshold, rule numbers) and anomaly_invoice.card.json.
 
-## 8. Benford screen E (stretch)
+## 8. Benford screen E (optional)
 
-Company-level only: first-digit distribution of taxable values across all purchase invoices in the period, compared to Benford's expected proportions with mean absolute deviation (MAD). Do not run per vendor: median 43 invoices per vendor is too few. Before showing a verdict in the UI, verify the MAD conformity thresholds from a primary source and record it in docs/RESEARCH.md; until then show the chart with the label "screening only" and no pass or fail verdict.
+Take the first digit of the taxable value of every purchase invoice in the period and compare the spread with Benford's law, using mean absolute deviation. Do this for the whole Company only. About 43 invoices per Supplier is too few to do it per Supplier. Show the chart labelled "screening only". Do not show a pass or fail verdict unless the cut-off values are checked against a published source and that source is written in ml/reports.
 
-## 9. Public API and command line
+## 9. Functions and commands
 
-### 9.1 Python API (ledgerlens_ml/__init__.py)
+### 9.1 Functions other code may use (ledgerlens_ml/__init__.py)
 
 ```python
-MODEL_VERSION: str  # for example "2026.10.0"
+MODEL_VERSION: str                      # "2026.10.0"
 
-def load_dataset(path: str | None = None) -> Dataset: ...
-    # Dataset is a frozen dataclass of typed DataFrames: invoices, bank, ledger, tax_rates,
-    # parties, filings, answer_key, labels, links, gstr2b (None until augmented).
+load_dataset(path=None, derived_dir=None, expected_sha256=...) -> Dataset
+# Dataset holds tables: invoices, bank, ledger, tax_rates, parties, filings,
+# answer_key, labels, links, gstr2b (None until augment has run),
+# plus manifest (the augment manifest) and sha256.
+# Pass expected_sha256=None only for the small test workbook.
 
-def score_pairs(kind: Literal["booking", "payment", "gstr2b"], ds: Dataset,
-                period: str | None = None) -> list[MatchResult]: ...
+resolve_bank(bank, parties, invoices) -> bank table with the three resolver columns
 
-def score_anomalies(ds: Dataset, period: str | None = None) -> list[AnomalyResult]: ...
+score_pairs(kind, ds, period=None, artifacts_dir=None) -> list[MatchResult]
+# kind is "booking" or "payment". One MatchResult per invoice.
+
+is_valid_gstin(text) -> bool
 ```
 
 ```python
-class MatchResult(BaseModel):          # pydantic v2
-    kind: Literal["booking", "payment", "gstr2b"]
+class MatchResult(BaseModel):
+    kind: "booking" | "payment" | "gstr2b"
     invoice_id: str
-    right_id: str | None               # ledger entry_id, bank txn_id or gstr2b line id
-    confidence: float                  # calibrated, 0 to 1
-    band: Literal["auto", "review", "unmatched"]
-    reasons: list[str]                 # plain sentences, at most 3
-    features: dict[str, float]         # for the diff view and debugging
+    right_id: str | None      # ledger entry_id or bank txn_id; None when unmatched
+    confidence: float         # 0 to 1
+    band: "auto" | "review" | "unmatched"
+    reasons: list[str]        # up to 3 plain sentences
+    features: dict[str, float]
+```
+
+Still to add with section 7:
+
+```python
+score_anomalies(ds, period=None) -> list[AnomalyResult]
 
 class AnomalyResult(BaseModel):
-    entity_type: Literal["INVOICE", "BANK_TRANSACTION"]
+    entity_type: "INVOICE" | "BANK_TRANSACTION"
     entity_id: str
-    rule: str | None                   # rule name from 7.1, or None if forest-only
-    score: float                       # forest score, higher is more unusual
+    rule: str | None          # rule name, or None if only the forest flagged it
+    score: float              # higher is more unusual
     reasons: list[str]
 ```
 
-Failure behaviour: if an artifact is missing, score_pairs raises ModelNotTrainedError with the command to fix it. The backend catches it and falls back to the baseline rule score, showing "baseline matcher" in the UI. It never silently returns empty results.
+If a model file is missing, score_pairs raises ModelNotTrainedError and the message names the command that fixes it. It never returns an empty list in silence.
 
 ### 9.2 Commands
 
-All run from the repo root with the ml venv active (or prefix with ml\.venv\Scripts\python on Windows).
+Run from the project folder. On Windows put ml\.venv\Scripts\ before python.
 
-| Command | Does |
+| Command | What it does | Status |
+|---|---|---|
+| python -m ledgerlens_ml profile | checks the hash and columns, prints the facts in 3.3, the pair check in 5.1 and a summary of the features | works |
+| python -m ledgerlens_ml augment | writes the three files in data/derived | works |
+| python -m ledgerlens_ml train --model booking | trains the booking matcher, writes the model and card | works |
+| python -m ledgerlens_ml train --model payment | trains the payment matcher | works |
+| python -m ledgerlens_ml train --all | trains every model | works |
+| python -m pytest ml/tests -q | runs the tests | works |
+| python -m ledgerlens_ml train --model anomaly | fits the anomaly detector | to build |
+| python -m ledgerlens_ml evaluate | scores the test split, writes ml/reports/ML_REPORT.md and metrics.json | to build |
+| python -m ledgerlens_ml predict --period 2025-09 --out out/predictions_2025-09.json | runs every model on one month | to build |
+| python -m ledgerlens_ml train --model gstr2b | trains matcher D | to build |
+
+ML_REPORT.md layout: first a table of target against actual with pass or miss, then details per model, then the baseline comparison, then the known limits (including the Rule 37 clash in 3.4).
+
+## 10. Tests
+
+Write the test first, see it fail, then write the code. Test the logic, not the plumbing.
+
+| Test file | What it checks |
 |---|---|
-| python -m ledgerlens_ml profile | checks the hash and column contract, prints the facts table in 3.3 |
-| python -m ledgerlens_ml augment | writes data/derived/gstr2b.csv and augment labels |
-| python -m ledgerlens_ml train --model booking | trains matcher A, writes artifact and card |
-| python -m ledgerlens_ml train --model payment | trains matcher B |
-| python -m ledgerlens_ml train --model gstr2b | trains matcher D (V2) |
-| python -m ledgerlens_ml train --model anomaly | fits detector C |
-| python -m ledgerlens_ml train --all | all of the above in order |
-| python -m ledgerlens_ml evaluate | scores test split, writes ml/reports/ML_REPORT.md and ml/reports/metrics.json |
-| python -m ledgerlens_ml predict --period 2025-09 --out out/predictions_2025-09.json | runs every model on one month, writes MatchResult and AnomalyResult lists |
-| python -m pytest ml/tests -q | unit tests |
+| test_normalise.py | every row of the table in 4.1; party names on 6 real pairs; narration references |
+| test_parties.py | the right Party for 10 real bank lines, including a cut-off name, a name without spaces and a line where only the narration helps |
+| test_candidates.py | at least 99.5 percent of true pairs kept; no DEBIT paired with a sales invoice; the cap keeps the closest amounts |
+| test_features.py | amounts, dates and ID features on hand-made pairs; column order equals config |
+| test_split.py | no invoice in two splits; averages read train months only |
+| test_matcher_contract.py | a saved model loads back; a changed feature list is refused; Confidence is 0 to 1; Band follows the thresholds; assignment is one to one |
+| test_augment.py | two runs give identical files; rates within 1 percent of the settings; every GSTIN passes the check character |
+| test_anomaly_rules.py | each rule fires on a planted row and stays quiet on a near miss (to write) |
 
-ML_REPORT.md layout: first a table of targets vs actual with pass or miss, then per-model detail, then the baseline comparison, then known limitations (including the Rule 37 label conflict in 3.4).
+ml/tests/fixtures/mini.xlsx is a small copy of the workbook: every record of 3 Suppliers and 3 Customers picked with seed 7 (280 invoices). ml/tests/fixtures/make_mini.py makes it. Most tests use it. test_augment.py loads the real workbook once (about 7 seconds) because the rates only mean something at full size. The whole suite has 81 tests and runs in about 12 seconds.
 
-## 10. Tests to write first (TDD)
+## 11. Build order
 
-Write each test, watch it fail, then implement. Do not write tests for glue or plotting.
+Each step ends with something you can run. Run the tests after every step.
 
-| Test file | Asserts |
-|---|---|
-| test_normalise.py | every row of the table in 4.1; party name normaliser on 6 real pairs from the data |
-| test_parties.py | resolver returns the right party for 10 hand-picked bank rows, including one truncated name and one narration-only case |
-| test_candidates.py | candidate recall at least 99.5 percent on a 200-invoice fixture; no candidate crosses direction (DEBIT with SALES) |
-| test_features.py | amt_rel_diff, date_diff_days and id features on hand-built pairs; feature column order equals config |
-| test_split.py | no invoice in two splits; aggregates read train only |
-| test_matcher_contract.py | saved artifact round-trips; inference rejects a mismatched feature list; confidence in 0 to 1; band follows thresholds |
-| test_anomaly_rules.py | each rule fires on a planted fixture row and stays silent on a near miss |
-| test_augment.py | same seed gives byte-identical gstr2b.csv; label counts within 1 percent of configured rates; every generated GSTIN passes the check digit |
-
-A small fixture workbook (ml/tests/fixtures/mini.xlsx, written by ml/tests/fixtures/make_mini.py: every record of 3 suppliers and 3 customers picked with seed 7, 280 invoices) keeps most tests fast. test_augment.py loads the real workbook once (about 7 seconds) because the augmentation rates only mean something at full size; the whole suite runs in about 10 seconds.
-
-## 11. Build order with done conditions
-
-Each step ends with something you can run and check. Typecheck is not applicable to plain Python here; run python -m pytest ml/tests -q after every step.
-
-| Step | Build | Done when | Verify with |
+| Step | Build | Done when | Status |
 |---|---|---|---|
-| 1 | Package skeleton, requirements, config, data.py with hash and column checks | profile prints the 3.3 facts and they match | python -m ledgerlens_ml profile |
-| 1b | augment.py (tests first), because the MVP headline numbers (ITC at risk, ITC found) need GSTR-2B lines, matched by the baseline rule score until matcher D exists | gstr2b.csv and augment labels written, same bytes on rerun | augment, then pytest |
-| 2 | normalise.py, parties.py (tests first) | all 4.1 cases and resolver tests pass | pytest |
-| 3 | candidates.py (tests first) | candidate recall gate passes on full train | profile output adds candidate recall line |
-| 4 | features.py (tests first) | feature frame builds for train, no NaN except where allowed | pytest, plus a printed describe() |
-| 5 | matcher.py for booking: baseline, model, calibration, assignment, reasons | card written; test metrics printed | train --model booking |
-| 6 | payment matcher | card written | train --model payment |
-| 7 | anomaly.py rules then forest | card written; per-rule recall printed | train --model anomaly |
-| 8 | evaluate.py and report | ML_REPORT.md exists with targets table | evaluate |
-| 9 | predict command and API used by the backend | predictions JSON for 2025-09 loads in the backend | predict --period 2025-09 |
-| 10 | learned gstr2b matcher (V2) | gstr2b card written | train --model gstr2b |
-| 11 | Benford screen (stretch) | chart data in predictions JSON, labelled screening only | predict |
+| 1 | package, requirements, config, data.py | profile runs and the hash check passes | done |
+| 2 | augment.py | two runs give the same files | done |
+| 3 | normalise.py, parties.py | the 4.1 table and the Party tests pass | done |
+| 4 | candidates.py | the 99.5 percent check passes on train | done |
+| 5 | features.py | feature tables build with empty values only in id_ratio and id_dl_sim | done |
+| 6 | matcher.py, booking | card written, test numbers printed | done |
+| 7 | payment matcher | card written | done |
+| 8 | anomaly.py: rules, then the forest | card written, recall per rule printed | next |
+| 9 | evaluate.py | ML_REPORT.md exists with the targets table | to do |
+| 10 | predict command | a predictions file for 2025-09 is written | to do |
+| 11 | matcher D | gstr2b card written | later |
+| 12 | Benford screen | chart data in the predictions file | optional |
 
-Something demo-able exists after step 6: the backend can show matched, review and unmatched pairs with confidence and reasons for any month.
+## 12. Single-file program (optional)
 
-## 12. Single-file executable (optional)
-
-For a laptop without Python, build a Windows executable of the command line:
+For a laptop without Python you can build one Windows program:
 
 ```
 ml\.venv\Scripts\python -m pip install pyinstaller==6.22.3
 ml\.venv\Scripts\pyinstaller --onefile --name ledgerlens-ml --collect-data ledgerlens_ml --add-data "ml\artifacts;ledgerlens_ml\artifacts" ml\ledgerlens_ml\__main__.py
 ```
 
-Output: dist\ledgerlens-ml.exe. Check it with: dist\ledgerlens-ml.exe predict --period 2025-09 --out out\check.json. Expect a file of roughly 60 to 120 MB (numpy, scipy and scikit-learn are bundled). The demo itself does not need this; the backend imports the package directly.
+The result is dist\ledgerlens-ml.exe, roughly 60 to 120 MB. The app does not need it.
 
-## 13. Risks and fallbacks
+## 13. What can go wrong
 
-| Risk | Early signal | Fallback that still demos |
+| Risk | How you notice | What to do |
 |---|---|---|
-| Model barely beats the rule baseline | step 5 report | ship the baseline matcher through the same interface; the deck says "rules with confidence scores" and it is still true |
-| Candidate recall below 99.5 percent | step 3 gate | widen date windows, raise the cap to 40, add narration-ID candidates regardless of party |
-| Augmented GSTR-2B looks too clean | ID-variant recall near 1.0 on day one | raise variant and value-mismatch rates in config, regenerate, retrain; never hand-edit the CSV |
-| Anomaly precision very low | step 7 | show rule-based anomalies only, forest score as a secondary sort; say so in the report |
-| Label conflict on Rule 37 confuses a judge | question in Q and A | the report section in 3.4 explains it in two sentences |
-| Different Python on the demo laptop | pip install fails | use the committed artifacts plus the PyInstaller executable from section 12 |
+| The model barely beats the baseline | the card after training | ship the baseline; the code does this by itself |
+| Fewer than 99.5 percent of true pairs are kept | the profile output | widen the date windows, raise the cap to 40 |
+| The GSTR-2B lines are too clean | every line matched on the first try | raise the rates in config.py, run augment and train again |
+| Anomaly precision is very low | the anomaly card | show only the rule flags, use the forest score for sorting |
+| Someone asks why unpaid invoices marked benign are reported | questions | the Rule 37 note in 3.4 |
+| A different Python on another laptop | pip install fails | use the saved files in ml/artifacts, or the program in section 12 |
 
-## 14. Decisions made (override if you disagree)
+## 14. Decisions and why
 
-- Gradient boosting over logistic regression: interactions between ID similarity and amount difference matter (a near-match ID with an exact amount is strong; either alone is weak). Logistic regression would need hand-built interaction features.
-- Calibrated probabilities are shown to users as "how sure we are". Isotonic calibration on the validation month, because the score drives the auto, review and unmatched bands.
-- Temporal split, not random: a random split leaks vendor-specific patterns from the future and inflates numbers.
-- The one-to-many payment search stays deterministic: it is an exact combinatorial problem, and a wrong learned answer would be hard to explain.
-- Benford is company-level only and verdict-free until thresholds are verified.
+- Gradient boosting, not logistic regression: a near-match ID with an exact amount is strong, but each alone is weak. Trees learn such combinations. Logistic regression would need them hand-built.
+- Calibrated scores: the score is shown to people as how sure we are, and it sets the Band. So it must behave like a probability.
+- Split by time, not at random: a random split lets the model see later months of the same Party and makes the numbers look better than they are.
+- One payment for several invoices is solved by exact search, not by the model: it is an exact sum problem, and a wrong learned answer would be hard to explain.
+- The account step in Party resolution: same-named parties exist, and each Party has its own bank account.
+- Benford is for the whole Company only, with no verdict until the cut-offs are checked.

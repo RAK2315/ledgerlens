@@ -1,6 +1,6 @@
 # 05 Build plan
 
-MVP first. Every phase ends in something you can run and show. Commit at the end of every phase with a descriptive message. Run tests and typecheck during each phase, not only at the end. Timeline: the event date is not known yet; ask the user, then add dates here.
+MVP first. Every phase ends in something you can run and show. Commit at the end of every phase with a descriptive message. Run tests and typecheck during each phase, not only at the end. Timeline: prototype video due 4 Oct 2026, 1:30 AM (2 to 2.5 minutes; script in docs/DEMO_SCRIPT.md, written once the user approves the frontend). Results about 3:00 AM. Final presentation at NSUT Dwarka, 4 Oct 2026, 10:30 AM. Record the video from whatever is working at about midnight; the demo has a story after phase 7, the approve moment after phase 8 and the ring after phase 10.
 
 ## Phases
 
@@ -17,7 +17,7 @@ MVP first. Every phase ends in something you can run and show. Commit at the end
 | 9 | Workbench with One-to-many view | filters work, One-to-many renders | browser walk |
 | 10 | Ring view | September ring and cancelled GSTIN visible with reasons | browser walk; compare with deck/images/mockups/supplier_graph.png |
 | 11 | Liability and money check against answer_key | computed vs declared gap shown; engine test compares with answer_key | pytest; browser walk |
-| 12 | Evaluation (engine plus ML steps 7 to 9) and proof screen | /api/eval returns rows; proof screen renders; ML_REPORT.md written | evaluate; browser walk |
+| 12 | Evaluation (engine plus ML steps 8 to 10) and proof screen | /api/eval returns rows; proof screen renders; ML_REPORT.md written | evaluate; browser walk |
 | 13 | Claude Drafts: read claude-api skill, llm.py with cache, precache for 2025-09 | with network off, every September Finding opens a Draft from cache or template | LLM_MODE=cache_only, network off, walk the drawer on 10 Findings |
 | 14 | Demo hardening: self-hosted fonts, NEXT_PUBLIC_DEMO next-step control, the 8-step journey | three clean offline runs, zero console errors | full walk with console open; Playwright script of the journey |
 | 15 | Quality passes: deslop, then thermo-nuclear review if time allows, then simplify and code-review | review findings resolved or listed | tests and typecheck green |

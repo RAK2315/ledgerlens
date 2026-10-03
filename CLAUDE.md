@@ -6,10 +6,11 @@ Vocabulary lives in CONTEXT.md. Use its terms in code, UI and docs.
 
 ## Status
 
+- Stage: prototype round (shortlisted from the ideathon). Prototype video (2 to 2.5 minutes: problem, approach, demo) due 4 Oct 2026, 1:30 AM. Results about 3:00 AM. Final presentation on campus at NSUT Dwarka, 4 Oct 2026, 10:30 AM, with the working prototype and the deck. The plan is still to build the whole project.
 - Ideathon deck: done (deck/, see deck/NOTES.md). Team details on slide 3 are still placeholders.
 - Blueprint: complete. CONTEXT.md, this file, ML_BUILD.md, plan/00 to plan/06 and plan/schema.sql.
 - Code: plan/05-build-plan.md phases 1 and 2 done. ml package has the loader, augment, normalisers, counterparty resolver, candidates, features and the booking and payment matchers (artifacts and cards in ml/artifacts, both beat the baseline on the test split); commands profile, augment, train; 81 tests. Next step is phase 3, the backend scaffold and records load.
-- Dataset: data/source/tax_recon_dataset.xlsx (SHA-256 in ML_BUILD.md 3.1). GSTR-2B lines and augment labels are in data/derived, written by ml augment and committed; choices made there are listed at the end of ML_BUILD.md 3.5.
+- Dataset: data/source/tax_recon_dataset.xlsx (SHA-256 in ML_BUILD.md 3.1). GSTR-2B lines and augment labels are in data/derived, written by ml augment and committed; choices made there are in ML_BUILD.md 3.5. ML_BUILD.md is written to stand alone (it needs only the dataset) in simple language; keep it that way when editing.
 
 Update this section as phases land.
 
