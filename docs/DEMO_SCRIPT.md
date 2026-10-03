@@ -2,7 +2,7 @@
 
 For the prototype video (2 to 2.5 minutes: problem, approach, demo) and, further down, the live presentation. Every number in the lines below was read from the running app on 3 Oct 2026 for the demo month, September 2025. If an engine change moves a number, change it here too.
 
-The spoken lines come to 393 words over 2:29. The words are meant to fill each shot, so you talk while you click.
+The spoken lines come to 395 words over 2:29. The words are meant to fill each shot, so you talk while you click.
 
 ## Before you record
 
@@ -17,9 +17,9 @@ The spoken lines come to 393 words over 2:29. The words are meant to fill each s
 
 Each shot has a short Do list and the exact words to Say. The words are written to fill the shot: start speaking as the shot starts and do the actions while you talk, so there is no silence.
 
-In all: 393 words over 2:29, which is a brisk but clear pace (about 160 words a minute). Rehearse once with a timer. If you speak slower, use the cuts below rather than rushing.
+In all: 395 words over 2:29, which is a brisk but clear pace (about 160 words a minute). Rehearse once with a timer. If you speak slower, use the cuts below rather than rushing.
 
-### 0:00 to 0:20  The problem
+### 0:00 to 0:23  The problem
 
 Screen: Landing page, top
 
@@ -28,11 +28,11 @@ Do:
 1. Start at the top of the landing page.
 2. Scroll slowly to "Four records describe one purchase" and stop there.
 
-Say (49 words):
+Say (61 words):
 
-> Every month an Indian business has to make four records agree: its invoices, its books, its bank statement, and GSTR-2B, the statement of what its suppliers reported. When they disagree, input tax credit is lost or tax is overpaid, and today that is found late, by hand, in spreadsheets.
+> Every month an Indian business has to make four records agree: its invoices, its books, its bank statement, and GSTR-2B, the statement of what its suppliers reported. When they disagree, it loses input tax credit, the tax paid on purchases that it can deduct from what it owes, or it overpays tax. Today that is found late, by hand, in spreadsheets.
 
-### 0:20 to 0:34  The approach
+### 0:23 to 0:37  The approach
 
 Screen: Landing page, "Seven stages, one month"
 
@@ -44,7 +44,7 @@ Say (35 words):
 
 > LedgerLens reconciles the month end to end. It prices every mismatch in rupees, shows the evidence, and drafts the fix for you to approve. Code decides every number. The language model only words the explanation.
 
-### 0:34 to 0:50  The Run
+### 0:37 to 0:52  The Run
 
 Screen: Landing page top, then the Run overlay
 
@@ -53,11 +53,11 @@ Do:
 1. Scroll to the top and click Run again (Load demo company on a fresh install).
 2. Hands off while the feed streams.
 
-Say (46 words):
+Say (40 words):
 
-> This is one month of books for a demo company: September 2025, the month GST rates changed. What you see going by are real records: invoice numbers a supplier wrote in its own style, one payment settling two invoices, and each stage reporting what it found.
+> This is one month of books for a demo company: September 2025, the month GST rates changed. What you see going by are real records: invoice numbers a supplier wrote in its own style, and one payment settling two invoices.
 
-### 0:50 to 1:08  The dashboard
+### 0:52 to 1:08  The dashboard
 
 Screen: Dashboard
 
@@ -66,9 +66,9 @@ Do:
 1. Move the pointer across the four numbers as you name them.
 2. Scroll slowly down through the page to the charts.
 
-Say (44 words):
+Say (40 words):
 
-> Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable is 34.97 lakh. Below that: what to fix first, why the credit is at risk, how the month matched, and the filed return against our working.
+> Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable, the tax to pay this month, is 34.97 lakh. Below that: why the credit is at risk and what to fix first.
 
 ### 1:08 to 1:32  A Finding, and the approval
 
@@ -138,13 +138,13 @@ Say (8 words):
 
 The same lines in one block, for rehearsing or for recording the voice first and the screen to match.
 
-**0:00** Every month an Indian business has to make four records agree: its invoices, its books, its bank statement, and GSTR-2B, the statement of what its suppliers reported. When they disagree, input tax credit is lost or tax is overpaid, and today that is found late, by hand, in spreadsheets.
+**0:00** Every month an Indian business has to make four records agree: its invoices, its books, its bank statement, and GSTR-2B, the statement of what its suppliers reported. When they disagree, it loses input tax credit, the tax paid on purchases that it can deduct from what it owes, or it overpays tax. Today that is found late, by hand, in spreadsheets.
 
-**0:20** LedgerLens reconciles the month end to end. It prices every mismatch in rupees, shows the evidence, and drafts the fix for you to approve. Code decides every number. The language model only words the explanation.
+**0:23** LedgerLens reconciles the month end to end. It prices every mismatch in rupees, shows the evidence, and drafts the fix for you to approve. Code decides every number. The language model only words the explanation.
 
-**0:34** This is one month of books for a demo company: September 2025, the month GST rates changed. What you see going by are real records: invoice numbers a supplier wrote in its own style, one payment settling two invoices, and each stage reporting what it found.
+**0:37** This is one month of books for a demo company: September 2025, the month GST rates changed. What you see going by are real records: invoice numbers a supplier wrote in its own style, and one payment settling two invoices.
 
-**0:50** Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable is 34.97 lakh. Below that: what to fix first, why the credit is at risk, how the month matched, and the filed return against our working.
+**0:52** Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable, the tax to pay this month, is 34.97 lakh. Below that: why the credit is at risk and what to fix first.
 
 **1:08** Open a Finding. This invoice was charged 28 percent, three days after the rate for that product became 18. On the left is what the invoice says, on the right what it should be, then the rule in plain words. Below it is a credit note, already drafted. I approve it, and excess tax on the dashboard drops from 24,117 rupees to 2,681.
 
@@ -160,7 +160,7 @@ The same lines in one block, for rehearsing or for recording the voice first and
 
 Cut in this order. Each cut leaves the story whole.
 
-1. In the dashboard shot, stop after "Net payable is 34.97 lakh." Saves about 6 seconds.
+1. In the dashboard shot, stop after "is 34.97 lakh." Saves about 5 seconds.
 2. In the ring shot, drop the last sentence about the year. Saves about 5 seconds.
 3. In the proof shot, drop the last sentence about the Data page and do not open Data. Saves about 7 seconds.
 

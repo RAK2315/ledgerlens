@@ -85,7 +85,11 @@ export default function StartPage() {
         <p className="mt-3 text-center text-[14px] text-ink-2">The dashboard for the demo month. Everything on this page is the app itself with real results, not a picture.</p>
       </div>
 
-      <section id="problem" className="scroll-mt-10 py-28">
+      <section
+        id="problem"
+        className="scroll-mt-10 bg-cover bg-center py-28"
+        style={{ backgroundImage: "linear-gradient(to bottom, var(--paper), transparent 25%, transparent 75%, var(--cream)), url(/landing-bg.png)" }}
+      >
         <div className={WIDE}>
           <h2 className={`max-w-[18ch] ${H2}`}>Four records describe one purchase. They rarely agree.</h2>
           <div className="mt-12 grid grid-cols-4 gap-x-10">

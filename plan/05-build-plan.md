@@ -70,6 +70,10 @@ Asked for after seeing the rebuilt app. Items 2 and 3 are built and not yet comm
 
 Notes on items 2 and 3: radii come from three sizes in globals.css (r-control 4px, r-surface 6px, r-bar 2px, used as rounded-control, rounded-surface and rounded-bar), so one edit there changes every screen; status dots stay round. Rows that open a Finding use the row-action class with a row-cta label inside: the row tints and the label fills orange on hover. Buttons get the pointer cursor from a rule in globals.css, because Tailwind 4 gives them the default cursor.
 
+Sidebar (asked for after items 2 and 3, because the icon rail with a tinted active box still read as AI-made): a 152px list under the LedgerLens wordmark, a small line icon before each label (the user asked for icons back, but different ones), the current page marked by an orange bar on the left edge. The presenter guide bar in DemoGuide.tsx is offset by the same 152px. At 1440 wide the Start here line on the dashboard now wraps to two lines.
+
+Landing background: frontend/public/landing-bg.png is a ledger paper texture the user generated; it sits behind the problem section only, faded into white above and cream below. frontend/.env.local has NEXT_PUBLIC_DEMO commented out for the video build; put it back and rebuild before the live presentation.
+
 1. README.md for people who are not technical: walk from the problem to the solution and the USP, using sentences from the organisers' problem statement (docs/PROBLEM_STATEMENT.md), with images. The seven capabilities the statement lists should each be answered by what LedgerLens does. It still needs the run steps and the hosted copy section, lower down.
 2. Dashboard buttons must look like buttons on hover. Today the action lines (Start here, Rate change), the Findings rows and the text links only underline or tint faintly.
 3. Corners are too rounded in many places, which the user reads as the AI look. Radii in use: 9px buttons, 14 to 20px panels and bands, rounded-xl and rounded-full in several places (globals.css and the components).

@@ -54,7 +54,7 @@ export function DemoGuide() {
     router.push(steps[to].path);
   };
   return (
-    <div data-guide className="fixed bottom-0 left-[84px] right-0 z-30 border-t-2 border-ink bg-paper">
+    <div data-guide className="fixed bottom-0 left-[152px] right-0 z-30 border-t-2 border-ink bg-paper">
       <div className="flex items-center gap-6 px-8 py-3">
         <p className="font-display text-[26px] font-extrabold leading-none">
           {index + 1}

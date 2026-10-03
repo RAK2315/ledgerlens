@@ -142,7 +142,7 @@ export default function DashboardPage() {
             {first ? (
               <button onClick={() => setOpenId(first.id)} className="row-action flex w-full items-center gap-4 px-2 py-3 text-left">
                 <span className="w-28 shrink-0 whitespace-nowrap font-display text-[18px] font-bold leading-none text-orange-deep">Start here</span>
-                <span className="flex-1">
+                <span className="flex-1 text-pretty">
                   <b>{first.title}.</b> The evidence, the rule and a drafted fix are ready.
                 </span>
                 <span className="row-cta text-[15px]">
@@ -160,7 +160,7 @@ export default function DashboardPage() {
             <li>
               <button onClick={() => setOpenId(rateChange[0].id)} className="row-action flex w-full items-center gap-4 px-2 py-3 text-left">
                 <span className="w-28 shrink-0 whitespace-nowrap font-display text-[18px] font-bold leading-none text-bad">Rate change</span>
-                <span className="flex-1">
+                <span className="flex-1 text-pretty">
                   <b>
                     {rateChange.length} {rateChange.length === 1 ? "invoice" : "invoices"} this month still {rateChange.length === 1 ? "uses" : "use"} a GST rate that ended on 22 Sep 2025.
                   </b>{" "}

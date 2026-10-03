@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { BadgeCheck, Database, LayoutDashboard, ListChecks, Network, ScrollText, Scale, Search, Zap } from "lucide-react";
+import { Calculator, FileSpreadsheet, IndianRupee, Rows3, ScrollText, Target, Waypoints, Zap } from "lucide-react";
 import { useRun } from "@/lib/run-store";
 import { periodName } from "@/lib/format";
 import { ErrorState, Skeleton } from "./ui";
@@ -11,21 +11,13 @@ import { RunLog, RunOverlay } from "./RunOverlay";
 import { DemoGuide } from "./DemoGuide";
 
 const NAV = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/workbench", label: "Workbench", icon: ListChecks },
-  { href: "/graph", label: "Ring view", icon: Network },
-  { href: "/liability", label: "Liability", icon: Scale },
-  { href: "/proof", label: "Proof", icon: BadgeCheck },
-  { href: "/data", label: "Data", icon: Database },
+  { href: "/dashboard", label: "Dashboard", icon: IndianRupee },
+  { href: "/workbench", label: "Workbench", icon: Rows3 },
+  { href: "/graph", label: "Ring view", icon: Waypoints },
+  { href: "/liability", label: "Liability", icon: Calculator },
+  { href: "/proof", label: "Proof", icon: Target },
+  { href: "/data", label: "Data", icon: FileSpreadsheet },
 ];
-
-export function Logo({ dark = false }: { dark?: boolean }) {
-  return (
-    <span className={`flex size-10 items-center justify-center rounded-surface ${dark ? "bg-ink text-cream" : "bg-white/10 text-white"}`} aria-hidden>
-      <Search className="size-5" strokeWidth={2.6} />
-    </span>
-  );
-}
 
 export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -41,26 +33,28 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen">
-      <nav aria-label="Main" className="sticky top-0 flex h-screen w-[84px] shrink-0 flex-col items-center gap-1 bg-side py-4">
-        <Link href="/" aria-label="LedgerLens start" className="mb-4">
-          <Logo />
+      <nav aria-label="Main" className="sticky top-0 flex h-screen w-[152px] shrink-0 flex-col bg-side">
+        <Link href="/" className="flex h-[72px] items-center border-b border-white/10 px-5 font-display text-[22px] font-extrabold leading-none text-cream hover:text-white">
+          LedgerLens
         </Link>
-        {NAV.map(({ href, label, icon: Icon }) => {
-          const active = pathname.startsWith(href);
-          return (
-            <Link
-              key={href}
-              href={href}
-              aria-current={active ? "page" : undefined}
-              className={`flex w-[68px] flex-col items-center gap-1 rounded-surface py-2.5 text-[11px] font-semibold ${
-                active ? "bg-orange/20 text-orange" : "text-white/60 hover:bg-white/15 hover:text-white"
-              }`}
-            >
-              <Icon className="size-5" aria-hidden />
-              {label}
-            </Link>
-          );
-        })}
+        <div className="mt-4 grid">
+          {NAV.map(({ href, label, icon: Icon }) => {
+            const active = pathname.startsWith(href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={`flex items-center gap-2.5 border-l-[3px] py-2.5 pl-[17px] pr-3 text-[15px] font-semibold ${
+                  active ? "border-orange text-white" : "border-transparent text-white/55 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                <Icon className={`size-[17px] shrink-0 ${active ? "text-orange" : ""}`} strokeWidth={1.75} aria-hidden />
+                {label}
+              </Link>
+            );
+          })}
+        </div>
       </nav>
 
       <div className="min-w-0 flex-1">
