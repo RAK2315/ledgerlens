@@ -24,7 +24,8 @@ await page.goto(base, { waitUntil: "networkidle" });
 if (want("start")) await shot("01-start");
 
 if (want("run")) {
-  await page.getByRole("button", { name: /Load demo company|Run again/ }).click();
+  // The landing page has the main action at the top and again at the bottom.
+  await page.getByRole("button", { name: /Load demo company|Run again/ }).first().click();
   await page.waitForTimeout(1800);
   await shot("02-running");
   await page.waitForURL("**/dashboard", { timeout: 120000 });
@@ -46,7 +47,7 @@ if (want("hero")) {
   }
   await page.keyboard.press("Escape");
 }
-for (const [name, path, marker] of [["workbench", "/workbench", "Findings"], ["graph", "/graph", "Ring view"], ["liability", "/liability", "Net payable"], ["proof", "/proof", "Catch rate"]]) {
+for (const [name, path, marker] of [["workbench", "/workbench", "Findings"], ["graph", "/graph", "Ring view"], ["liability", "/liability", "Net payable"], ["proof", "/proof", "Catch rate"], ["data", "/data", "Browse the records"]]) {
   if (!want(name)) continue;
   const response = await page.goto(`${base}${path}`, { waitUntil: "networkidle" });
   if (!response || response.status() >= 400) {

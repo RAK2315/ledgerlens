@@ -44,7 +44,7 @@ export default function LiabilityPage() {
 
       <div className="grid grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-4">
         <section className="card p-5">
-          <h2 className="mb-3 font-display text-lg font-bold">Net payable by tax type</h2>
+          <h2 className="mb-4 font-display text-[28px] font-bold leading-tight">Net payable by tax type</h2>
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-line text-right text-[13px] text-ink-3">
@@ -78,7 +78,7 @@ export default function LiabilityPage() {
         </section>
 
         <section className="card p-5">
-          <h2 className="mb-3 font-display text-lg font-bold">Against the filed return</h2>
+          <h2 className="mb-4 font-display text-[28px] font-bold leading-tight">Against the filed return</h2>
           {!data.declared ? (
             <p className="text-ink-2">No return is on file for this period.</p>
           ) : (

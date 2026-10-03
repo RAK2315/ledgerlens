@@ -36,6 +36,8 @@ After phase 7 the demo has a story (load and dashboard). After phase 8 it has th
 
 The user tested every screen. Overall verdict: it works, but it looks AI-generated and shows too little of the thinking behind it. Do these before the demo script. Answers below were confirmed with the user; nothing here is a guess unless marked.
 
+Status, 3 Oct 2026 late evening: items 1 to 9 are built and pushed. The user picked the bold direction (the one with the dark headline band) after seeing two, then asked for the charts back on the dashboard, which is done. Notes from this work are under "Notes from the review fixes" below. Not yet done: the user's second test of the whole app.
+
 ### Bugs
 
 1. The Run overlay names the wrong month. Choosing another Return period shows "Reconciling <the month you were on>" while the stage text is for the chosen month (seen: title December 2025, stage text 2025-10). Cause: lib/run-store.tsx sets period only after the Run ends, and components/Shell.tsx titles the overlay and the select from run.period. Fix: keep a target period in the store from the moment launch or choosePeriod starts, and use it for the overlay title and the select.
@@ -58,9 +60,20 @@ The user is not sure which direction to take. So: use the impeccable skill, make
 
 ### Still open from before
 
-- docs/DEMO_SCRIPT.md (2 to 2.5 minutes: problem, approach, demo). Write it only after the user approves the reworked frontend.
+- docs/DEMO_SCRIPT.md is written (the user asked for it before the second test). Recheck its numbers if the engine changes.
 - Hosted deploy: Dockerfile and render.yaml are untried; needs the user's accounts.
 - Quality passes (deslop, simplify, code review) and the answer_key liability test.
+
+## Notes from the review fixes
+
+- Look: PRODUCT.md is the design brief. Sections sit on a heavy rule (the card class) instead of in boxes, Pill is a dot and a label, PageTitle and Heading in components/ui.tsx carry the type scale. The panel class is for surfaces that float (the Run overlay).
+- The landing page shows September 2025 numbers from frontend/lib/demo-month.ts before any data is loaded. Update that file if an engine change moves the dashboard numbers. Its screenshots come from frontend/scripts/landing-shots.mjs; run it after redesigning the dashboard, drawer, ring or proof screens.
+- Live feed: backend/app/engine/feed.py picks up to six real lines per stage; they are stored in run_items and streamed as item events next to stage events. Items are ordered by the stage event they follow (after_event), not by time, because timestamps tie when the stage delay is zero. LEDGERLENS_STAGE_DELAY is 0.7 seconds, which gives a Run of about 9 seconds.
+- Anything under backend/app/engine is part of the analysis cache key, so every edit there costs a 20 second recompute (python -m app.warm). View code that only reads results lives outside it: backend/app/proof.py and backend/app/ring_view.py.
+- Proof: the headline catch rate counts planted mistakes only (287 of 288 on the test months, 8 false alarms). True matches are reported in the matcher section against the rule baseline from the cards. Whole year: 1,567 of 1,586 caught, 34 false alarms, almost all in the anomaly screens.
+- Ring view: rings.graph returns every Party; the page draws the 18 largest unless asked for all. No two Parties share a bank account in this data, and the page says so rather than hiding the check.
+- The Data page's "why this data" wording is not from a source document; it was written from what the workbook contains. The user should correct it if the real reason for choosing the dataset differs.
+- Editing from Git Bash: a path argument starting with a slash is rewritten to a Windows path, and shell heredocs with apostrophes break. Write patch scripts with the Write tool and run them.
 
 ## Notes from phases 3 to 13
 

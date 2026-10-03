@@ -10,7 +10,8 @@ Built for Fintechstico V7.0 (NSUT Consilium'26), problem statement 2.
 |---|---|
 | ml | Data loading, GSTR-2B generation, the two trained matchers (invoice to ledger, invoice to bank) |
 | backend | FastAPI app: the rules engine, the money maths, the SQLite store, Drafts |
-| frontend | Next.js app: start, dashboard, workbench, ring view, liability, proof |
+| frontend | Next.js app: landing page, dashboard, workbench, ring view, liability, proof, data |
+| docs | The demo script for the video and the live presentation |
 | data | The dataset and the generated GSTR-2B lines |
 | plan, CONTEXT.md, ML_BUILD.md | The design documents |
 | deck | The ideathon deck |
