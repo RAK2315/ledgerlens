@@ -1,0 +1,4 @@
+{
+ "subject": "Correction of ledger entry for INV-2526-01473",
+ "body": "Record: INV-2526-01473\nFinding: booked Rs 90 away from the invoice total\nWhy: invoice total is Rs 26,985 but the ledger entry shows Rs 26,895\nEntry to make: correct the ledger entry so it equals the invoice total\nAmount involved: Rs 90\nPrepared for approval by the accounts lead.\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

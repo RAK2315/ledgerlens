@@ -1,0 +1,4 @@
+{
+ "subject": "Journal entry correction for INV-2526-01221",
+ "body": "Record: TXN-002058\nFinding: payment for INV-2526-01221 is Rs 1,837 away from the invoice total.\nWhy: the bank shows Rs 89,848 against an invoice of Rs 91,685, while the books record the full amount as settled.\nNext step: check with Sigma Logistics LLP and book the difference of Rs 1,837.\n\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

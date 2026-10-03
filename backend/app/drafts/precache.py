@@ -27,7 +27,8 @@ def main() -> None:
             draft = llm.write(finding, names.get(finding["party_id"]))
             if draft["source"] != "template" or settings.llm_mode() != "live":
                 break
-            time.sleep(3 * (attempt + 1))
+            # The key allows a fixed number of tokens a minute; wait for the window to refill.
+            time.sleep(20)
         sources[draft["source"]] += 1
         print(f"{n}/{len(findings)} {draft['source']:<8} {finding['finding_type']:<24} {draft['subject'][:70]}", flush=True)
     print(dict(sources), "cache:", settings.cache_dir() / "drafts", db.now())

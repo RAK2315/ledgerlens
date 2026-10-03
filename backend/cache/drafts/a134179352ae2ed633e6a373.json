@@ -1,0 +1,4 @@
+{
+ "subject": "Credit note correction for INV-2526-01469",
+ "body": "Record: INV-2526-01469\nFinding: booked Rs 1,422 away from the invoice total\nWhy: invoice total is Rs 29,853 but ledger entry shows Rs 28,431\nAction: correct the ledger entry so it equals the invoice total\nAmount involved: Rs 1,422\nPrepared for approval by the accounts lead.\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

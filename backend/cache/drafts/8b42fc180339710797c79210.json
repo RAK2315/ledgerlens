@@ -1,0 +1,4 @@
+{
+ "subject": "Credit note for INV-2526-00947 \u2013 Rs 816 difference",
+ "body": "Record: TXN-001861\nFinding: Payment for INV-2526-00947 is Rs 816 away from the invoice total.\nWhy: The bank shows Rs 64,785 against an invoice of Rs 65,601, while the books record the full invoice amount as settled.\nNext step: Check with Jupiter Components Ltd and book the difference.\nAmount involved: Rs 816\n\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

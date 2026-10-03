@@ -1,0 +1,4 @@
+{
+ "subject": "Debit note correction for INV-2526-01442",
+ "body": "Dear Accounts lead,\n\nRecord: INV-2526-01442\nFinding: INV-2526-01442 was never booked; Rs 16,326 of tax is missing from the books.\nWhy: No ledger entry for Delta Foods Pvt Ltd carries this invoice number or its amount.\nNext step: Book the invoice in the ledger.\n\nPrepared for approval.\n\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

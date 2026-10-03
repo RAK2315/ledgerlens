@@ -1,0 +1,4 @@
+{
+ "subject": "Correction note for record TXN-001899",
+ "body": "Record: TXN-001899\nFinding: Bank narration says INV VEN038-0043, the invoice is VEN038-0026\nWhy: The narration quotes INV VEN038-0043, which is not this invoice's number. Party, amount and date match VEN038-0026.\nEntry to make: Fix the reference so both records carry the same invoice number.\nAmount involved: Rs 0\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

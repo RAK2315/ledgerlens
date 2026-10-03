@@ -1,0 +1,4 @@
+{
+ "subject": "Debit note correction for INV-2526-01303",
+ "body": "Record: INV-2526-01303\nFinding: INV-2526-01303 was never booked: Rs 15,945 of tax missing from the books\nWhy: No ledger entry for this party carries this invoice number or its amount.\nNext step: Book the invoice in the ledger.\nAmount involved: Rs 15,945\nPrepared for approval by the accounts lead.\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

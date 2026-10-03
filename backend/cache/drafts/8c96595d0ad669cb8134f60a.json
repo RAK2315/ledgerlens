@@ -1,0 +1,4 @@
+{
+ "subject": "Credit note for duplicate payment VEN001-0011",
+ "body": "Record: TXN-001974\nFinding: VEN001-0011 was paid twice, Rs 4,767 extra.\nWhy: Bank lines TXN-001952 and TXN-001974 show the same amount for Global Consulting Pvt Ltd, but the invoice requires only one payment.\nNext step: Request a refund or adjust the amount against the next invoice.\nAmount involved: Rs 4,767\n\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

@@ -1,0 +1,4 @@
+{
+ "subject": "Issue with GSTIN on invoice INV-2526-01472",
+ "body": "Dear Sigma Logistics LLP team,\n\nWhile reconciling our purchases with GSTR-2B we found an issue with invoice INV-2526-01472 dated 30 Sep 2025. The GSTIN on the invoice is 09OSCQD1366A7ZU; its check character is wrong. Our records show the correct GSTIN as 07OSCQD1366A7ZU. Rs 0 of input tax credit depends on this correction. Please provide the correct GSTIN and reissue the invoice.\n\nRegards,\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

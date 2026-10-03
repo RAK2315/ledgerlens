@@ -1,0 +1,4 @@
+{
+ "subject": "Correction note for JE-003959",
+ "body": "Record: JE-003959\nFinding: Ledger says VEN002/0015, the invoice is VEN002-0015\nWhy: The payment entry quotes VEN002/0015. Party and amount match VEN002-0015.\nEntry to make: Fix the reference so both records carry the same invoice number.\nAmount involved: Rs 0\nPrepared for approval by the accounts lead.\n\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

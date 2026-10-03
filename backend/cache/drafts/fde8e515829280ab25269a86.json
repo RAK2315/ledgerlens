@@ -1,0 +1,4 @@
+{
+ "subject": "Journal entry correction for INV-2526-01474",
+ "body": "Record: INV-2526-01474\nFinding: the entry is booked Rs 2,738 away from the invoice total.\nWhy: the invoice total is Rs 57,494 but the ledger shows Rs 54,756.\nNext step: correct the ledger entry so it equals the invoice total.\nAmount involved: Rs 2,738\n\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

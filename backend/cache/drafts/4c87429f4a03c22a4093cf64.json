@@ -1,0 +1,4 @@
+{
+ "subject": "Journal entry correction for VEN005-0011",
+ "body": "Record: TXN-002013\nFinding: payment for VEN005-0011 is Rs 16,877 away from the invoice total.\nWhy: the bank shows Rs 2,11,633 against an invoice of Rs 2,28,510, while the books record the full invoice amount as settled.\nNext step: check with Bharat Enterprises LLP and book the difference.\nAmount involved: Rs 16,877\n\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

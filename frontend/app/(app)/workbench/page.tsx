@@ -153,6 +153,15 @@ export default function WorkbenchPage() {
     }
   }, [runId, tab, category, status, kind, band, oneToMany]);
 
+  // A link can open the One-to-many view directly.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("view") === "one-to-many") {
+      setTab("matches");
+      setKind("payment");
+      setOneToMany(true);
+    }
+  }, []);
+
   // Reload when a Finding is approved or dismissed, which changes the summary.
   useEffect(load, [load, summary?.finding_counts_by_status?.open]);
 

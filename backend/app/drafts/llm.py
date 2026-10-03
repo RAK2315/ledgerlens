@@ -35,7 +35,7 @@ def _ask(prompt: str) -> dict:
     response = httpx.post(
         GROQ_URL, timeout=20,
         headers={"Authorization": f"Bearer {os.environ['GROQ_API_KEY']}"},
-        json={"model": settings.llm_model(), "temperature": 0.2, "response_format": {"type": "json_object"},
+        json={"model": settings.llm_model(), "temperature": 0.2, "response_format": {"type": "json_object"}, "reasoning_effort": "low", "max_tokens": 700,
               "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}]},
     )
     response.raise_for_status()

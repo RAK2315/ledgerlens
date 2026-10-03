@@ -1,0 +1,4 @@
+{
+ "subject": "GSTIN issue on invoice VEN028-0030",
+ "body": "Dear Falcon Components LLP team,\n\nWe are reconciling purchases with GSTR-2B and found an issue with invoice VEN028-0030 dated 30 Sep 2025.\n\nThe GSTIN on the invoice is 29ULWSZ7970U2Z, which has the wrong length. The party master record shows 29ULWSZ7970U2Z8.\n\nRs 5,535 of input tax credit depends on this. Please provide the correct GSTIN so we can reissue the invoice.\n\nRegards,\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

@@ -8,6 +8,7 @@ import { useRun } from "@/lib/run-store";
 import { periodName } from "@/lib/format";
 import { ErrorState, Skeleton } from "./ui";
 import { StageStepper } from "./StageStepper";
+import { DemoGuide } from "./DemoGuide";
 
 const NAV = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -91,7 +92,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <main className="mx-auto max-w-[1440px] p-6">
+        <main className={`mx-auto max-w-[1440px] p-6 ${process.env.NEXT_PUBLIC_DEMO === "1" ? "pb-24" : ""}`}>
           {!run.ready ? (
             <div className="grid gap-4">
               <Skeleton className="h-10 w-80" />
@@ -105,6 +106,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
           )}
         </main>
       </div>
+
+      {process.env.NEXT_PUBLIC_DEMO === "1" && run.runId && !busy && <DemoGuide />}
 
       {(busy || run.runState === "failed") && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-6" role="dialog" aria-modal="true" aria-label="Run in progress">
