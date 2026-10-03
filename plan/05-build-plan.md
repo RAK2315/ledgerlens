@@ -26,6 +26,26 @@ MVP first. Every phase ends in something you can run and show. Commit at the end
 
 After phase 7 the demo has a story (load and dashboard). After phase 8 it has the hero moment. After phase 10 it has the second wow moment.
 
+## Progress
+
+- Phase 1 done (commit aabb24f). Phase 2 done (commit 3021f51). Next: phase 3.
+
+## Notes from phases 1 and 2 for the phases that follow
+
+- Loading the workbook takes about 7 seconds (openpyxl). Do it once in POST /api/demo/load and keep Records in SQLite; a Run must not reload it. Scoring September 2025 takes about 2 seconds for booking and 3 for payment, so a Run fits the 5 to 10 second budget only if the engine stages stay light.
+- The backend gets everything it needs from the package root: load_dataset, resolve_bank, score_pairs, MatchResult, ModelNotTrainedError, is_valid_gstin, MODEL_VERSION. Frames keep workbook column names, with money columns renamed to end in _paise (taxable_value_paise, invoice_total_paise, amount_paise, total_amount_paise). The Dataset also carries manifest (the augmentation manifest) and sha256.
+- load_dataset already applies the augmentation: parties has filing_behaviour, gstin_status and cancelled_from, and the ring customer's PAN and GSTIN are rewritten on the party and its invoices. records.py only maps columns and lowercases enums.
+- parties.bank_account in schema.sql: every party uses exactly one counterparty_account, so take it from the resolved bank frame (the account of the rows resolved to that party).
+- score_pairs returns one MatchResult per invoice. Unmatched results have right_id None and an empty features dict when nothing was assigned. The second invoice of a bundled payment and the second payment of a partial pair come back unmatched or unassigned by design; one_to_many.py picks them up (6 such invoices in September 2025).
+- All 60 credit notes are sales credit notes; there are no purchase credit notes. Payment candidates skip credit notes.
+- A purchase invoice labelled DUPLICATE_INVOICE has no GSTR-2B line and no MISSING_IN_2B label; the engine must not report it as missing in GSTR-2B.
+- Late suppliers: every line sits one Return period after the invoice month and is labelled PERIOD_SHIFT (415 labels in the year, 39 for September invoices). The engine has to decide how loudly to show these; they carry no Rupee impact in the labels.
+- Non-filing suppliers with a cancelled GSTIN carry both MISSING_IN_2B and CANCELLED_GSTIN labels on the same invoice. Count the ITC at risk once per invoice in money.py.
+- September 2025 augment labels by invoice month: MISSING_IN_2B 11 (Rs 1,35,012 of tax), GSTR2B_VALUE_MISMATCH 5, CANCELLED_GSTIN 3 (supplier VEN-006, cancelled from 2 Sep 2025), RULE_37_UNPAID_180 2, plus 2 GSTR-2B lines missing from the books. Ring: supplier VEN-009 Unity Infra Pvt Ltd and customer CUS-007 Unity Motors Ltd, with the Rs 5,00,000 round trip leaving on 30 Sep 2025 (TXN-002236) and returning on 2 Oct 2025 (TXN-002282).
+- The hero invoice INV-2526-01431 matches booking JE-004698 and payment TXN-002447, both at Confidence 1.0.
+- Git: data/derived and ml/artifacts are committed and marked in .gitattributes so line endings never change them. Retraining rewrites the artifacts because trained_at changes.
+- ML steps 7 to 9 (anomaly rules, evaluate, predict) are not built yet; they belong to phases 4 and 12 here. features.train_aggregates already gives the train-only medians the anomaly rules need.
+
 ## Task order
 
 Claude Code builds alone, so phases run in sequence. Two safe parallel points if a second session is used: frontend phase 6 can start once phase 3 has fixed the API shapes; the claude-api work in phase 13 can start any time after phase 4.
