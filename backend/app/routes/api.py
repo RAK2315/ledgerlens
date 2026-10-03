@@ -129,21 +129,34 @@ async def run_events(run_id: str) -> StreamingResponse:
     _run(run_id)
 
     async def stream():
-        last = 0
+        last = {"event": 0, "item": 0}
         while True:
-            for event in db.events_after(run_id, last):
-                last = event["id"]
-                kind = "failed" if event["status"] == "failed" else "stage"
-                data = {"message": event["message"]} if kind == "failed" else {k: event[k] for k in ("stage", "status", "message", "at")}
+            for event in db.events_after(run_id, **{f"last_{k}": v for k, v in last.items()}):
+                last[event["source"]] = event["id"]
+                kind = event["status"] if event["status"] in ("failed", "item") else "stage"
+                fields = {"failed": ("message",), "item": ("stage", "message", "at"), "stage": ("stage", "status", "message", "at")}[kind]
+                data = {k: event[k] for k in fields}
                 yield f"event: {kind}\ndata: {json.dumps(data)}\n\n"
             run = db.get_run(run_id)
-            if run["status"] in ("done", "failed") and not db.events_after(run_id, last):
+            if run["status"] in ("done", "failed") and not db.events_after(run_id, last["event"], last["item"]):
                 if run["status"] == "done":
                     yield f"event: done\ndata: {json.dumps({'run_id': run_id})}\n\n"
                 return
             await asyncio.sleep(0.15)
 
     return StreamingResponse(stream(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+
+@router.get("/records/{table}")
+def browse_records(table: str, period: str | None = None, q: str | None = None,
+                   page: int = Query(1, ge=1), page_size: int = Query(50, ge=1, le=500)) -> dict:
+    dataset = db.latest_dataset()
+    if dataset is None:
+        raise ApiError(404, "dataset_not_found", "Load the demo company first")
+    if table not in db.BROWSE:
+        raise ApiError(404, "table_not_found", f"No Record table called {table}")
+    items, total = db.browse(dataset["id"], table, period, q, page_size, (page - 1) * page_size)
+    return {"items": items, "total": total}
 
 
 @router.get("/runs/{run_id}/summary")

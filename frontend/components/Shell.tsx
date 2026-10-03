@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { BadgeCheck, LayoutDashboard, ListChecks, Network, Scale, Search, Zap } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { BadgeCheck, LayoutDashboard, ListChecks, Network, ScrollText, Scale, Search, Zap } from "lucide-react";
 import { useRun } from "@/lib/run-store";
 import { periodName } from "@/lib/format";
 import { ErrorState, Skeleton } from "./ui";
-import { RunOverlay } from "./RunOverlay";
+import { RunLog, RunOverlay } from "./RunOverlay";
 import { DemoGuide } from "./DemoGuide";
 
 const NAV = [
@@ -31,6 +31,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const run = useRun();
   const busy = run.runState === "loading" || run.runState === "running";
+  const [logOpen, setLogOpen] = useState(false);
+  const closeLog = useCallback(() => setLogOpen(false), []);
 
   useEffect(() => {
     if (run.ready && !run.loadError && !run.runId && !busy) router.replace("/");
@@ -85,6 +87,10 @@ export function Shell({ children }: { children: React.ReactNode }) {
                 ))}
               </select>
             </label>
+            <button className="btn" disabled={busy || !run.runId} onClick={() => setLogOpen(true)}>
+              <ScrollText className="size-4" aria-hidden />
+              Run log
+            </button>
             <button className="btn btn-primary" disabled={busy || !run.dataset} onClick={() => run.launch()}>
               <Zap className="size-4" aria-hidden />
               Run reconciliation
@@ -110,6 +116,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       {process.env.NEXT_PUBLIC_DEMO === "1" && run.runId && !busy && <DemoGuide />}
 
       <RunOverlay />
+      {logOpen && run.runId && run.summary && !busy && <RunLog runId={run.runId} period={run.summary.period} onClose={closeLog} />}
     </div>
   );
 }

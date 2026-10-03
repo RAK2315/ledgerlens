@@ -150,6 +150,16 @@ CREATE TABLE IF NOT EXISTS run_events (
   at      TEXT NOT NULL
 );
 
+-- Example records shown in the live feed while a stage runs. after_event is the stage event each one follows in the stream.
+CREATE TABLE IF NOT EXISTS run_items (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  run_id      TEXT NOT NULL REFERENCES runs(id),
+  after_event INTEGER NOT NULL REFERENCES run_events(id),
+  stage       TEXT NOT NULL,
+  message     TEXT NOT NULL,
+  at          TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS matches (
   id           TEXT PRIMARY KEY,
   run_id       TEXT NOT NULL REFERENCES runs(id),

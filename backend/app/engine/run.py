@@ -8,7 +8,7 @@ import traceback
 from collections import Counter
 
 from .. import db, settings
-from . import analyse, money, records
+from . import analyse, feed, money, records
 from .findings import rupees
 
 COMPANY = {"name": "Sharma Traders Pvt Ltd", "gstin": "07AAACS1234F1ZU"}
@@ -67,12 +67,17 @@ def execute(run_id: str, period: str) -> None:
         starts = {"clean": "Cleaning invoice numbers and Party names", "match": "Matching invoices to bookings, payments and Supplier filings",
                   "check": "Checking rates, tax type, arithmetic, duplicates and Rule 37", "anomalies": "Looking for unusual invoices and Supplier rings",
                   "money": "Working out ITC at risk, ITC found and Net payable", "explain": "Writing the reason and next step for each Finding"}
+        examples = feed.items(b, period, matches, findings)
         for stage in analyse.STAGES:
             if stage != "read":
                 db.add_event(run_id, stage, "started", starts[stage])
             if stage == "explain":
                 db.save_results(run_id, matches, findings)
-            time.sleep(pause)
+            gap = pause / (len(examples[stage]) + 1)
+            for line in examples[stage]:
+                time.sleep(gap)
+                db.add_item(run_id, stage, line)
+            time.sleep(gap)
             db.add_event(run_id, stage, "done", messages[stage])
         db.update_run(run_id, status="done", finished_at=db.now(), summary_json=json.dumps(base))
     except Exception as error:  # the Run must end in a terminal state whatever went wrong

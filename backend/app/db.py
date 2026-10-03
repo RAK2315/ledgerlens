@@ -123,9 +123,19 @@ def add_event(run_id: str, stage: str, status: str, message: str) -> None:
             conn.execute("UPDATE runs SET stage = ? WHERE id = ?", (stage, run_id))
 
 
-def events_after(run_id: str, last_id: int) -> list[dict]:
+def add_item(run_id: str, stage: str, message: str) -> None:
     with connect() as conn:
-        rows = conn.execute("SELECT * FROM run_events WHERE run_id = ? AND id > ? ORDER BY id", (run_id, last_id)).fetchall()
+        conn.execute("INSERT INTO run_items (run_id, after_event, stage, message, at) VALUES (?, (SELECT MAX(id) FROM run_events WHERE run_id = ?), ?, ?, ?)",
+                     (run_id, run_id, stage, message, now()))
+
+
+def events_after(run_id: str, last_event: int, last_item: int) -> list[dict]:
+    """Stage events and feed items newer than the two cursors, in the order they happened. One statement, so the two tables are read at the same moment."""
+    with connect() as conn:
+        rows = conn.execute(
+            "SELECT 'event' AS source, id, id AS follows, stage, status, message, at FROM run_events WHERE run_id = ? AND id > ? "
+            "UNION ALL SELECT 'item', id, after_event, stage, 'item', message, at FROM run_items WHERE run_id = ? AND id > ? ORDER BY follows, source, id",
+            (run_id, last_event, run_id, last_item)).fetchall()
     return [dict(r) for r in rows]
 
 
@@ -220,6 +230,31 @@ def get_record(dataset_id: str, table: str, record_id: str) -> dict | None:
     with connect() as conn:
         row = conn.execute(f"SELECT * FROM {table} WHERE dataset_id = ? AND {key} = ?", (dataset_id, record_id)).fetchone()
     return dict(row) if row else None
+
+
+# The Record tables the Data page can browse: the period column, the order, and the columns a search looks in.
+BROWSE = {
+    "invoices": ("period", "invoice_date, id", ("id", "party_id", "party_gstin", "category")),
+    "ledger_entries": ("period", "posting_date, id", ("id", "invoice_ref", "narration", "account")),
+    "bank_transactions": ("period", "txn_date, id", ("id", "counterparty_name", "narration", "utr")),
+    "gstr2b_lines": ("return_period", "invoice_date, id", ("id", "trade_name", "invoice_number", "supplier_gstin")),
+}
+
+
+def browse(dataset_id: str, table: str, period: str | None, q: str | None, limit: int, offset: int) -> tuple[list[dict], int]:
+    period_column, order, searched = BROWSE[table]
+    where, values = ["dataset_id = ?"], [dataset_id]
+    if period:
+        where.append(f"{period_column} = ?")
+        values.append(period)
+    if q:
+        where.append("(" + " OR ".join(f"{column} LIKE ?" for column in searched) + ")")
+        values += [f"%{q}%"] * len(searched)
+    clause = " AND ".join(where)
+    with connect() as conn:
+        total = conn.execute(f"SELECT COUNT(*) FROM {table} WHERE {clause}", values).fetchone()[0]
+        rows = conn.execute(f"SELECT * FROM {table} WHERE {clause} ORDER BY {order} LIMIT ? OFFSET ?", [*values, limit, offset]).fetchall()
+    return [{k: v for k, v in dict(r).items() if k != "dataset_id"} for r in rows], total
 
 
 def draft_of(finding_id: str) -> dict | None:

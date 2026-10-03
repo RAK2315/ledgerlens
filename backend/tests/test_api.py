@@ -25,10 +25,7 @@ def test_demo_load_inserts_every_record_once(client, loaded):
     assert client.get("/api/health").json()["dataset_loaded"] is True
 
 
-def test_run_finishes_and_streams_stages_in_order(client, run_id):
-    run = client.get(f"/api/runs/{run_id}").json()
-    assert run["status"] == "done", run
-    assert set(run) >= {"run_id", "period", "status", "stage", "started_at", "finished_at"}
+def _stream(client, run_id):
     events = []
     with client.stream("GET", f"/api/runs/{run_id}/events") as response:
         assert response.headers["content-type"].startswith("text/event-stream")
@@ -38,10 +35,34 @@ def test_run_finishes_and_streams_stages_in_order(client, run_id):
                 kind = line[7:]
             elif line.startswith("data: "):
                 events.append((kind, json.loads(line[6:])))
+    return events
+
+
+def test_run_finishes_and_streams_stages_in_order(client, run_id):
+    run = client.get(f"/api/runs/{run_id}").json()
+    assert run["status"] == "done", run
+    assert set(run) >= {"run_id", "period", "status", "stage", "started_at", "finished_at"}
+    events = _stream(client, run_id)
     assert events[-1] == ("done", {"run_id": run_id})
     stages = [(e["stage"], e["status"]) for kind, e in events if kind == "stage"]
     assert stages == [(s, status) for s in STAGES for status in ("started", "done")]
     assert all(set(e) == {"stage", "status", "message", "at"} for kind, e in events if kind == "stage")
+
+
+def test_run_streams_real_records_inside_their_stage(client, run_id):
+    events = _stream(client, run_id)
+    items = [e for kind, e in events if kind == "item"]
+    assert items and all(set(e) == {"stage", "message", "at"} and e["message"] for e in items)
+    assert {e["stage"] for e in items} >= {"read", "match"}
+    open_stage = None
+    for kind, e in events:
+        if kind == "stage":
+            open_stage = e["stage"] if e["status"] == "started" else None
+        elif kind == "item":
+            assert e["stage"] == open_stage
+    known = {row["id"] for table in ("invoices", "bank_transactions") for row in client.get(f"/api/records/{table}", params={"period": "2025-09", "page_size": 500}).json()["items"]}
+    read = [e["message"] for e in items if e["stage"] == "read"]
+    assert any(message.split()[0] in known for message in read)
 
 
 def test_run_errors(client, loaded):

@@ -127,9 +127,19 @@ textarea:focus-visible {
 .drawer {
   animation: slide-in 0.18s ease-out;
 }
+@keyframes feed-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+.feed-line {
+  animation: feed-in 0.25s ease-out;
+}
 @media (prefers-reduced-motion: reduce) {
   .skeleton,
-  .drawer {
+  .drawer,
+  .feed-line {
     animation: none;
   }
 }

@@ -5,6 +5,7 @@ export type DatasetInfo = { dataset_id: string; company: Company; periods: strin
 export type Health = { status: string; model_version: string; dataset_loaded: boolean; llm: "live" | "cache" | "template" };
 export type RunInfo = { run_id: string; period: string; status: "queued" | "running" | "done" | "failed"; stage: string | null; error?: string | null };
 export type StageEvent = { stage: string; status: "started" | "done"; message: string; at: string };
+export type FeedItem = { stage: string; message: string; at: string };
 
 export type ImpactType = "itc_at_risk" | "itc_found" | "excess_tax" | "short_tax" | "unaccounted_payment" | "open_payable" | "none";
 export type Category = "matching" | "missing" | "duplicate" | "tax" | "anomaly" | "filing";

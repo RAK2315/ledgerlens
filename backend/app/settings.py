@@ -54,4 +54,4 @@ def llm_model() -> str:
 
 def stage_delay() -> float:
     """Seconds each Run stage stays on screen when results come from the cache."""
-    return float(os.environ.get("LEDGERLENS_STAGE_DELAY", "0.6"))
+    return float(os.environ.get("LEDGERLENS_STAGE_DELAY", "0.7"))

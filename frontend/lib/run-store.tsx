@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { api, ApiError } from "./api";
-import type { DatasetInfo, StageEvent, Summary } from "./types";
+import type { DatasetInfo, FeedItem, StageEvent, Summary } from "./types";
 
 export const DEFAULT_PERIOD = "2025-09";
 type RunState = "idle" | "loading" | "running" | "done" | "failed";
@@ -16,6 +16,7 @@ type Store = {
   runId: string | null;
   summary: Summary | null;
   stages: StageEvent[];
+  items: FeedItem[];
   runState: RunState;
   runError: string | null;
   launch: (period?: string) => Promise<boolean>;
@@ -37,6 +38,7 @@ export function RunProvider({ children }: { children: React.ReactNode }) {
   const [runId, setRunId] = useState<string | null>(null);
   const [summary, setSummary] = useState<Summary | null>(null);
   const [stages, setStages] = useState<StageEvent[]>([]);
+  const [items, setItems] = useState<FeedItem[]>([]);
   const [runState, setRunState] = useState<RunState>("idle");
   const [runError, setRunError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
@@ -72,6 +74,7 @@ export function RunProvider({ children }: { children: React.ReactNode }) {
       const wanted = chosen ?? pending ?? period;
       setPending(wanted);
       setStages([]);
+      setItems([]);
       setRunError(null);
       setRunState("loading");
       try {
@@ -83,6 +86,7 @@ export function RunProvider({ children }: { children: React.ReactNode }) {
           const events = new EventSource(api.eventsUrl(run_id));
           source.current = events;
           events.addEventListener("stage", (e) => setStages((all) => [...all, JSON.parse((e as MessageEvent).data)]));
+          events.addEventListener("item", (e) => setItems((all) => [...all, JSON.parse((e as MessageEvent).data)]));
           events.addEventListener("done", () => {
             events.close();
             resolve(true);
@@ -147,8 +151,8 @@ export function RunProvider({ children }: { children: React.ReactNode }) {
   }, [runId]);
 
   const value = useMemo<Store>(
-    () => ({ ready, loadError, dataset, period, target: pending ?? period, runId, summary, stages, runState, runError, launch, choosePeriod, setSummary, refresh, retry: () => setAttempt((n) => n + 1) }),
-    [ready, loadError, dataset, period, pending, runId, summary, stages, runState, runError, launch, choosePeriod, refresh],
+    () => ({ ready, loadError, dataset, period, target: pending ?? period, runId, summary, stages, items, runState, runError, launch, choosePeriod, setSummary, refresh, retry: () => setAttempt((n) => n + 1) }),
+    [ready, loadError, dataset, period, pending, runId, summary, stages, items, runState, runError, launch, choosePeriod, refresh],
   );
   return <RunContext.Provider value={value}>{children}</RunContext.Provider>;
 }
