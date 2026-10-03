@@ -5,12 +5,12 @@ import type { Category, FindingRow } from "@/lib/types";
 import { IMPACT_WORDS, rupees } from "@/lib/format";
 
 const TONES = {
-  ok: "bg-ok-soft text-ok",
-  bad: "bg-bad-soft text-bad",
-  dup: "bg-dup-soft text-dup",
-  miss: "bg-miss-soft text-miss",
-  orange: "bg-orange-soft text-orange-deep",
-  plain: "bg-line-2 text-ink-2",
+  ok: "bg-ok",
+  bad: "bg-bad",
+  dup: "bg-dup",
+  miss: "bg-miss",
+  orange: "bg-orange-deep",
+  plain: "bg-ink-3",
 } as const;
 export type Tone = keyof typeof TONES;
 
@@ -18,7 +18,12 @@ export const CATEGORY_TONE: Record<Category, Tone> = { tax: "bad", missing: "mis
 export const CATEGORY_NAME: Record<Category, string> = { tax: "Tax", missing: "Missing", duplicate: "Duplicate", matching: "Matching", anomaly: "Anomaly", filing: "Filing" };
 
 export function Pill({ tone = "plain", children }: { tone?: Tone; children: React.ReactNode }) {
-  return <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-0.5 text-[13px] font-semibold ${TONES[tone]}`}>{children}</span>;
+  return (
+    <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-[13px] font-semibold">
+      <span className={`size-2 shrink-0 rounded-full ${TONES[tone]}`} aria-hidden />
+      {children}
+    </span>
+  );
 }
 
 export function impactTone(type: FindingRow["impact_type"]): Tone {
@@ -81,10 +86,10 @@ export function Skeleton({ className = "" }: { className?: string }) {
 
 export function PageTitle({ title, lead, right }: { title: string; lead: string; right?: React.ReactNode }) {
   return (
-    <div className="mb-5 flex items-end justify-between gap-6">
+    <div className="mb-8 flex items-end justify-between gap-6 px-2">
       <div>
-        <h1 className="font-display text-[28px] font-bold leading-tight">{title}</h1>
-        <p className="mt-1 max-w-3xl text-ink-2">{lead}</p>
+        <h1 className="font-display text-[48px] font-extrabold leading-none tracking-[-0.02em]">{title}</h1>
+        <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-2">{lead}</p>
       </div>
       {right}
     </div>

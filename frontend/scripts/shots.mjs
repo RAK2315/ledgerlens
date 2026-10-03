@@ -37,6 +37,7 @@ if (want("hero")) {
   await page.getByRole("button", { name: /GST rate that ended/ }).click();
   await page.waitForSelector("text=Why this was flagged");
   await page.waitForSelector("text=Approve draft", { timeout: 30000 });
+  await page.waitForTimeout(400);
   await shot("04-hero-drawer");
   if (process.env.APPROVE === "1") {
     await page.getByRole("button", { name: "Approve draft" }).click();

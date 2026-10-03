@@ -145,7 +145,7 @@ export function FindingBody({ findingId, onClose }: { findingId: string; onClose
       {error && <ErrorState message={error} />}
 
       {detail.diff.length > 0 && (
-        <div className="rounded-xl border border-line">
+        <div className="border-t-2 border-ink">
           <table className="w-full border-collapse text-[13px]">
             <thead>
               <tr className="border-b border-line text-ink-3">
@@ -175,7 +175,7 @@ export function FindingBody({ findingId, onClose }: { findingId: string; onClose
         </div>
       )}
 
-      <div className="rounded-xl border border-orange/50 bg-cream-2 p-4">
+      <div className="rounded-[14px] bg-cream p-5">
         <p className="mb-1 flex items-center gap-2 font-semibold text-orange-deep">
           <Sparkles className="size-4" aria-hidden /> Why this was flagged
         </p>
@@ -185,7 +185,7 @@ export function FindingBody({ findingId, onClose }: { findingId: string; onClose
         <p>{detail.what_to_do}</p>
       </div>
 
-      <div className="rounded-xl border border-line p-4">
+      <div className="border-t-2 border-ink pt-4">
         <div className="mb-2 flex items-center justify-between gap-3">
           <p className="flex items-center gap-2 font-semibold">
             {draft?.kind === "journal_entry" ? <FileText className="size-4 text-miss" aria-hidden /> : <Mail className="size-4 text-miss" aria-hidden />}
@@ -283,7 +283,7 @@ export function FindingBody({ findingId, onClose }: { findingId: string; onClose
         )}
       </div>
 
-      <details className="rounded-xl border border-line p-3" open={detail.diff.length === 0}>
+      <details className="border-t border-line pt-3" open={detail.diff.length === 0}>
         <summary className="cursor-pointer font-semibold">The records behind this Finding</summary>
         <div className={`mt-3 grid gap-3 ${right ? "sm:grid-cols-2" : ""}`}>
           <RecordCard record={left} labels={detail.field_labels} />

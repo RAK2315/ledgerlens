@@ -32,7 +32,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
     <button
       onClick={onClick}
       aria-pressed={active}
-      className={`rounded-full border px-3 py-1 text-[13px] font-semibold ${active ? "border-ink bg-ink text-white" : "border-line bg-paper text-ink-2 hover:bg-cream-2"}`}
+      className={`border-b-2 px-0.5 pb-1 text-[15px] font-semibold ${active ? "border-ink text-ink" : "border-transparent text-ink-2 hover:text-ink"}`}
     >
       {children}
     </button>
@@ -42,7 +42,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
 function Side({ title, records }: { title: string; records: RecordView[] }) {
   const total = records.reduce((sum, r) => sum + Math.abs(Number(r.fields[AMOUNT_FIELD[r.table]] ?? 0)), 0);
   return (
-    <div className="rounded-xl border border-line">
+    <div className="border-t-2 border-ink">
       <p className="border-b border-line px-3 py-2 text-[13px] font-semibold text-ink-3">{title}</p>
       {records.length === 0 ? (
         <p className="px-3 py-4 text-[13px] text-ink-3">Nothing matched on this side.</p>
@@ -108,7 +108,7 @@ function MatchPanel({ matchId, onClose }: { matchId: string; onClose: () => void
               <Side title={detail.left_all.length > 1 ? "Invoices" : "Invoice"} records={detail.left_all} />
               <Side title={TABLE_NAMES[detail.right[0]?.table] ?? KIND_NAME[detail.match.kind]} records={detail.right} />
             </div>
-            <div className="rounded-xl border border-orange/50 bg-cream-2 p-4">
+            <div className="rounded-[14px] bg-cream p-5">
               <p className="mb-1 font-semibold text-orange-deep">Why these belong together</p>
               <ul className="list-disc pl-5">
                 {detail.match.reasons.map((reason) => (

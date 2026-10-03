@@ -59,10 +59,16 @@ body {
   font-size: 14px;
 }
 
+/* A section of a page: a heavy rule on top, content flush with it, no box. */
 .card {
+  border-top: 2px solid var(--ink);
+  padding-left: 0;
+  padding-right: 0;
+}
+/* A surface that floats over the page: the Run overlay. */
+.panel {
   background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
 .btn {

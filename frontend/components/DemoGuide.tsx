@@ -54,23 +54,27 @@ export function DemoGuide() {
     router.push(steps[to].path);
   };
   return (
-    <div data-guide className="fixed bottom-4 left-1/2 z-30 flex w-[min(760px,calc(100vw-140px))] -translate-x-1/2 items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-cream shadow-float">
-      <span className="rounded-full bg-white/10 px-2.5 py-0.5 font-mono text-[12px]">
-        {index + 1}/{steps.length}
-      </span>
-      <p className="min-w-0 flex-1 text-[13px]">
-        <b className="text-white">{step.title}.</b> <span className="text-cream/80">{step.say}</span>
-      </p>
-      <button className="rounded-lg p-1.5 hover:bg-white/10 disabled:opacity-30" onClick={() => go(index - 1)} disabled={index === 0} aria-label="Previous step">
-        <ArrowLeft className="size-4" aria-hidden />
-      </button>
-      <button
-        className="flex items-center gap-1.5 rounded-lg bg-orange-deep px-3 py-1.5 text-[13px] font-semibold text-white disabled:opacity-40"
-        onClick={() => go(index + 1)}
-        disabled={index === steps.length - 1}
-      >
-        Next <ArrowRight className="size-4" aria-hidden />
-      </button>
+    <div data-guide className="fixed bottom-0 left-[84px] right-0 z-30 border-t-2 border-ink bg-paper">
+      <div className="flex items-center gap-6 px-8 py-3">
+        <p className="font-display text-[26px] font-extrabold leading-none">
+          {index + 1}
+          <span className="text-ink-3"> / {steps.length}</span>
+        </p>
+        <ol className="flex gap-1" aria-hidden>
+          {steps.map((s, i) => (
+            <li key={s.path} className={`h-1.5 w-7 rounded-full ${i <= index ? "bg-orange-deep" : "bg-line"}`} />
+          ))}
+        </ol>
+        <p className="min-w-0 flex-1 text-[15px] leading-snug">
+          <span className="font-display text-[18px] font-bold">{step.title}.</span> <span className="text-ink-2">{step.say}</span>
+        </p>
+        <button className="btn" onClick={() => go(index - 1)} disabled={index === 0}>
+          <ArrowLeft className="size-4" aria-hidden /> Back
+        </button>
+        <button className="btn btn-primary" onClick={() => go(index + 1)} disabled={index === steps.length - 1}>
+          {index === steps.length - 1 ? "End of the walk-through" : `Next: ${steps[index + 1].title}`} <ArrowRight className="size-4" aria-hidden />
+        </button>
+      </div>
     </div>
   );
 }

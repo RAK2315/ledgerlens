@@ -15,7 +15,7 @@ for (let step = 1; step <= 7; step++) {
   await page.waitForTimeout(2500);
   await page.screenshot({ path: `${out}/guide-${step}.png` });
   console.log("saved step", step, page.url());
-  const next = page.getByRole("button", { name: "Next" });
+  const next = page.getByRole("button", { name: /^Next|^End of/ });
   if (await next.isDisabled()) break;
   await next.click();
 }
