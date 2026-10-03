@@ -15,14 +15,19 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, dev
 const clean = () => page.addStyleTag({ content: "[data-guide], nextjs-portal { display: none !important; }" });
 
 await page.goto(`${base}/dashboard`, { waitUntil: "networkidle" });
-await page.waitForSelector("text=ITC at risk by cause", { timeout: 60000 });
+await page.waitForSelector("text=Why credit is at risk", { timeout: 60000 });
+await page.waitForSelector("text=What the month should cost", { timeout: 60000 });
 await clean();
-await page.screenshot({ path: join(out, "dashboard.png") });
+const frame = { x: 84, y: 0, width: 1356, height: 900 };
+await page.screenshot({ path: join(out, "dashboard.png"), clip: frame });
 
-await page.getByRole("button", { name: /GST rates changed/ }).click();
+await page.getByRole("button", { name: /GST rate that ended/ }).click();
 await page.waitForSelector("text=Approve draft", { timeout: 60000 });
 await page.waitForTimeout(400);
 await page.locator(".drawer").screenshot({ path: join(out, "finding.png") });
+await page.locator(".drawer").evaluate((el) => el.scrollTo(0, el.scrollHeight));
+await page.waitForTimeout(300);
+await page.locator(".drawer").screenshot({ path: join(out, "finding-draft.png") });
 await page.keyboard.press("Escape");
 
 for (const [name, path, marker] of [["ring", "/graph", "Ring view"], ["proof", "/proof", "Catch rate"]]) {
@@ -30,7 +35,7 @@ for (const [name, path, marker] of [["ring", "/graph", "Ring view"], ["proof", "
   await page.waitForSelector(`text=${marker}`, { timeout: 30000 });
   await page.waitForTimeout(1500);
   await clean();
-  await page.screenshot({ path: join(out, `${name}.png`), clip: { x: 84, y: 0, width: 1356, height: 900 } });
+  await page.screenshot({ path: join(out, `${name}.png`), clip: frame });
   console.log("saved", name);
 }
 await browser.close();

@@ -30,11 +30,11 @@ if (want("run")) {
   await page.waitForURL("**/dashboard", { timeout: 120000 });
 }
 await page.goto(`${base}/dashboard`, { waitUntil: "networkidle" });
-await page.waitForSelector("text=ITC at risk by cause", { timeout: 60000 });
+await page.waitForSelector("text=Why credit is at risk", { timeout: 60000 });
 if (want("dashboard")) await shot("03-dashboard", true);
 
 if (want("hero")) {
-  await page.getByRole("button", { name: /GST rates changed/ }).click();
+  await page.getByRole("button", { name: /GST rate that ended/ }).click();
   await page.waitForSelector("text=Why this was flagged");
   await page.waitForSelector("text=Approve draft", { timeout: 30000 });
   await shot("04-hero-drawer");

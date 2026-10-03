@@ -2,38 +2,28 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight, CalendarClock, IndianRupee } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { api } from "@/lib/api";
 import { useRun } from "@/lib/run-store";
-import { periodName, rupees, rupeesShort } from "@/lib/format";
-import type { FindingRow, Summary } from "@/lib/types";
+import { IMPACT_WORDS, date, periodName, rupees, rupeesShort } from "@/lib/format";
+import type { Category, FindingRow, Liability, Summary } from "@/lib/types";
 import { FindingDrawer } from "@/components/FindingDrawer";
-import { FindingTable } from "@/components/FindingTable";
-import { EmptyState, Skeleton } from "@/components/ui";
+import { CATEGORY_NAME, EmptyState, Skeleton } from "@/components/ui";
 
-const CAUSE_COLOURS = ["var(--miss)", "var(--bad)", "var(--orange)", "var(--dup)", "var(--ink-3)"];
+const CATEGORY_NOTE: Record<Category, string> = {
+  missing: "not in GSTR-2B, books or bank",
+  tax: "rate, tax type or arithmetic",
+  anomaly: "unusual, each with a reason",
+  matching: "amount, date or number differs",
+  duplicate: "entered, booked or paid twice",
+  filing: "the filed return",
+};
 
-function MoneyTile({ tone, label, value, note }: { tone: "risk" | "found" | "plain"; label: string; value: string; note: string }) {
-  const styles = { risk: "border-orange/50 bg-orange-soft/60 text-orange-deep", found: "border-ok/40 bg-ok-soft text-ok", plain: "border-line bg-paper text-ink" }[tone];
+function Heading({ children, note }: { children: React.ReactNode; note?: React.ReactNode }) {
   return (
-    <div className={`rounded-xl border p-4 ${styles}`}>
-      <p className="flex items-center gap-1.5 font-semibold">
-        <IndianRupee className="size-4" aria-hidden /> {label}
-      </p>
-      <p className="font-display text-[38px] font-extrabold leading-tight">{value}</p>
-      <p className="text-[13px] text-ink-2">{note}</p>
-    </div>
-  );
-}
-
-function CountTile({ dot, label, value, note }: { dot: string; label: string; value: string; note: string }) {
-  return (
-    <div className="card p-4">
-      <p className="flex items-center gap-2 font-semibold text-ink-2">
-        <span className="size-2.5 rounded-full" style={{ background: dot }} aria-hidden /> {label}
-      </p>
-      <p className="font-display text-[30px] font-extrabold leading-tight">{value}</p>
-      <p className="text-[13px] text-ink-3">{note}</p>
+    <div className="flex items-baseline justify-between gap-6 border-b-2 border-ink pb-3">
+      <h2 className="font-display text-[28px] font-bold leading-tight">{children}</h2>
+      {note && <span className="text-[14px] text-ink-2">{note}</span>}
     </div>
   );
 }
@@ -47,44 +37,72 @@ function Donut({ summary }: { summary: Summary }) {
     { label: "Unmatched", value: c.unmatched, colour: "var(--bad)" },
   ];
   const total = parts.reduce((sum, p) => sum + p.value, 0) || 1;
-  const matched = Math.round(((c.auto + c.one_to_many) / total) * 100);
+  const matched = ((c.auto + c.one_to_many) / total) * 100;
   const radius = 54;
   const around = 2 * Math.PI * radius;
   let offset = 0;
   return (
-    <div className="flex items-center gap-6">
-      <svg viewBox="0 0 140 140" className="size-40 shrink-0 -rotate-90" role="img" aria-label={`${matched} percent of matches are settled`}>
+    <div className="flex items-center gap-10">
+      <svg viewBox="0 0 140 140" className="size-52 shrink-0 -rotate-90" role="img" aria-label={`${matched.toFixed(1)} percent of matches needed no one`}>
         {parts.map((p) => {
           const length = (p.value / total) * around;
-          const arc = <circle key={p.label} cx="70" cy="70" r={radius} fill="none" stroke={p.colour} strokeWidth="18" strokeDasharray={`${length} ${around - length}`} strokeDashoffset={-offset} />;
+          const arc = <circle key={p.label} cx="70" cy="70" r={radius} fill="none" stroke={p.colour} strokeWidth="16" strokeDasharray={`${length} ${around - length}`} strokeDashoffset={-offset} />;
           offset += length;
           return arc;
         })}
-        <text x="70" y="68" textAnchor="middle" transform="rotate(90 70 70)" className="fill-ink font-display text-[26px] font-extrabold">
-          {matched}%
+        <text x="70" y="70" textAnchor="middle" transform="rotate(90 70 70)" className="fill-ink font-display text-[26px] font-extrabold">
+          {matched.toFixed(1)}%
         </text>
-        <text x="70" y="86" textAnchor="middle" transform="rotate(90 70 70)" className="fill-ink-3 text-[10px]">
-          matched
+        <text x="70" y="86" textAnchor="middle" transform="rotate(90 70 70)" className="fill-ink-2 text-[9px]">
+          needed no one
         </text>
       </svg>
-      <ul className="grid gap-1.5 text-[13px]">
+      <ul className="grid flex-1 gap-3">
         {parts.map((p) => (
-          <li key={p.label} className="flex items-center gap-2">
-            <span className="size-2.5 rounded-full" style={{ background: p.colour }} aria-hidden />
-            <span className="text-ink-2">{p.label}</span>
-            <span className="ml-auto pl-4 font-mono font-semibold">{p.value.toLocaleString("en-IN")}</span>
+          <li key={p.label} className="flex items-baseline gap-3 border-b border-line-2 pb-3 last:border-b-0">
+            <span className="size-3 shrink-0 translate-y-[1px] rounded-full" style={{ background: p.colour }} aria-hidden />
+            <span className="text-[16px]">{p.label}</span>
+            <span className="ml-auto font-display text-[24px] font-bold leading-none">{p.value.toLocaleString("en-IN")}</span>
           </li>
         ))}
-        <li className="mt-1 border-t border-line-2 pt-1.5 text-[12px] text-ink-3">{c.open} invoices are open (not yet due or unpaid), which is normal.</li>
+        <li className="text-[14px] text-ink-2">{c.open} invoices are open (not yet due or unpaid), which is normal.</li>
       </ul>
     </div>
+  );
+}
+
+function TaxTypes({ liability }: { liability: Liability }) {
+  const largest = Math.max(1, ...liability.by_tax_type.map((t) => t.output_paise));
+  return (
+    <ul className="grid gap-5">
+      {liability.by_tax_type.map((t) => (
+        <li key={t.tax_type} className="grid grid-cols-[64px_1fr_120px] items-center gap-4">
+          <span className="font-display text-[22px] font-bold uppercase">{t.tax_type}</span>
+          <span className="grid gap-1.5">
+            <span className="flex items-center gap-3">
+              <span className="h-3 rounded-full bg-ink" style={{ width: `${(t.output_paise / largest) * 100}%` }} />
+              <span className="whitespace-nowrap font-mono text-[13px]">{rupeesShort(t.output_paise)} output</span>
+            </span>
+            <span className="flex items-center gap-3">
+              <span className="h-3 rounded-full bg-ok" style={{ width: `${Math.max(1, (t.eligible_itc_paise / largest) * 100)}%` }} />
+              <span className="whitespace-nowrap font-mono text-[13px]">{rupeesShort(t.eligible_itc_paise)} credit</span>
+            </span>
+          </span>
+          <span className="text-right">
+            <span className="block font-display text-[24px] font-bold leading-none">{rupeesShort(t.net_paise)}</span>
+            <span className="text-[13px] text-ink-2">to pay</span>
+          </span>
+        </li>
+      ))}
+    </ul>
   );
 }
 
 export default function DashboardPage() {
   const { summary, runId } = useRun();
   const [openId, setOpenId] = useState<string | null>(null);
-  const [rateChange, setRateChange] = useState<FindingRow[] | null>(null);
+  const [rateChange, setRateChange] = useState<FindingRow[]>([]);
+  const [liability, setLiability] = useState<Liability | null>(null);
 
   useEffect(() => {
     if (!runId) return;
@@ -92,115 +110,218 @@ export default function DashboardPage() {
       .findings(runId, { finding_type: "WRONG_TAX_RATE", status: "open" })
       .then((r) => setRateChange(r.items.filter((f) => f.title.includes(" since "))))
       .catch(() => setRateChange([]));
+    api.liability(runId).then(setLiability).catch(() => setLiability(null));
   }, [runId, summary]);
 
   if (!summary)
     return (
-      <div className="grid gap-4">
-        <div className="grid grid-cols-3 gap-4">
-          <Skeleton className="h-32" />
-          <Skeleton className="h-32" />
-          <Skeleton className="h-32" />
+      <div className="grid gap-8">
+        <Skeleton className="h-72 rounded-[20px]" />
+        <div className="grid grid-cols-[7fr_5fr] gap-12">
+          <Skeleton className="h-80" />
+          <Skeleton className="h-80" />
         </div>
-        <Skeleton className="h-56" />
-        <Skeleton className="h-64" />
       </div>
     );
 
-  const counts = summary.finding_counts_by_category;
   const c = summary.match_counts;
-  const settled = c.auto + c.one_to_many;
-  const totalMatches = settled + c.review + c.unmatched || 1;
-  const openFindings = Object.values(counts).reduce((a, b) => a + (b ?? 0), 0);
-  const largest = Math.max(1, ...summary.itc_at_risk_by_cause.map((x) => x.paise));
-  const rateTotal = (rateChange ?? []).reduce((sum, f) => sum + f.impact_paise, 0);
+  const openFindings = summary.finding_counts_by_status.open ?? 0;
+  const largestCause = Math.max(1, ...summary.itc_at_risk_by_cause.map((x) => x.paise));
+  const first = summary.top_findings[0];
+  const kinds = (Object.entries(summary.finding_counts_by_category) as [Category, number][]).sort((a, b) => b[1] - a[1]);
+  const largestKind = Math.max(1, ...kinds.map(([, n]) => n));
+  const declared = liability?.declared;
+  const filedWidth = declared ? Math.min(100, (declared.net_paise / Math.max(declared.net_paise, summary.net_payable_paise)) * 100) : 0;
+  const computedWidth = declared ? Math.min(100, (summary.net_payable_paise / Math.max(declared.net_paise, summary.net_payable_paise)) * 100) : 0;
 
   return (
-    <div className="grid gap-4">
-      <p className="text-ink-2">
-        <b className="text-ink">{periodName(summary.period)}:</b> {summary.invoice_count.toLocaleString("en-IN")} invoices checked against the ledger, the bank statement and
-        GSTR-2B. {openFindings} Findings are open, each with its rupee effect, the reason and a drafted fix.
-      </p>
+    <div className="grid gap-12 pb-6">
+      <section className="grid grid-cols-[minmax(0,1fr)_380px] gap-10 rounded-[20px] bg-side px-10 py-9 text-cream">
+        <div>
+          <p className="text-[15px] text-cream/70">
+            {periodName(summary.period)} · {summary.invoice_count.toLocaleString("en-IN")} invoices checked against the ledger, the bank statement and GSTR-2B
+          </p>
+          <h1 className="mt-3 max-w-[18ch] font-display text-[54px] font-extrabold leading-[1.02] tracking-[-0.02em]">
+            {summary.itc_at_risk_paise > 0 ? (
+              <>
+                <span className="text-orange">{rupeesShort(summary.itc_at_risk_paise)}</span> of tax credit is at risk this month.
+              </>
+            ) : (
+              "No tax credit is at risk this month."
+            )}
+          </h1>
+          <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-4">
+            <div>
+              <dt className="text-[15px] text-cream/70">ITC found, not yet claimed</dt>
+              <dd className="font-display text-[34px] font-bold leading-tight text-ok-soft">{rupeesShort(summary.itc_found_paise)}</dd>
+            </div>
+            <div>
+              <dt className="text-[15px] text-cream/70">Net payable</dt>
+              <dd className="font-display text-[34px] font-bold leading-tight">{rupeesShort(summary.net_payable_paise)}</dd>
+            </div>
+            <div>
+              <dt className="text-[15px] text-cream/70">Tax charged in excess / short</dt>
+              <dd className="font-display text-[34px] font-bold leading-tight">
+                {rupeesShort(summary.excess_tax_paise)} <span className="text-cream/40">/</span> {rupeesShort(summary.short_tax_paise)}
+              </dd>
+            </div>
+          </dl>
+        </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        <MoneyTile tone="risk" label="ITC at risk" value={rupeesShort(summary.itc_at_risk_paise)} note="Credit claimed that may be lost unless fixed" />
-        <MoneyTile tone="found" label="ITC found" value={rupeesShort(summary.itc_found_paise)} note="In GSTR-2B, not yet claimed in your books" />
-        <MoneyTile
-          tone="plain"
-          label="Net payable"
-          value={rupeesShort(summary.net_payable_paise)}
-          note={`Output tax minus eligible credit. ${rupees(summary.excess_tax_paise)} charged in excess, ${rupees(summary.short_tax_paise)} short.`}
-        />
-      </div>
+        <div className="flex flex-col justify-between border-l border-white/15 pl-10">
+          {first ? (
+            <>
+              <div>
+                <p className="text-[15px] font-semibold text-orange">Start here</p>
+                <p className="mt-2 font-display text-[24px] font-bold leading-snug">{first.title}</p>
+                <p className="mt-2 text-[15px] text-cream/70">The evidence, the rule and a drafted fix are ready to review.</p>
+              </div>
+              <button onClick={() => setOpenId(first.id)} className="btn btn-primary mt-6 self-start px-5 py-3 text-[15px]">
+                See why and fix <ArrowRight className="size-4" aria-hidden />
+              </button>
+            </>
+          ) : (
+            <div>
+              <p className="text-[15px] font-semibold text-orange">All clear</p>
+              <p className="mt-2 font-display text-[24px] font-bold leading-snug">Every Finding has been approved or dismissed.</p>
+            </div>
+          )}
+        </div>
+      </section>
 
-      <div className="grid grid-cols-5 gap-4">
-        <CountTile dot="var(--ok)" label="Matched" value={settled.toLocaleString("en-IN")} note={`${((settled / totalMatches) * 100).toFixed(1)}% of matches`} />
-        <CountTile dot="var(--bad)" label="Discrepant" value={String((counts.tax ?? 0) + (counts.matching ?? 0) + (counts.filing ?? 0))} note="rate, amount, date, tax type" />
-        <CountTile dot="var(--dup)" label="Duplicates" value={String(counts.duplicate ?? 0)} note="entered, booked or paid twice" />
-        <CountTile dot="var(--miss)" label="Missing" value={String(counts.missing ?? 0)} note="not in GSTR-2B, books or bank" />
-        <CountTile dot="var(--ink-3)" label="Anomalies" value={String(counts.anomaly ?? 0)} note="unusual, each with a reason" />
-      </div>
-
-      {rateChange && rateChange.length > 0 && (
-        <button
-          onClick={() => setOpenId(rateChange[0].id)}
-          className="flex w-full items-center gap-3 rounded-xl border border-bad/30 bg-bad-soft px-4 py-3 text-left hover:brightness-[0.98]"
-        >
-          <CalendarClock className="size-5 shrink-0 text-bad" aria-hidden />
+      {rateChange.length > 0 && (
+        <button onClick={() => setOpenId(rateChange[0].id)} className="group -my-5 flex w-full items-center gap-4 px-2 text-left text-[16px]">
+          <span className="size-2.5 shrink-0 rounded-full bg-bad" aria-hidden />
           <span className="flex-1">
-            <b>GST rates changed on 22 Sep 2025.</b> {rateChange.length} {rateChange.length === 1 ? "invoice" : "invoices"} dated after the change still {rateChange.length === 1 ? "uses" : "use"} the old rate, {rupees(rateTotal)} in all. Largest:{" "}
-            <span className="font-mono">{rateChange[0].record_refs[0]?.id}</span>.
+            <b>
+              {rateChange.length} {rateChange.length === 1 ? "invoice" : "invoices"} this month still {rateChange.length === 1 ? "uses" : "use"} a GST rate that ended on 22 Sep 2025.
+            </b>{" "}
+            {rupees(rateChange.reduce((sum, f) => sum + f.impact_paise, 0))} in all. Largest: <span className="font-mono text-[14px]">{rateChange[0].record_refs[0]?.id}</span>.
           </span>
-          <span className="flex items-center gap-1 font-semibold text-bad">
+          <span className="inline-flex items-center gap-1 font-semibold text-orange-deep group-hover:underline">
             See why and fix <ArrowRight className="size-4" aria-hidden />
           </span>
         </button>
       )}
 
-      <div className="grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-4">
-        <section className="card p-5">
-          <h2 className="mb-3 font-display text-lg font-bold">Match status</h2>
-          <Donut summary={summary} />
+      <div className="grid grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-12 px-2">
+        <section>
+          <Heading note={`${summary.top_findings.length} largest of ${openFindings} open Findings`}>Fix these first</Heading>
+          {summary.top_findings.length === 0 ? (
+            <EmptyState title="No open Findings in this period" hint="Every Finding has been approved or dismissed." />
+          ) : (
+            <ol>
+              {summary.top_findings.map((f, i) => (
+                <li key={f.id} className="border-b border-line">
+                  <button onClick={() => setOpenId(f.id)} className="group grid w-full grid-cols-[28px_150px_1fr_auto] items-center gap-4 py-4 text-left hover:bg-cream-2">
+                    <span className="pl-1 font-display text-[20px] font-bold text-ink-3">{i + 1}</span>
+                    <span className="font-display text-[26px] font-bold leading-none">{f.impact_type === "none" ? "" : rupees(f.impact_paise)}</span>
+                    <span>
+                      <span className="text-[16px] font-semibold">{f.label}</span>
+                      <span className="block text-[14px] text-ink-2">
+                        {f.party?.name ?? "Company"}, <span className="font-mono text-[13px]">{f.record_refs[0]?.id}</span>, {IMPACT_WORDS[f.impact_type]}
+                        {f.deadline ? `, due ${date(f.deadline)}` : ""}
+                      </span>
+                    </span>
+                    <ArrowRight className="mr-2 size-5 text-orange-deep transition-transform group-hover:translate-x-1" aria-hidden />
+                  </button>
+                </li>
+              ))}
+            </ol>
+          )}
+          <Link href="/workbench" className="mt-4 inline-flex items-center gap-1 text-[16px] font-semibold text-orange-deep hover:underline">
+            All {openFindings} Findings in the workbench <ArrowRight className="size-4" aria-hidden />
+          </Link>
         </section>
-        <section className="card p-5">
-          <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="font-display text-lg font-bold">ITC at risk by cause</h2>
-            <span className="text-[13px] text-ink-3">sorted by rupees, each invoice counted once</span>
-          </div>
+
+        <section>
+          <Heading note="each invoice counted once">Why credit is at risk</Heading>
           {summary.itc_at_risk_by_cause.length === 0 ? (
             <EmptyState title="No ITC at risk in this period" />
           ) : (
-            <ul className="grid gap-2.5">
-              {summary.itc_at_risk_by_cause.slice(0, 6).map((cause, i) => (
-                <li key={cause.finding_type} className="grid grid-cols-[minmax(0,260px)_1fr_auto] items-center gap-3">
-                  <span className="truncate">{cause.label}</span>
-                  <span className="h-3.5 rounded-full bg-line-2">
-                    <span className="block h-full rounded-full" style={{ width: `${Math.max(2, (cause.paise / largest) * 100)}%`, background: CAUSE_COLOURS[Math.min(i, CAUSE_COLOURS.length - 1)] }} />
-                  </span>
-                  <span className="w-24 text-right font-mono font-semibold">{rupeesShort(cause.paise)}</span>
+            <ol className="mt-5 grid gap-4">
+              {summary.itc_at_risk_by_cause.map((cause) => (
+                <li key={cause.finding_type}>
+                  <div className="flex items-baseline justify-between gap-4 text-[15px]">
+                    <span>{cause.label}</span>
+                    <span className="font-mono font-semibold">{rupees(cause.paise)}</span>
+                  </div>
+                  <div className="mt-1.5 h-2.5 rounded-full bg-line-2">
+                    <div className="h-full rounded-full bg-orange" style={{ width: `${Math.max(1.5, (cause.paise / largestCause) * 100)}%` }} />
+                  </div>
                 </li>
               ))}
-            </ul>
+            </ol>
           )}
         </section>
       </div>
 
-      <section className="card p-5">
-        <div className="mb-2 flex items-baseline justify-between">
-          <h2 className="font-display text-lg font-bold">Top Findings</h2>
-          <span className="text-[13px] text-ink-3">
-            {summary.top_findings.length} of {openFindings} · ranked by rupees ·{" "}
-            <Link href="/workbench" className="font-semibold text-orange-deep">
-              see all
-            </Link>
-          </span>
+      <div className="grid grid-cols-2 gap-12 px-2">
+        <section>
+          <Heading note={`${(c.auto + c.one_to_many + c.review + c.unmatched).toLocaleString("en-IN")} matches`}>How the month matched</Heading>
+          <div className="mt-6">
+            <Donut summary={summary} />
+          </div>
+        </section>
+
+        <section>
+          <Heading note={`${openFindings} open`}>Findings by kind</Heading>
+          <ol className="mt-5 grid gap-3.5">
+            {kinds.map(([category, count]) => (
+              <li key={category} className="grid grid-cols-[110px_1fr] items-center gap-4">
+                <span className="text-[16px] font-semibold">{CATEGORY_NAME[category]}</span>
+                <span className="flex items-center gap-3">
+                  <span className="h-6 rounded-[5px] bg-ink" style={{ width: `${Math.max(1, (count / largestKind) * 50)}%` }} />
+                  <span className="font-display text-[22px] font-bold leading-none">{count}</span>
+                  <span className="truncate text-[14px] text-ink-2">{CATEGORY_NOTE[category]}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      </div>
+
+      {liability && (
+        <div className="grid grid-cols-2 gap-12 px-2">
+          <section>
+            <Heading note="output tax against eligible credit">What the month should cost</Heading>
+            <div className="mt-6">
+              <TaxTypes liability={liability} />
+            </div>
+          </section>
+
+          {declared && (
+            <section>
+              <Heading note={`return filed ${date(declared.filed_on)}`}>The filed return against LedgerLens</Heading>
+              <div className="mt-6 grid gap-5">
+                <div>
+                  <div className="flex items-baseline justify-between text-[16px]">
+                    <span>The filed return declared</span>
+                    <span className="font-display text-[24px] font-bold leading-none">{rupeesShort(declared.net_paise)}</span>
+                  </div>
+                  <div className="mt-2 h-3 rounded-full bg-ink-3" style={{ width: `${filedWidth}%` }} />
+                </div>
+                <div>
+                  <div className="flex items-baseline justify-between text-[16px]">
+                    <span>LedgerLens works out</span>
+                    <span className="font-display text-[24px] font-bold leading-none">{rupeesShort(summary.net_payable_paise)}</span>
+                  </div>
+                  <div className="mt-2 h-3 rounded-full bg-ink" style={{ width: `${computedWidth}%` }} />
+                </div>
+                {liability.gap_paise !== null && (
+                  <p className="text-[16px]">
+                    <span className="font-display text-[24px] font-bold text-orange-deep">{rupees(Math.abs(liability.gap_paise))}</span>{" "}
+                    {liability.gap_paise >= 0 ? "more to pay than the return said." : "less to pay than the return said."}
+                  </p>
+                )}
+                <Link href="/liability" className="inline-flex items-center gap-1 text-[16px] font-semibold text-orange-deep hover:underline">
+                  See the working by tax type <ArrowRight className="size-4" aria-hidden />
+                </Link>
+              </div>
+            </section>
+          )}
         </div>
-        {summary.top_findings.length === 0 ? (
-          <EmptyState title="No open Findings in this period" hint="Every Finding has been approved or dismissed." />
-        ) : (
-          <FindingTable rows={summary.top_findings} onOpen={setOpenId} />
-        )}
-      </section>
+      )}
 
       <FindingDrawer findingId={openId} onClose={() => setOpenId(null)} />
     </div>

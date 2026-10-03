@@ -107,7 +107,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
 
-      {process.env.NEXT_PUBLIC_DEMO === "1" && run.runId && !busy && !/^\/dashboard\/[ab]$/.test(pathname) && <DemoGuide />}
+      {process.env.NEXT_PUBLIC_DEMO === "1" && run.runId && !busy && <DemoGuide />}
 
       <RunOverlay />
     </div>
