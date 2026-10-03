@@ -1,0 +1,4 @@
+{
+ "subject": "Duplicate payment entry for VEN020-0025",
+ "body": "Record: JE-004438\nFinding: The payment for VEN020-0025 is booked twice: Rs 90,123\nWhy: Ledger entries JE-004428 and JE-004438 record the same payment for the same invoice and amount.\nEntry to make: Reverse the second booking.\nAmount involved: Rs 90,123\nPrepared for approval by the accounts lead.\n\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

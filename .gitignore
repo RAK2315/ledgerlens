@@ -12,3 +12,4 @@ deck/out/ppt_check/
 deck/out/full*.png
 backend/data/
 backend/cache/analysis_*.pkl
+backend/cache/precache.log

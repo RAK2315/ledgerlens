@@ -1,0 +1,4 @@
+{
+ "subject": "Journal entry for credit note VEN049-0014",
+ "body": "Record: VEN049-0014\nFinding: VEN049-0014 shows in GSTR-2B for 2025-10, not 2025-09\nWhy: The supplier reported this invoice one return period late, so its Rs 0 of credit can be claimed only in that month.\nEntry to make: claim the credit in the month it appears in GSTR-2B.\nAmount involved: Rs 0\nPrepared for approval by the accounts lead.\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}
