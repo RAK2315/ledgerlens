@@ -54,7 +54,7 @@ Windows PowerShell from the repo root. Backend and frontend commands apply once 
 | Engine check | backend\.venv\Scripts\python backend\scripts\check_engine.py |
 | Start both | start.cmd (production frontend; run pnpm --dir frontend build first) |
 | Journey screenshots | node frontend\scripts\shots.mjs <output folder> |
-| Landing page screenshots | node frontend\scripts\landing-shots.mjs (run after any redesign of the dashboard, drawer, ring or proof screens) |
+| Landing page data | node frontend\scripts\landing-data.mjs (writes frontend/lib/landing-data.json from a fresh September Run; run after any engine change that moves the numbers) |
 | Backend test | backend\.venv\Scripts\python -m pytest backend\tests -q |
 | Frontend install | pnpm --dir frontend install |
 | Frontend dev | pnpm --dir frontend dev |

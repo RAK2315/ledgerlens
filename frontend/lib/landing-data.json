@@ -1,0 +1,799 @@
+{
+ "period": "2025-09",
+ "company": {
+  "name": "Sharma Traders Pvt Ltd",
+  "gstin": "07AAACS1234F1ZU"
+ },
+ "counts": {
+  "invoices": 453,
+  "ledger_entries": 898,
+  "bank_transactions": 453,
+  "gstr2b_lines": 156
+ },
+ "summary": {
+  "period": "2025-09",
+  "itc_at_risk_paise": 28161527,
+  "itc_found_paise": 309778,
+  "excess_tax_paise": 2411702,
+  "short_tax_paise": 12304356,
+  "net_payable_paise": 349692634,
+  "invoice_count": 453,
+  "match_counts": {
+   "auto": 1018,
+   "review": 1,
+   "unmatched": 16,
+   "one_to_many": 30,
+   "open": 12
+  },
+  "finding_counts_by_category": {
+   "anomaly": 23,
+   "duplicate": 6,
+   "filing": 1,
+   "matching": 13,
+   "missing": 63,
+   "tax": 23
+  },
+  "finding_counts_by_status": {
+   "open": 129
+  },
+  "itc_at_risk_by_cause": [
+   {
+    "finding_type": "MISSING_IN_2B",
+    "label": "Supplier has not reported this invoice",
+    "paise": 13501228
+   },
+   {
+    "finding_type": "PAN_LINKED_RING",
+    "label": "Supplier and Customer share an owner",
+    "paise": 5361689
+   },
+   {
+    "finding_type": "WRONG_TAX_TYPE",
+    "label": "IGST and CGST plus SGST mixed up",
+    "paise": 4608689
+   },
+   {
+    "finding_type": "DUPLICATE_INVOICE",
+    "label": "Invoice entered twice",
+    "paise": 1919727
+   },
+   {
+    "finding_type": "RULE_37_UNPAID_180",
+    "label": "Supplier unpaid for over 180 days",
+    "paise": 1300104
+   },
+   {
+    "finding_type": "GSTR2B_VALUE_MISMATCH",
+    "label": "Supplier reported a different amount",
+    "paise": 824523
+   },
+   {
+    "finding_type": "INVALID_GSTIN",
+    "label": "GSTIN is not valid",
+    "paise": 553468
+   },
+   {
+    "finding_type": "TAX_CALC_ERROR",
+    "label": "Tax does not add up",
+    "paise": 92099
+   }
+  ],
+  "top_findings": [
+   {
+    "label": "Supplier has not reported this invoice",
+    "impact_paise": 5848023,
+    "impact_type": "itc_at_risk",
+    "party": "Titan Logistics Ltd",
+    "record": "VEN041-0020"
+   },
+   {
+    "label": "Supplier and Customer share an owner",
+    "impact_paise": 5361689,
+    "impact_type": "itc_at_risk",
+    "party": "Unity Infra Pvt Ltd",
+    "record": "CUS-007"
+   },
+   {
+    "label": "IGST and CGST plus SGST mixed up",
+    "impact_paise": 4608689,
+    "impact_type": "itc_at_risk",
+    "party": "Falcon Tech LLP",
+    "record": "VEN035-0025"
+   },
+   {
+    "label": "Supplier's GSTIN is cancelled",
+    "impact_paise": 4159419,
+    "impact_type": "itc_at_risk",
+    "party": "Prime Electronics LLP",
+    "record": "VEN006-0029"
+   },
+   {
+    "label": "Supplier has not reported this invoice",
+    "impact_paise": 4159419,
+    "impact_type": "itc_at_risk",
+    "party": "Prime Electronics LLP",
+    "record": "VEN006-0029"
+   }
+  ]
+ },
+ "output_paise": 611248280,
+ "eligible_paise": 261555646,
+ "declared": {
+  "output_paise": 611248280,
+  "itc_paise": 289717173,
+  "net_paise": 321531107,
+  "filed_on": "2025-10-28",
+  "due_on": "2025-10-20"
+ },
+ "run": {
+  "stages": [
+   {
+    "stage": "read",
+    "status": "started",
+    "message": "Reading invoices, ledger, bank statement and GSTR-2B",
+    "at": "2026-10-03T17:49:31.025283Z"
+   },
+   {
+    "stage": "read",
+    "status": "done",
+    "message": "453 invoices, 898 ledger entries, 453 bank lines and GSTR-2B for 2025-09",
+    "at": "2026-10-03T17:49:32.515159Z"
+   },
+   {
+    "stage": "clean",
+    "status": "started",
+    "message": "Cleaning invoice numbers and Party names",
+    "at": "2026-10-03T17:49:32.523973Z"
+   },
+   {
+    "stage": "clean",
+    "status": "done",
+    "message": "Invoice numbers and Party names cleaned, bank lines traced to Parties",
+    "at": "2026-10-03T17:49:33.334697Z"
+   },
+   {
+    "stage": "match",
+    "status": "started",
+    "message": "Matching invoices to bookings, payments and Supplier filings",
+    "at": "2026-10-03T17:49:33.343257Z"
+   },
+   {
+    "stage": "match",
+    "status": "done",
+    "message": "1,018 matched automatically, 1 for review, 30 one-to-many",
+    "at": "2026-10-03T17:49:34.180221Z"
+   },
+   {
+    "stage": "check",
+    "status": "started",
+    "message": "Checking rates, tax type, arithmetic, duplicates and Rule 37",
+    "at": "2026-10-03T17:49:34.190916Z"
+   },
+   {
+    "stage": "check",
+    "status": "done",
+    "message": "106 Findings from tax, duplicate and missing checks",
+    "at": "2026-10-03T17:49:35.036270Z"
+   },
+   {
+    "stage": "anomalies",
+    "status": "started",
+    "message": "Looking for unusual invoices and Supplier rings",
+    "at": "2026-10-03T17:49:35.046583Z"
+   },
+   {
+    "stage": "anomalies",
+    "status": "done",
+    "message": "23 Anomalies, each with a reason",
+    "at": "2026-10-03T17:49:35.853661Z"
+   },
+   {
+    "stage": "money",
+    "status": "started",
+    "message": "Working out ITC at risk, ITC found and Net payable",
+    "at": "2026-10-03T17:49:35.865030Z"
+   },
+   {
+    "stage": "money",
+    "status": "done",
+    "message": "ITC at risk Rs 2,81,615, ITC found Rs 3,098",
+    "at": "2026-10-03T17:49:36.706165Z"
+   },
+   {
+    "stage": "explain",
+    "status": "started",
+    "message": "Writing the reason and next step for each Finding",
+    "at": "2026-10-03T17:49:36.714279Z"
+   },
+   {
+    "stage": "explain",
+    "status": "done",
+    "message": "129 Findings explained with evidence",
+    "at": "2026-10-03T17:49:37.718377Z"
+   }
+  ],
+  "items": [
+   {
+    "stage": "read",
+    "message": "CN-2526-0041  Aarav Foods Pvt Ltd  -Rs 44,889",
+    "at": "2026-10-03T17:49:31.818200Z"
+   },
+   {
+    "stage": "read",
+    "message": "VEN015-0029  Meridian Traders & Co  Rs 18,717",
+    "at": "2026-10-03T17:49:31.930713Z"
+   },
+   {
+    "stage": "read",
+    "message": "JE-003938  Purchase VEN015-0026 - Commercial Property Rental",
+    "at": "2026-10-03T17:49:32.056242Z"
+   },
+   {
+    "stage": "read",
+    "message": "JE-004387  Receipt against INV-2526-01330",
+    "at": "2026-10-03T17:49:32.166475Z"
+   },
+   {
+    "stage": "read",
+    "message": "TXN-001795  NEFT/HDFC252440000157/DELTA RETAIL PVT LTD/00541",
+    "at": "2026-10-03T17:49:32.292295Z"
+   },
+   {
+    "stage": "read",
+    "message": "TXN-002021  UPI/UTIB252580002848/UNITY SYSTEMS LLP/0019",
+    "at": "2026-10-03T17:49:32.402023Z"
+   },
+   {
+    "stage": "clean",
+    "message": "VEN002-0016  Supplier wrote the number as INV-0016; the serial matches",
+    "at": "2026-10-03T17:49:32.640046Z"
+   },
+   {
+    "stage": "clean",
+    "message": "VEN002-0017  Supplier wrote the number as VEN/002/0017; the serial matches",
+    "at": "2026-10-03T17:49:32.754092Z"
+   },
+   {
+    "stage": "clean",
+    "message": "VEN009-0017  Supplier wrote the number as VEN/009/0017; the serial matches",
+    "at": "2026-10-03T17:49:32.878090Z"
+   },
+   {
+    "stage": "clean",
+    "message": "TXN-001798  ZENITH ENTERPRISES is Zenith Enterprises Pvt Ltd",
+    "at": "2026-10-03T17:49:32.989016Z"
+   },
+   {
+    "stage": "clean",
+    "message": "TXN-001930  NOVA CONSULTING is Nova Consulting Pvt Ltd",
+    "at": "2026-10-03T17:49:33.098079Z"
+   },
+   {
+    "stage": "clean",
+    "message": "TXN-002125  JUPITER INDUSTRIES PVT is Jupiter Industries Pvt Ltd",
+    "at": "2026-10-03T17:49:33.209826Z"
+   },
+   {
+    "stage": "match",
+    "message": "CN-2526-0041 booked as JE-003964. Invoice number matches exactly",
+    "at": "2026-10-03T17:49:33.459103Z"
+   },
+   {
+    "stage": "match",
+    "message": "INV-2526-01210 paid by TXN-002194. Bank narration quotes the invoice number",
+    "at": "2026-10-03T17:49:33.583263Z"
+   },
+   {
+    "stage": "match",
+    "message": "INV-2526-01216 paid by TXN-002648. Invoice number matches after removing prefix and year",
+    "at": "2026-10-03T17:49:33.708314Z"
+   },
+   {
+    "stage": "match",
+    "message": "VEN015-0026 paid by TXN-002039. Invoice serial number matches",
+    "at": "2026-10-03T17:49:33.817917Z"
+   },
+   {
+    "stage": "match",
+    "message": "VEN013-0028 paid by TXN-002048. No invoice number in the bank narration",
+    "at": "2026-10-03T17:49:33.944724Z"
+   },
+   {
+    "stage": "match",
+    "message": "TXN-002222 against INV-2526-01234, INV-2526-01244. 1 payment settles 2 invoices",
+    "at": "2026-10-03T17:49:34.053855Z"
+   },
+   {
+    "stage": "check",
+    "message": "Rs 1,05,365 received from Falcon Industries Private Limited with no invoice",
+    "at": "2026-10-03T17:49:34.305049Z"
+   },
+   {
+    "stage": "check",
+    "message": "VEN020-0025 was paid twice: Rs 90,123 extra",
+    "at": "2026-10-03T17:49:34.415978Z"
+   },
+   {
+    "stage": "check",
+    "message": "VEN035-0025 charges CGST plus SGST where IGST applies",
+    "at": "2026-10-03T17:49:34.540107Z"
+   },
+   {
+    "stage": "check",
+    "message": "INV-2526-01291 is booked Rs 26,962 away from the invoice total",
+    "at": "2026-10-03T17:49:34.664621Z"
+   },
+   {
+    "stage": "check",
+    "message": "The return for 2025-09 was filed 8 days late",
+    "at": "2026-10-03T17:49:34.789014Z"
+   },
+   {
+    "stage": "check",
+    "message": "Books show Rs 99,138 moved for INV-2526-01118, the bank does not",
+    "at": "2026-10-03T17:49:34.911828Z"
+   },
+   {
+    "stage": "anomalies",
+    "message": "INV-2526-01337 has a perfectly round value of Rs 50,00,000",
+    "at": "2026-10-03T17:49:35.154928Z"
+   },
+   {
+    "stage": "anomalies",
+    "message": "VEN030-0021 has a perfectly round value of Rs 25,00,000",
+    "at": "2026-10-03T17:49:35.278104Z"
+   },
+   {
+    "stage": "anomalies",
+    "message": "INV-2526-01286 has a perfectly round value of Rs 25,00,000",
+    "at": "2026-10-03T17:49:35.388956Z"
+   },
+   {
+    "stage": "anomalies",
+    "message": "INV-2526-01347 for Rs 15,34,440 is dated on a Sunday",
+    "at": "2026-10-03T17:49:35.497900Z"
+   },
+   {
+    "stage": "anomalies",
+    "message": "INV-2526-01284 has a perfectly round value of Rs 10,00,000",
+    "at": "2026-10-03T17:49:35.606231Z"
+   },
+   {
+    "stage": "anomalies",
+    "message": "Rs 5,00,000 went out to Unity Infra Pvt Ltd and came back",
+    "at": "2026-10-03T17:49:35.731239Z"
+   },
+   {
+    "stage": "money",
+    "message": "Rs 58,480 ITC at risk  VEN041-0020",
+    "at": "2026-10-03T17:49:35.981953Z"
+   },
+   {
+    "stage": "money",
+    "message": "Rs 53,617 ITC at risk  VEN-009",
+    "at": "2026-10-03T17:49:36.093898Z"
+   },
+   {
+    "stage": "money",
+    "message": "Rs 46,087 ITC at risk  VEN035-0025",
+    "at": "2026-10-03T17:49:36.217800Z"
+   },
+   {
+    "stage": "money",
+    "message": "Rs 2,371 ITC found  2B-000774",
+    "at": "2026-10-03T17:49:36.343233Z"
+   },
+   {
+    "stage": "money",
+    "message": "Rs 21,436 excess tax  INV-2526-01431",
+    "at": "2026-10-03T17:49:36.465145Z"
+   },
+   {
+    "stage": "money",
+    "message": "Rs 31,666 short tax  INV-2526-01310",
+    "at": "2026-10-03T17:49:36.582833Z"
+   },
+   {
+    "stage": "explain",
+    "message": "INV-2526-01337  Check the supporting order and delivery papers.",
+    "at": "2026-10-03T17:49:36.988455Z"
+   },
+   {
+    "stage": "explain",
+    "message": "INV-2526-01347  Confirm the date and the supply.",
+    "at": "2026-10-03T17:49:37.112913Z"
+   },
+   {
+    "stage": "explain",
+    "message": "TXN-002236  Ask for the business reason and the documents behind both transfers.",
+    "at": "2026-10-03T17:49:37.237917Z"
+   },
+   {
+    "stage": "explain",
+    "message": "TXN-001901  Ask the Party what the payment is for and book it.",
+    "at": "2026-10-03T17:49:37.348997Z"
+   },
+   {
+    "stage": "explain",
+    "message": "JE-004100  Trace the payment or reverse the ledger entry.",
+    "at": "2026-10-03T17:49:37.470764Z"
+   },
+   {
+    "stage": "explain",
+    "message": "JE-004774  Find the invoice or reverse the entry.",
+    "at": "2026-10-03T17:49:37.595162Z"
+   }
+  ]
+ },
+ "finding": {
+  "title": "Rs 21,436 excess tax on INV-2526-01431: charged 28 percent, the rate is 18 percent since 22 Sep 2025",
+  "label": "Wrong GST rate",
+  "impact_paise": 2143630,
+  "impact_type": "excess_tax",
+  "confidence": 1,
+  "party": "Delta Traders Private Limited",
+  "record": "INV-2526-01431",
+  "invoice_date": "2025-09-25",
+  "diff": [
+   {
+    "field": "tax_rate_pct",
+    "label": "GST rate",
+    "left": 28,
+    "right": null,
+    "expected": 18,
+    "differs": true
+   },
+   {
+    "field": "total_tax_paise",
+    "label": "Total tax",
+    "left": 6002165,
+    "right": null,
+    "expected": 3858535,
+    "differs": true
+   }
+  ],
+  "rule_ref": "Effective rate on the invoice date",
+  "reason": "HSN 8528 (Large Electronic Appliances) was taxed at 28 percent. The rate in force on 25 Sep 2025 is 18 percent. The rate changed on 22 Sep 2025.",
+  "rule_text": "The GST rate must be the one in force for that HSN code on the invoice date.",
+  "what_to_do": "Issue a credit note to the Customer for the excess tax and correct the invoice.",
+  "draft": {
+   "recipient": "Delta Traders Private Limited (accounts)",
+   "subject": "Credit note for invoice INV-2526-01431",
+   "body": "Dear Delta Traders Private Limited team,\n\nWe have reviewed invoice INV-2526-01431 dated 25 Sep 2025 and identified that HSN 8528 was charged at 28 percent instead of the applicable 18 percent rate effective from 22 Sep 2025. Consequently, an excess tax of Rs 21,436 was applied.\n\nWe will issue a credit note for Rs 21,436 and provide a corrected invoice. Please update your records accordingly.\n\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU",
+   "source": "cache"
+  }
+ },
+ "ring": {
+  "story": {
+   "ring_id": "ring_1",
+   "pan": "QIKWC6704V",
+   "supplier": {
+    "id": "VEN-009",
+    "name": "Unity Infra Pvt Ltd"
+   },
+   "customer": {
+    "id": "CUS-007",
+    "name": "Unity Motors Ltd"
+   },
+   "steps": [
+    {
+     "kind": "purchase",
+     "party_id": "VEN-009",
+     "date": "2025-09-01",
+     "until": "2025-09-20",
+     "amount_paise": 37848743,
+     "records": [
+      "VEN009-0017",
+      "VEN009-0018",
+      "VEN009-0019",
+      "VEN009-0020",
+      "VEN009-0021"
+     ],
+     "text": "You bought Rs 3,78,487 from Unity Infra Pvt Ltd on 5 invoices."
+    },
+    {
+     "kind": "sale",
+     "party_id": "CUS-007",
+     "date": "2025-09-08",
+     "until": "2025-09-24",
+     "amount_paise": 30407778,
+     "records": [
+      "INV-2526-01282",
+      "INV-2526-01313",
+      "INV-2526-01403",
+      "INV-2526-01415",
+      "INV-2526-01416"
+     ],
+     "text": "You sold Rs 3,04,078 to Unity Motors Ltd on 5 invoices."
+    },
+    {
+     "kind": "out",
+     "party_id": "VEN-009",
+     "date": "2025-09-30",
+     "until": null,
+     "amount_paise": 50000000,
+     "records": [
+      "TXN-002236"
+     ],
+     "text": "Rs 5,00,000 went out to Unity Infra Pvt Ltd with no invoice."
+    },
+    {
+     "kind": "back",
+     "party_id": "VEN-009",
+     "date": "2025-10-02",
+     "until": null,
+     "amount_paise": 50000000,
+     "records": [
+      "TXN-002282"
+     ],
+     "text": "Rs 5,00,000 came back from Unity Infra Pvt Ltd with no invoice."
+    }
+   ],
+   "timeline": [
+    {
+     "period": "2025-04",
+     "bought_paise": 22621924,
+     "sold_paise": 100075692,
+     "credit_paise": 2960163,
+     "round_trip": false
+    },
+    {
+     "period": "2025-05",
+     "bought_paise": 148166584,
+     "sold_paise": 25529832,
+     "credit_paise": 22377641,
+     "round_trip": false
+    },
+    {
+     "period": "2025-06",
+     "bought_paise": 0,
+     "sold_paise": 21346731,
+     "credit_paise": 0,
+     "round_trip": false
+    },
+    {
+     "period": "2025-07",
+     "bought_paise": 28449604,
+     "sold_paise": 20138869,
+     "credit_paise": 4269554,
+     "round_trip": false
+    },
+    {
+     "period": "2025-08",
+     "bought_paise": 68974137,
+     "sold_paise": 65474150,
+     "credit_paise": 9058322,
+     "round_trip": false
+    },
+    {
+     "period": "2025-09",
+     "bought_paise": 37848743,
+     "sold_paise": 30407778,
+     "credit_paise": 5361689,
+     "round_trip": true
+    },
+    {
+     "period": "2025-10",
+     "bought_paise": 109502187,
+     "sold_paise": 124330143,
+     "credit_paise": 16703723,
+     "round_trip": true
+    },
+    {
+     "period": "2025-11",
+     "bought_paise": 14286616,
+     "sold_paise": 10663685,
+     "credit_paise": 2179315,
+     "round_trip": false
+    },
+    {
+     "period": "2025-12",
+     "bought_paise": 28893554,
+     "sold_paise": 21212567,
+     "credit_paise": 3950812,
+     "round_trip": false
+    },
+    {
+     "period": "2026-01",
+     "bought_paise": 33013392,
+     "sold_paise": 116653997,
+     "credit_paise": 3543453,
+     "round_trip": false
+    },
+    {
+     "period": "2026-02",
+     "bought_paise": 36605093,
+     "sold_paise": 56767119,
+     "credit_paise": 5583828,
+     "round_trip": false
+    },
+    {
+     "period": "2026-03",
+     "bought_paise": 43150823,
+     "sold_paise": 5363137,
+     "credit_paise": 6582330,
+     "round_trip": false
+    }
+   ]
+  },
+  "credit_paise": 5361689
+ },
+ "proof": {
+  "test": {
+   "planted": 288,
+   "caught": 287,
+   "reported": 294,
+   "false_alarms": 8,
+   "on_benign_traps": 0,
+   "months": [
+    "2026-02",
+    "2026-03"
+   ]
+  },
+  "by_month": [
+   {
+    "period": "2025-04",
+    "unseen": false,
+    "planted": 99,
+    "caught": 96,
+    "reported": 99,
+    "false_alarms": 3
+   },
+   {
+    "period": "2025-05",
+    "unseen": false,
+    "planted": 139,
+    "caught": 138,
+    "reported": 139,
+    "false_alarms": 1
+   },
+   {
+    "period": "2025-06",
+    "unseen": false,
+    "planted": 108,
+    "caught": 106,
+    "reported": 108,
+    "false_alarms": 2
+   },
+   {
+    "period": "2025-07",
+    "unseen": false,
+    "planted": 145,
+    "caught": 144,
+    "reported": 147,
+    "false_alarms": 3
+   },
+   {
+    "period": "2025-08",
+    "unseen": false,
+    "planted": 116,
+    "caught": 114,
+    "reported": 114,
+    "false_alarms": 0
+   },
+   {
+    "period": "2025-09",
+    "unseen": false,
+    "planted": 133,
+    "caught": 129,
+    "reported": 132,
+    "false_alarms": 3
+   },
+   {
+    "period": "2025-10",
+    "unseen": false,
+    "planted": 143,
+    "caught": 142,
+    "reported": 148,
+    "false_alarms": 6
+   },
+   {
+    "period": "2025-11",
+    "unseen": false,
+    "planted": 119,
+    "caught": 119,
+    "reported": 122,
+    "false_alarms": 3
+   },
+   {
+    "period": "2025-12",
+    "unseen": false,
+    "planted": 137,
+    "caught": 134,
+    "reported": 137,
+    "false_alarms": 3
+   },
+   {
+    "period": "2026-01",
+    "unseen": false,
+    "planted": 153,
+    "caught": 152,
+    "reported": 154,
+    "false_alarms": 2
+   },
+   {
+    "period": "2026-02",
+    "unseen": true,
+    "planted": 111,
+    "caught": 111,
+    "reported": 115,
+    "false_alarms": 4
+   },
+   {
+    "period": "2026-03",
+    "unseen": true,
+    "planted": 175,
+    "caught": 174,
+    "reported": 178,
+    "false_alarms": 4
+   }
+  ],
+  "matchers": [
+   {
+    "kind": "booking",
+    "name": "Invoice to ledger match",
+    "model": {
+     "pairs": 9194,
+     "positives": 878,
+     "precision": 0.9977272727272727,
+     "recall": 1,
+     "f1": 0.9988623435722411,
+     "average_precision": 0.9977272727272727,
+     "false_auto_rate": 0.0022727272727272726
+    },
+    "baseline": {
+     "pairs": 9194,
+     "positives": 878,
+     "precision": 0.9731543624161074,
+     "recall": 0.9908883826879271,
+     "f1": 0.981941309255079,
+     "average_precision": 0.9953560167068645,
+     "false_auto_rate": 0.026845637583892617
+    }
+   },
+   {
+    "kind": "payment",
+    "name": "Invoice to bank match",
+    "model": {
+     "pairs": 6865,
+     "positives": 288,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1,
+     "average_precision": 1,
+     "false_auto_rate": 0
+    },
+    "baseline": {
+     "pairs": 6865,
+     "positives": 288,
+     "precision": 0.9776536312849162,
+     "recall": 0.6076388888888888,
+     "f1": 0.7494646680942184,
+     "average_precision": 0.8330791633458904,
+     "false_auto_rate": 0.0223463687150838
+    }
+   }
+  ],
+  "year": {
+   "planted": 1586,
+   "caught": 1567,
+   "reported": 1600,
+   "false_alarms": 34,
+   "on_benign_traps": 0,
+   "months": [
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03"
+   ]
+  }
+ }
+}

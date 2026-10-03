@@ -2,7 +2,7 @@
 
 For the prototype video (2 to 2.5 minutes: problem, approach, demo) and, further down, the live presentation. Every number in the lines below was read from the running app on 3 Oct 2026 for the demo month, September 2025. If an engine change moves a number, change it here too.
 
-The spoken lines come to about 360 words, which is about 2 minutes 25 seconds at an even pace. Two cuts are marked if you run long.
+The spoken lines come to 393 words over 2:34. The words are meant to fill each shot, so you talk while you click.
 
 ## Before you record
 
@@ -15,197 +15,161 @@ The spoken lines come to about 360 words, which is about 2 minutes 25 seconds at
 
 ## The video, shot by shot
 
-Each shot has two parts. Do is what your hands and the screen do. Say is the exact words, read as written.
+Each shot has a short Do list and the exact words to Say. The words are written to fill the shot: start speaking as the shot starts and do the actions while you talk, so there is no silence.
 
-### 0:00  The problem
+In all: 393 words over 2:34, which is a brisk but clear pace (about 160 words a minute). Rehearse once with a timer. If you speak slower, use the cuts below rather than rushing.
+
+### 0:00 to 0:20  The problem
 
 Screen: Landing page, top
 
 Do:
 
-1. Start on the landing page, scrolled to the top. Hold for two seconds.
-2. Scroll slowly down to the heading "Four records describe one purchase".
-3. Stop with the four record counts and the example on screen.
+1. Start at the top of the landing page.
+2. Scroll slowly to "Four records describe one purchase" and stop there.
 
-Say:
+Say (49 words):
 
 > Every month an Indian business has to make four records agree: its invoices, its books, its bank statement, and GSTR-2B, the statement of what its suppliers reported. When they disagree, input tax credit is lost or tax is overpaid, and today that is found late, by hand, in spreadsheets.
 
-### 0:18  The approach
+### 0:20 to 0:34  The approach
 
 Screen: Landing page, "Seven stages, one month"
 
 Do:
 
-1. Keep scrolling to "Seven stages, one month".
-2. Pause with all seven stages on screen.
+1. Scroll on to "Seven stages, one month" and stop. The feed on the right replays by itself; let it run.
 
-Say:
+Say (35 words):
 
 > LedgerLens reconciles the month end to end. It prices every mismatch in rupees, shows the evidence, and drafts the fix for you to approve. Code decides every number. The language model only words the explanation.
 
-### 0:30  The Run
+### 0:34 to 0:50  The Run
 
 Screen: Landing page top, then the Run overlay
 
 Do:
 
-1. Scroll back to the top.
-2. Click Run again (it says Load demo company on a fresh install).
-3. Do nothing while the feed streams. Let the viewer read the lines.
+1. Scroll to the top and click Run again (Load demo company on a fresh install).
+2. Hands off while the feed streams.
 
-Say:
+Say (46 words):
 
-> This is one month of books for a demo company: September 2025, the month GST rates changed. These are real records going by: invoice numbers a supplier wrote differently, one payment settling two invoices, and each stage reporting what it found.
+> This is one month of books for a demo company: September 2025, the month GST rates changed. What you see going by are real records: invoice numbers a supplier wrote in its own style, one payment settling two invoices, and each stage reporting what it found.
 
-### 0:45  The dashboard
+### 0:50 to 1:08  The dashboard
 
 Screen: Dashboard
 
 Do:
 
-1. The dashboard opens by itself when the Run ends.
-2. Move the pointer along the dark headline band, left to right, as you say each number.
-3. Move down to Fix these first, then across to Why credit is at risk.
+1. Move the pointer across the four numbers as you name them.
+2. Scroll slowly down through the page to the charts.
 
-Say:
+Say (44 words):
 
-> Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable is 34.97 lakh. Below that: what to fix first, and why the credit is at risk.
+> Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable is 34.97 lakh. Below that: what to fix first, why the credit is at risk, how the month matched, and the filed return against our working.
 
-### 1:00  A Finding, and the approval
+### 1:08 to 1:33  A Finding, and the approval
 
 Screen: Finding drawer over the dashboard
 
 Do:
 
-1. Click the line with the red dot: "2 invoices this month still use a GST rate that ended on 22 Sep 2025".
-2. Point at 28% and 18% in the table, then at Why this was flagged, then at the drafted note.
-3. Click Approve draft.
-4. Point at the headline band: excess tax now reads Rs 2,681.
-5. Close the drawer.
+1. Scroll to the top and click the Rate change line.
+2. Point at 28% and 18%, then at the drafted note.
+3. Click Approve draft, then close the drawer.
 
-Say:
+Say (63 words):
 
-> Open a Finding. This invoice was charged 28 percent three days after the rate became 18. Here is the record, what it should be, the rule, and a drafted credit note. I approve it, and excess tax drops from 24,117 rupees to 2,681.
+> Open a Finding. This invoice was charged 28 percent, three days after the rate for that product became 18. On the left is what the invoice says, on the right what it should be, then the rule in plain words. Below it is a credit note, already drafted. I approve it, and excess tax on the dashboard drops from 24,117 rupees to 2,681.
 
-### 1:17  A second approval (cut 1 if long)
-
-Screen: Dashboard, then the drawer again
-
-Do:
-
-1. Click See why and fix under Start here in the headline band.
-2. Click Approve draft.
-3. Close the drawer. The headline now reads Rs 2.23 L.
-
-Say:
-
-> This supplier never reported our invoice, so its credit is at risk. The draft asks them to report it. Approved: credit at risk falls to 2.23 lakh.
-
-### 1:27  Matched, not flagged (cut 2 if long)
-
-Screen: Workbench, Matches tab
-
-Do:
-
-1. Click Workbench in the sidebar.
-2. Click Matches.
-3. Open a row marked One-to-many.
-4. Close it.
-
-Say:
-
-> Not everything odd is wrong. One payment settling two invoices is matched and left alone.
-
-### 1:35  The Supplier ring
+### 1:33 to 1:59  The Supplier ring
 
 Screen: Ring view
 
 Do:
 
-1. Click Ring view in the sidebar.
-2. Click the red supplier node, Unity Infra Pvt Ltd. Its panel opens on the right.
-3. Scroll down to Follow the money. Pause on the arrows.
-4. Scroll on to The ring across the year.
+1. Click Ring view, then click the red supplier node.
+2. Scroll to Follow the money, pause, then on to The ring across the year.
 
-Say:
+Say (70 words):
 
-> The ring view shows who we trade with. This supplier and this customer share one PAN, so one owner sits on both sides. Five lakh rupees went out on 30 September with no invoice and came back on 2 October.
+> The ring view shows everyone we trade with. Two of them are red. This supplier and this customer share one PAN, so one owner sits on both sides of our books. Follow the money: we buy from one, sell to the other, and on 30 September five lakh rupees went out with no invoice and came back on 2 October. Across the year, 8.26 lakh of credit depended on them.
 
-### 1:55  What the month should cost
+### 1:59 to 2:07  What the month should cost
 
 Screen: Liability
 
 Do:
 
-1. Click Liability in the sidebar.
-2. Point at Declared net payable, then at the LedgerLens figure and the gap.
+1. Click Liability.
 
-Say:
+Say (21 words):
 
 > The filed return declared 32.15 lakh. LedgerLens shows what the month should cost, tax type by tax type, and the gap.
 
-### 2:03  Proof and the data
+### 2:07 to 2:29  Proof and the data
 
 Screen: Proof, then Data
 
 Do:
 
-1. Click Proof in the sidebar.
-2. Point at the four numbers at the top.
-3. Scroll to Every miss, by record.
-4. Click Data in the sidebar and scroll to Mistakes planted for LedgerLens to catch.
+1. Click Proof and scroll to Every miss, by record.
+2. Click Data and scroll to the planted mistakes.
 
-Say:
+Say (57 words):
 
-> And it is measured, not claimed. The data has planted mistakes and an answer key. On two months the matchers never saw, LedgerLens caught 287 of 288 planted mistakes with 8 false alarms, and every miss is listed by record. The Data page shows exactly what was planted.
+> And it is measured, not claimed. The data has mistakes planted on purpose and an answer key. On two months the matchers never saw, LedgerLens caught 287 of 288 planted mistakes, with 8 false alarms, and every miss is listed by record. The Data page shows exactly what was planted, and lets you check any record yourself.
 
-### 2:23  Close
+### 2:29 to 2:34  Close
 
 Screen: Dashboard
 
 Do:
 
-1. Click Dashboard in the sidebar.
-2. Hold on the headline band for three seconds, then stop recording.
+1. Click Dashboard and hold.
 
-Say:
+Say (8 words):
 
 > LedgerLens: what it costs, why, and the fix.
 
 ## The words only
 
-The same lines in one block, for rehearsing or recording the voice separately.
+The same lines in one block, for rehearsing or for recording the voice first and the screen to match.
 
 **0:00** Every month an Indian business has to make four records agree: its invoices, its books, its bank statement, and GSTR-2B, the statement of what its suppliers reported. When they disagree, input tax credit is lost or tax is overpaid, and today that is found late, by hand, in spreadsheets.
 
-**0:18** LedgerLens reconciles the month end to end. It prices every mismatch in rupees, shows the evidence, and drafts the fix for you to approve. Code decides every number. The language model only words the explanation.
+**0:20** LedgerLens reconciles the month end to end. It prices every mismatch in rupees, shows the evidence, and drafts the fix for you to approve. Code decides every number. The language model only words the explanation.
 
-**0:30** This is one month of books for a demo company: September 2025, the month GST rates changed. These are real records going by: invoice numbers a supplier wrote differently, one payment settling two invoices, and each stage reporting what it found.
+**0:34** This is one month of books for a demo company: September 2025, the month GST rates changed. What you see going by are real records: invoice numbers a supplier wrote in its own style, one payment settling two invoices, and each stage reporting what it found.
 
-**0:45** Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable is 34.97 lakh. Below that: what to fix first, and why the credit is at risk.
+**0:50** Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable is 34.97 lakh. Below that: what to fix first, why the credit is at risk, how the month matched, and the filed return against our working.
 
-**1:00** Open a Finding. This invoice was charged 28 percent three days after the rate became 18. Here is the record, what it should be, the rule, and a drafted credit note. I approve it, and excess tax drops from 24,117 rupees to 2,681.
+**1:08** Open a Finding. This invoice was charged 28 percent, three days after the rate for that product became 18. On the left is what the invoice says, on the right what it should be, then the rule in plain words. Below it is a credit note, already drafted. I approve it, and excess tax on the dashboard drops from 24,117 rupees to 2,681.
 
-**1:17** This supplier never reported our invoice, so its credit is at risk. The draft asks them to report it. Approved: credit at risk falls to 2.23 lakh.
+**1:33** The ring view shows everyone we trade with. Two of them are red. This supplier and this customer share one PAN, so one owner sits on both sides of our books. Follow the money: we buy from one, sell to the other, and on 30 September five lakh rupees went out with no invoice and came back on 2 October. Across the year, 8.26 lakh of credit depended on them.
 
-**1:27** Not everything odd is wrong. One payment settling two invoices is matched and left alone.
+**1:59** The filed return declared 32.15 lakh. LedgerLens shows what the month should cost, tax type by tax type, and the gap.
 
-**1:35** The ring view shows who we trade with. This supplier and this customer share one PAN, so one owner sits on both sides. Five lakh rupees went out on 30 September with no invoice and came back on 2 October.
+**2:07** And it is measured, not claimed. The data has mistakes planted on purpose and an answer key. On two months the matchers never saw, LedgerLens caught 287 of 288 planted mistakes, with 8 false alarms, and every miss is listed by record. The Data page shows exactly what was planted, and lets you check any record yourself.
 
-**1:55** The filed return declared 32.15 lakh. LedgerLens shows what the month should cost, tax type by tax type, and the gap.
-
-**2:03** And it is measured, not claimed. The data has planted mistakes and an answer key. On two months the matchers never saw, LedgerLens caught 287 of 288 planted mistakes with 8 false alarms, and every miss is listed by record. The Data page shows exactly what was planted.
-
-**2:23** LedgerLens: what it costs, why, and the fix.
+**2:29** LedgerLens: what it costs, why, and the fix.
 
 ## If you run long
 
 Cut in this order. Each cut leaves the story whole.
 
-1. The second approval (1:17). Saves about 10 seconds.
-2. The workbench (1:27). Saves about 8 seconds.
-3. Shorten the Proof line to: "On two months the matchers never saw, it caught 287 of 288 planted mistakes, and every miss is listed."
+1. In the dashboard shot, stop after "Net payable is 34.97 lakh." Saves about 6 seconds.
+2. In the ring shot, drop the last sentence about the year. Saves about 5 seconds.
+3. In the proof shot, drop the last sentence about the Data page and do not open Data. Saves about 7 seconds.
+
+## If you have time to spare
+
+Two short beats that fit between the Finding and the ring. Each adds about 10 seconds.
+
+- A second approval. Do: click the Start here line, click Approve draft, close. Say: "This supplier never reported our invoice, so its credit is at risk. The draft asks them to report it. Approved, and credit at risk falls to 2.23 lakh."
+- Matched, not flagged. Do: click Workbench, click Matches, open a row marked One-to-many. Say: "Not everything odd is wrong. One payment settling two invoices is matched and left alone."
 
 ## If something goes wrong in the take
 
@@ -217,15 +181,15 @@ Cut in this order. Each cut leaves the story whole.
 
 | Line | Number | Screen |
 |---|---|---|
-| Credit at risk | Rs 2,81,615 (shown as Rs 2.82 L) | Dashboard headline |
-| Credit found | Rs 3,098 | Dashboard headline |
-| Net payable | Rs 34,96,926 (Rs 34.97 L) | Dashboard headline |
+| Credit at risk | Rs 2,81,615 (shown as Rs 2.82 L) | Dashboard, the four numbers |
+| Credit found | Rs 3,098 | Dashboard, the four numbers |
+| Net payable | Rs 34,96,926 (Rs 34.97 L) | Dashboard, the four numbers |
 | Open Findings | 129 | Dashboard, Fix these first |
 | Rate change invoice | INV-2526-01431, 28 percent on 25 Sep 2025, 18 percent since 22 Sep 2025, Rs 21,436 excess tax | Finding drawer |
-| Excess tax after approving it | Rs 24,117 to Rs 2,681; Net payable to Rs 34,75,490 | Dashboard headline |
-| Supplier not reporting | VEN041-0020, Titan Logistics Ltd, Rs 58,480 | Start here |
-| Credit at risk after approving it | Rs 2,23,135 (Rs 2.23 L) | Dashboard headline |
-| Ring | Unity Infra Pvt Ltd (supplier) and Unity Motors Ltd (customer), one PAN; Rs 5,00,000 out on 30 Sep 2025, back on 2 Oct 2025; Rs 53,617 of credit this month | Ring view |
+| Excess tax after approving it | Rs 24,117 to Rs 2,681; Net payable to Rs 34,75,490 | Dashboard, the four numbers |
+| Supplier not reporting | VEN041-0020, Titan Logistics Ltd, Rs 58,480 | Dashboard, Start here line |
+| Credit at risk after approving it | Rs 2,23,135 (Rs 2.23 L) | Dashboard, the four numbers |
+| Ring | Unity Infra Pvt Ltd (supplier) and Unity Motors Ltd (customer), one PAN; Rs 5,00,000 out on 30 Sep 2025, back on 2 Oct 2025; Rs 53,617 of credit this month, Rs 8.26 L over the year | Ring view |
 | Filed return | Rs 32,15,311 declared | Liability |
 | Catch rate | 287 of 288 planted mistakes (99.7 percent), 8 false alarms, 0 on Benign traps, February and March 2026 | Proof |
 | Run time | about 9 seconds | Run overlay |

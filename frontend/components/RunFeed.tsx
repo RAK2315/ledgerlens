@@ -15,17 +15,18 @@ const STAGES: { id: string; label: string; what: string }[] = [
 ];
 
 /** The stages of a Run with the real records each one touched, newest stage at the bottom. */
-export function RunFeed({ stages, items, waiting }: { stages: StageEvent[]; items: FeedItem[]; waiting: boolean }) {
+export function RunFeed({ stages, items, waiting, inPage = false }: { stages: StageEvent[]; items: FeedItem[]; waiting: boolean; inPage?: boolean }) {
   const end = useRef<HTMLDivElement>(null);
   const state = new Map<string, StageEvent>();
   for (const event of stages) state.set(event.stage, event);
 
   useEffect(() => {
-    if (waiting) end.current?.scrollIntoView({ block: "end" });
-  }, [items.length, stages.length, waiting]);
+    // Inside a page the feed grows in place; in the overlay it keeps the newest line in view.
+    if (waiting && !inPage) end.current?.scrollIntoView({ block: "end" });
+  }, [items.length, stages.length, waiting, inPage]);
 
   return (
-    <ol className="max-h-[62vh] overflow-y-auto pr-3" aria-live="polite">
+    <ol className={inPage ? "" : "max-h-[62vh] overflow-y-auto pr-3"} aria-live={inPage ? "off" : "polite"}>
       {STAGES.map((stage, index) => {
         const event = state.get(stage.id);
         const done = event?.status === "done";
