@@ -7,7 +7,7 @@ import { BadgeCheck, LayoutDashboard, ListChecks, Network, Scale, Search, Zap } 
 import { useRun } from "@/lib/run-store";
 import { periodName } from "@/lib/format";
 import { ErrorState, Skeleton } from "./ui";
-import { StageStepper } from "./StageStepper";
+import { RunOverlay } from "./RunOverlay";
 import { DemoGuide } from "./DemoGuide";
 
 const NAV = [
@@ -107,22 +107,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
 
-      {process.env.NEXT_PUBLIC_DEMO === "1" && run.runId && !busy && <DemoGuide />}
+      {process.env.NEXT_PUBLIC_DEMO === "1" && run.runId && !busy && !/^\/dashboard\/[ab]$/.test(pathname) && <DemoGuide />}
 
-      {(busy || run.runState === "failed") && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-6" role="dialog" aria-modal="true" aria-label="Run in progress">
-          <div className="card w-full max-w-lg p-5 shadow-float">
-            <p className="font-display text-xl font-bold">Reconciling {periodName(run.target)}</p>
-            <p className="mb-3 text-[13px] text-ink-2">Each stage reports what it found.</p>
-            <StageStepper events={run.stages} waiting={busy} />
-            {run.runState === "failed" && (
-              <div className="mt-3">
-                <ErrorState message={run.runError ?? "The Run failed."} onRetry={() => run.launch()} />
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      <RunOverlay />
     </div>
   );
 }

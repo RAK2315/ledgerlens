@@ -54,7 +54,7 @@ export function DemoGuide() {
     router.push(steps[to].path);
   };
   return (
-    <div className="fixed bottom-4 left-1/2 z-30 flex w-[min(760px,calc(100vw-140px))] -translate-x-1/2 items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-cream shadow-float">
+    <div data-guide className="fixed bottom-4 left-1/2 z-30 flex w-[min(760px,calc(100vw-140px))] -translate-x-1/2 items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-cream shadow-float">
       <span className="rounded-full bg-white/10 px-2.5 py-0.5 font-mono text-[12px]">
         {index + 1}/{steps.length}
       </span>
