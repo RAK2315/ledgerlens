@@ -28,9 +28,39 @@ After phase 7 the demo has a story (load and dashboard). After phase 8 it has th
 
 ## Progress
 
-- Phases 1 to 13 built. Next: demo script after the user approves the frontend, then phase 14 leftovers (presenter next-step control), phase 15 quality passes, deploy, V2.
+- Phases 1 to 13 built and tested by the user. Next: the review feedback section below (bugs, redesign, four feature asks), then the demo script, quality passes and deploy.
 - Frontend choices made for speed: plain Tailwind components instead of shadcn/ui, an SVG donut and CSS bars instead of Recharts, plain tables instead of TanStack Table. Cytoscape draws the ring view with hand-placed positions. TypeScript is 5.9 (the Next.js scaffold default). The Chrome extension was not connected, so browser checks use Playwright with the installed Chrome.
 - Changes from the plan made while building the backend: all routes live in backend/app/routes/api.py; the engine analyses the whole year once (about 20 seconds, cached to backend/cache) and a Run reads its Return period from that, so a Run takes about 5 seconds; anomaly rules live in backend/app/engine/anomalies.py; Drafts use Groq (model openai/gpt-oss-120b), not Claude; GET /api/runs/latest was added so the frontend can find the last Run after a reload.
+
+## Review feedback from the user (3 Oct 2026, first test of the prototype)
+
+The user tested every screen. Overall verdict: it works, but it looks AI-generated and shows too little of the thinking behind it. Do these before the demo script. Answers below were confirmed with the user; nothing here is a guess unless marked.
+
+### Bugs
+
+1. The Run overlay names the wrong month. Choosing another Return period shows "Reconciling <the month you were on>" while the stage text is for the chosen month (seen: title December 2025, stage text 2025-10). Cause: lib/run-store.tsx sets period only after the Run ends, and components/Shell.tsx titles the overlay and the select from run.period. Fix: keep a target period in the store from the moment launch or choosePeriod starts, and use it for the overlay title and the select.
+2. The red "GST rates changed on 22 Sep 2025" banner: the user asked whether it is right that it shows in January 2026 and never before September. It is right (it lists invoices of that month dated after the change that still use the old rate, for example VEN020-0041 in January 2026). Reword it so a later month does not read like stale news, for example "2 invoices this month still use a rate that ended on 22 Sep 2025".
+
+### Look and feel ("everything looks too much AI")
+
+The user is not sure which direction to take. So: use the impeccable skill, make two quick directions for the landing page and the dashboard only, screenshot both, let the user pick, then apply the chosen one everywhere. Signs of the generated look to remove: grids of icon, title and text cards; many tinted pills and chips; everything boxed in a rounded card; all information at one weight.
+
+3. Landing page: the user's words, "it ain't even a landing page, it's literally a button". Build a complete landing page: what the problem is, how LedgerLens solves it step by step, the features shown with real screens and real numbers from the demo month, the honesty about the data, and the call to action. Keep Load demo company as the main action.
+4. Dashboard: too much information at once. Lead with the three rupee numbers, then reveal the rest in an order a first-time viewer can follow (progressive disclosure, fewer boxes, clear reading order).
+5. The dark guide bar at the bottom (components/DemoGuide.tsx): keep a guided walk-through but redesign it so it looks intended, not like a generated tooltip.
+
+### Features the user asked for
+
+6. Live feed during a Run (chosen option): while each stage runs, real records stream past, for example "INV-2425-02759 read as INV-2526-02759", "TXN-002349 settles 2 invoices", with counters ticking up, and the feed stays readable after the Run. Needs the backend to send example items per stage (a new SSE event next to stage; the analysis already holds the matches, reasons and Findings to draw from).
+7. Ring view, all four: click any Party to see its invoices, payments and Findings for the month with links into the Finding detail; draw the money moving (the Rs 5,00,000 round trip, purchases and sales) as dated, labelled arrows with a short step by step; filters (Suppliers or Customers, all 120 Parties, search, shared bank accounts as well as shared PAN); a timeline of the ring across the year (months traded, credit depending on them).
+8. A Data page in the sidebar, all four: what the dataset is and why it is synthetic and why this one was chosen (sheets with row counts); what was planted (every planted error type and Benign trap with counts and a real example row); how GSTR-2B was generated and why each choice was made (ML_BUILD.md 3.5 and data/derived/augment_manifest.json); browse the raw records (invoices, ledger, bank, GSTR-2B for the month, searchable; the SQLite Record tables already hold them).
+9. Proof page, all four ("looks good, too good"): the trained matchers against the rule baseline (the cards in ml/artifacts hold both); the misses shown openly (the records missed or wrongly flagged with why, and hard cases caught: typos, part payments); how it was tested (train, validation and test months, what was planted, what counts as a false alarm, limits of synthetic data); a switch between test months and the whole year, and catch rate month by month (engine/evaluate.py already takes a period list).
+
+### Still open from before
+
+- docs/DEMO_SCRIPT.md (2 to 2.5 minutes: problem, approach, demo). Write it only after the user approves the reworked frontend.
+- Hosted deploy: Dockerfile and render.yaml are untried; needs the user's accounts.
+- Quality passes (deslop, simplify, code review) and the answer_key liability test.
 
 ## Notes from phases 3 to 13
 
