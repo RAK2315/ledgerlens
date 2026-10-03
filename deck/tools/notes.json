@@ -1,0 +1,9 @@
+[
+ "Organiser cover slide.",
+ "Tell it as a story. A shop buys stock and pays 18,000 rupees of GST. It can get that back as input tax credit, but only if every record agrees: the supplier reports the sale, the tax on the bill is right, and the bill is paid within 180 days. One mismatch and the money is gone. Today an accountant checks this by hand in Excel. Scale: 1.67 crore GST businesses, 35,132 crore of fake credit caught in seven months, and since Oct 2025 the rules are stricter.",
+ "Team slide.",
+ "LedgerLens does four things: upload, check, explain, fix. Point at the two coloured numbers: money you could lose, and money you can still claim. Every problem in the list has a rupee value and a next step. The green chips show we cover every requirement in the problem statement.",
+ "Five steps, left to right: your records, clean up, match everything, find risk and explain, you review and act. Two promises: maths by code and words by AI, so the AI never changes a number; and accuracy proven on test data with known mistakes. It runs on one laptop, even offline.",
+ "Free, proven tools. The test data is a full year of books for a fictional company: about 5,200 bills, 4,700 bank entries and 9,900 accounting entries, with 781 planted mistakes and 1,368 honest traps that look like errors but are not. We score both how many mistakes we catch and how few false alarms we raise.",
+ "Four reasons we are different. We show money, not rows. Every flag explains itself. We fix, not just find. We spot fake suppliers by linking firms that share an owner, bank account or address. The cement example is real: its GST rate dropped from 28 to 18 percent on 22 Sep 2025, and a bill two days later still charged 28."
+]

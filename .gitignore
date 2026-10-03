@@ -1,0 +1,11 @@
+**/.venv/
+**/node_modules/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.local
+deck/out/assets/
+deck/out/template_assets/
+deck/out/ppt_check/
+deck/out/full*.png
