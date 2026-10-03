@@ -64,3 +64,9 @@ Frontend, on Vercel:
 2. Set NEXT_PUBLIC_API_URL to the backend URL.
 
 The backend keeps its database on the container's disk, so approvals reset when the service restarts. That is fine for a demo.
+
+## Hosted copy
+
+- Backend: a Hugging Face Docker Space at https://rak2315-agentsupport-backend.hf.space (health check at /api/health). It is public, allows calls from any site and serves only the demo data. To update it, commit, then run `python deploy/hf-space/push.py rak2315/agentsupport-backend` from the repo root while logged in with `hf auth login`. Only files tracked by git are sent.
+- Frontend: Vercel, root directory `frontend`, with `NEXT_PUBLIC_API_URL` set to the Space URL. The value is fixed at build time, so redeploy after changing it.
+- A free Space sleeps when idle. Open the health check a few minutes before showing the hosted copy.
