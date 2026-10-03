@@ -2,7 +2,7 @@
 
 For the prototype video (2 to 2.5 minutes: problem, approach, demo) and, further down, the live presentation. Every number in the lines below was read from the running app on 3 Oct 2026 for the demo month, September 2025. If an engine change moves a number, change it here too.
 
-The spoken lines come to 393 words over 2:34. The words are meant to fill each shot, so you talk while you click.
+The spoken lines come to 393 words over 2:29. The words are meant to fill each shot, so you talk while you click.
 
 ## Before you record
 
@@ -17,7 +17,7 @@ The spoken lines come to 393 words over 2:34. The words are meant to fill each s
 
 Each shot has a short Do list and the exact words to Say. The words are written to fill the shot: start speaking as the shot starts and do the actions while you talk, so there is no silence.
 
-In all: 393 words over 2:34, which is a brisk but clear pace (about 160 words a minute). Rehearse once with a timer. If you speak slower, use the cuts below rather than rushing.
+In all: 393 words over 2:29, which is a brisk but clear pace (about 160 words a minute). Rehearse once with a timer. If you speak slower, use the cuts below rather than rushing.
 
 ### 0:00 to 0:20  The problem
 
@@ -70,7 +70,7 @@ Say (44 words):
 
 > Rupees first. 2.82 lakh rupees of credit is at risk, 3,098 more can be claimed, and Net payable is 34.97 lakh. Below that: what to fix first, why the credit is at risk, how the month matched, and the filed return against our working.
 
-### 1:08 to 1:33  A Finding, and the approval
+### 1:08 to 1:32  A Finding, and the approval
 
 Screen: Finding drawer over the dashboard
 
@@ -84,7 +84,7 @@ Say (63 words):
 
 > Open a Finding. This invoice was charged 28 percent, three days after the rate for that product became 18. On the left is what the invoice says, on the right what it should be, then the rule in plain words. Below it is a credit note, already drafted. I approve it, and excess tax on the dashboard drops from 24,117 rupees to 2,681.
 
-### 1:33 to 1:59  The Supplier ring
+### 1:32 to 1:56  The Supplier ring
 
 Screen: Ring view
 
@@ -97,7 +97,7 @@ Say (70 words):
 
 > The ring view shows everyone we trade with. Two of them are red. This supplier and this customer share one PAN, so one owner sits on both sides of our books. Follow the money: we buy from one, sell to the other, and on 30 September five lakh rupees went out with no invoice and came back on 2 October. Across the year, 8.26 lakh of credit depended on them.
 
-### 1:59 to 2:07  What the month should cost
+### 1:56 to 2:04  What the month should cost
 
 Screen: Liability
 
@@ -109,7 +109,7 @@ Say (21 words):
 
 > The filed return declared 32.15 lakh. LedgerLens shows what the month should cost, tax type by tax type, and the gap.
 
-### 2:07 to 2:29  Proof and the data
+### 2:04 to 2:24  Proof and the data
 
 Screen: Proof, then Data
 
@@ -122,7 +122,7 @@ Say (57 words):
 
 > And it is measured, not claimed. The data has mistakes planted on purpose and an answer key. On two months the matchers never saw, LedgerLens caught 287 of 288 planted mistakes, with 8 false alarms, and every miss is listed by record. The Data page shows exactly what was planted, and lets you check any record yourself.
 
-### 2:29 to 2:34  Close
+### 2:24 to 2:29  Close
 
 Screen: Dashboard
 
@@ -148,13 +148,13 @@ The same lines in one block, for rehearsing or for recording the voice first and
 
 **1:08** Open a Finding. This invoice was charged 28 percent, three days after the rate for that product became 18. On the left is what the invoice says, on the right what it should be, then the rule in plain words. Below it is a credit note, already drafted. I approve it, and excess tax on the dashboard drops from 24,117 rupees to 2,681.
 
-**1:33** The ring view shows everyone we trade with. Two of them are red. This supplier and this customer share one PAN, so one owner sits on both sides of our books. Follow the money: we buy from one, sell to the other, and on 30 September five lakh rupees went out with no invoice and came back on 2 October. Across the year, 8.26 lakh of credit depended on them.
+**1:32** The ring view shows everyone we trade with. Two of them are red. This supplier and this customer share one PAN, so one owner sits on both sides of our books. Follow the money: we buy from one, sell to the other, and on 30 September five lakh rupees went out with no invoice and came back on 2 October. Across the year, 8.26 lakh of credit depended on them.
 
-**1:59** The filed return declared 32.15 lakh. LedgerLens shows what the month should cost, tax type by tax type, and the gap.
+**1:56** The filed return declared 32.15 lakh. LedgerLens shows what the month should cost, tax type by tax type, and the gap.
 
-**2:07** And it is measured, not claimed. The data has mistakes planted on purpose and an answer key. On two months the matchers never saw, LedgerLens caught 287 of 288 planted mistakes, with 8 false alarms, and every miss is listed by record. The Data page shows exactly what was planted, and lets you check any record yourself.
+**2:04** And it is measured, not claimed. The data has mistakes planted on purpose and an answer key. On two months the matchers never saw, LedgerLens caught 287 of 288 planted mistakes, with 8 false alarms, and every miss is listed by record. The Data page shows exactly what was planted, and lets you check any record yourself.
 
-**2:29** LedgerLens: what it costs, why, and the fix.
+**2:24** LedgerLens: what it costs, why, and the fix.
 
 ## If you run long
 
