@@ -9,7 +9,7 @@ Vocabulary lives in CONTEXT.md. Use its terms in code, UI and docs.
 - Stage: prototype round (shortlisted from the ideathon). Prototype video (2 to 2.5 minutes: problem, approach, demo) due 4 Oct 2026, 1:30 AM. Results about 3:00 AM. Final presentation on campus at NSUT Dwarka, 4 Oct 2026, 10:30 AM, with the working prototype and the deck. The plan is still to build the whole project.
 - Ideathon deck: done (deck/, see deck/NOTES.md). Team details on slide 3 are still placeholders.
 - Blueprint: complete. CONTEXT.md, this file, ML_BUILD.md, plan/00 to plan/06 and plan/schema.sql.
-- Code: plan/05-build-plan.md phases 1 to 5 done. ml package: loader, augment, normalisers, resolver, candidates, features, booking and payment matchers (ml/artifacts). backend: SQLite store, engine (tax rules, duplicates, matching Findings, one-to-many, GSTR-2B, Rule 37, anomalies, rings, filing checks, money), Run pipeline with streamed stages, every API route, Drafts through Groq with disk cache and templates. The engine analyses the whole year once and caches it in backend/cache; a Run reads its Return period from that. backend/scripts/check_engine.py prints the Catch rate per Finding type. Next step is phase 6, the frontend.
+- Code: plan/05-build-plan.md phases 1 to 13 are built: ml package (matchers in ml/artifacts), backend (store, engine, Run pipeline, every API route, Drafts through Groq with disk cache and templates) and frontend (start, dashboard, Finding drawer with approve, edit and dismiss, workbench with One-to-many, ring view, liability, proof). Checked with Playwright at 1440x900 and 1920x1080 on the production build, no console errors (frontend/scripts/shots.mjs walks the journey). Run it with start.cmd after the one-time steps in README.md. Left: demo script (docs/DEMO_SCRIPT.md, after the user approves the frontend), presenter next-step control, quality passes, hosted deploy (Dockerfile and render.yaml are written but not tried), V2 features.
 - Dataset: data/source/tax_recon_dataset.xlsx (SHA-256 in ML_BUILD.md 3.1). GSTR-2B lines and augment labels are in data/derived, written by ml augment and committed; choices made there are in ML_BUILD.md 3.5. ML_BUILD.md is a from-scratch recipe that stands alone (it needs only the dataset), in simple language and with no build status in it; keep it that way when editing.
 - Explainability and the USP come first everywhere (UI copy, video, deck): a first-time viewer must understand the problem and how LedgerLens solves it. USP: rupees first, evidence for every Finding, a Draft fix to approve, Supplier rings, measured accuracy.
 
@@ -48,6 +48,11 @@ Windows PowerShell from the repo root. Backend and frontend commands apply once 
 | ML train and report | ml\.venv\Scripts\python -m ledgerlens_ml train --all; ml\.venv\Scripts\python -m ledgerlens_ml evaluate |
 | Backend install | python -m venv backend\.venv; backend\.venv\Scripts\python -m pip install -r backend\requirements.txt; backend\.venv\Scripts\python -m pip install -e ml |
 | Backend dev | backend\.venv\Scripts\python -m uvicorn app.main:app --app-dir backend --reload --port 8000 |
+| Warm the cache | cd backend; .venv\Scripts\python -m app.warm (loads the demo data and analyses the year once) |
+| Precache Drafts | cd backend; .venv\Scripts\python -m app.drafts.precache --period 2025-09 |
+| Engine check | backend\.venv\Scripts\python backend\scripts\check_engine.py |
+| Start both | start.cmd (production frontend; run pnpm --dir frontend build first) |
+| Journey screenshots | node frontend\scripts\shots.mjs <output folder> |
 | Backend test | backend\.venv\Scripts\python -m pytest backend\tests -q |
 | Frontend install | pnpm --dir frontend install |
 | Frontend dev | pnpm --dir frontend dev |

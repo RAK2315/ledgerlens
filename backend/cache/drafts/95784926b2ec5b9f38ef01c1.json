@@ -1,0 +1,4 @@
+{
+ "subject": "Debit note for invoice INV-2526-01280",
+ "body": "Dear Nova Systems Pvt Ltd team,\n\nWe reviewed invoice INV-2526-01280 dated 8 Sep 2025 and found an error.\nThe party is in another state (state code 27), so IGST applies, but the invoice charges CGST plus SGST.\nWe are issuing a debit note for Rs 7,843 and will send a corrected invoice.\nPlease adjust your records.\nRegards,\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

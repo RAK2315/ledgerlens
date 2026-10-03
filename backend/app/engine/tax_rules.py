@@ -31,6 +31,14 @@ def _direction(kind: str, charged: int, expected: int) -> str:
     return "itc_at_risk" if charged > expected else "none"
 
 
+FIXES = {
+    "excess_tax": "Issue a credit note to the Customer for the excess tax and correct the invoice.",
+    "short_tax": "Raise a debit note to the Customer for the tax not charged and correct the invoice.",
+    "itc_at_risk": "Ask the Supplier for a credit note for the excess tax. Claim credit only on the correct amount until it arrives.",
+    "none": "Ask the Supplier for a corrected invoice.",
+}
+
+
 def check(b: Books) -> list[dict]:
     out: list[dict] = []
     master_gstin = b.parties["gstin"].to_dict()
@@ -64,6 +72,7 @@ def check(b: Books) -> list[dict]:
                                    expected=expected, diffs=rows, split=tax_split(inv, tax), **common))
             elif rule["rate"] > 0 and rate == 0 and tax == 0:
                 out.append(finding("TAXABLE_ITEM_ZERO_TAX", impact_type="short_tax" if kind == "SALES" else "none", impact_paise=want,
+                                   what_to_do=FIXES["short_tax" if kind == "SALES" else "none"],
                                    title=f"No tax charged on a taxable item, {invoice_id}: {rupees(want)} missing",
                                    reason=f"{item} carries {rule['rate']} percent in the rate table, but the invoice charges no tax.",
                                    expected=expected, diffs=rows, split=tax_split(inv, want), **common))
@@ -71,14 +80,17 @@ def check(b: Books) -> list[dict]:
                 gap = abs(tax - want)
                 changed = rule["effective_from"] > b.tax_rates["effective_from"].min()
                 since = f" The rate changed on {nice_date(rule['effective_from'])}." if changed else ""
+                stale = f" since {nice_date(rule['effective_from'])}" if changed else ""
                 word = {"excess_tax": "excess tax", "short_tax": "short tax", "itc_at_risk": "ITC at risk", "none": "tax difference"}[_direction(kind, tax, want)]
                 out.append(finding("WRONG_TAX_RATE", impact_type=_direction(kind, tax, want), impact_paise=gap,
-                                   title=f"{rupees(gap)} {word} on {invoice_id}: charged {rate} percent, the rate is {rule['rate']} percent",
+                                   what_to_do=FIXES[_direction(kind, tax, want)],
+                                   title=f"{rupees(gap)} {word} on {invoice_id}: charged {rate} percent, the rate is {rule['rate']} percent{stale}",
                                    reason=f"{item} was taxed at {rate} percent. The rate in force on {nice_date(inv['invoice_date'])} is {rule['rate']} percent.{since}",
                                    expected=expected, diffs=rows, split=tax_split(inv, gap), **common))
             elif abs(tax - expected_tax(taxable, rate)) > TOLERANCE_PAISE:
                 gap = abs(tax - want)
                 out.append(finding("TAX_CALC_ERROR", impact_type=_direction(kind, tax, want), impact_paise=gap,
+                                   what_to_do=FIXES[_direction(kind, tax, want)],
                                    title=f"Tax on {invoice_id} is off by {rupees(gap)}",
                                    reason=f"{rupees(taxable)} at {rate} percent is {rupees(want)}, but the invoice shows {rupees(tax)}.",
                                    expected=expected, diffs=rows, split=tax_split(inv, gap), **common))

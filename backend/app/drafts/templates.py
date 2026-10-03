@@ -1,7 +1,7 @@
 """One template per Draft kind. Used when there is no model output, and as the facts the model must keep."""
 from __future__ import annotations
 
-from ..engine.findings import rupees
+from ..engine.findings import nice_date, rupees
 from ..engine.labels import META
 from ..engine.run import COMPANY
 
@@ -22,8 +22,10 @@ def facts(finding: dict, party_name: str | None) -> dict:
     return {
         "finding": finding["title"], "why": finding["reason"], "next_step": finding["what_to_do"],
         "amount": rupees(finding["impact_paise"]), "record": left["id"], "party": party_name or fields.get("party_name") or fields.get("trade_name") or "the Party",
-        "invoice_date": fields.get("invoice_date"), "invoice_total": rupees(fields["invoice_total_paise"]) if fields.get("invoice_total_paise") is not None else None,
+        "invoice_date": nice_date(fields["invoice_date"]) if fields.get("invoice_date") else None, "invoice_total": rupees(fields["invoice_total_paise"]) if fields.get("invoice_total_paise") is not None else None,
         "company": COMPANY["name"], "company_gstin": COMPANY["gstin"],
+        # Tax charged too low is corrected with a debit note, too high with a credit note.
+        "document": "debit note" if finding["impact_type"] == "short_tax" else "credit note",
     }
 
 
@@ -37,9 +39,10 @@ def build(finding: dict, party_name: str | None) -> dict:
                 f"{f['amount']} of input tax credit depends on this. Please look into it and confirm once it is corrected in your return.\n\nRegards,\n{SIGN_OFF}")
         recipient = f"{f['party']} (accounts)"
     elif kind == "customer_credit_note":
-        subject = f"Credit note for {record}: {f['amount']}"
+        note = f["document"]
+        subject = f"{note.capitalize()} for {record}: {f['amount']}"
         body = (f"Dear {f['party']} team,\n\nWe reviewed invoice {record}{' dated ' + f['invoice_date'] if f['invoice_date'] else ''} and found an error on our side.\n\n"
-                f"{f['why']}\n\nWe are issuing a credit note for {f['amount']} and will send the corrected invoice. Please adjust your records.\n\nRegards,\n{SIGN_OFF}")
+                f"{f['why']}\n\nWe are issuing a {note} for {f['amount']} and will send the corrected invoice. Please adjust your records.\n\nRegards,\n{SIGN_OFF}")
         recipient = f"{f['party']} (accounts)"
     elif kind == "credit_note_request":
         subject = f"Request for credit note: {record}, {f['amount']}"

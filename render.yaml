@@ -1,0 +1,15 @@
+# Render blueprint for the backend. Set CORS_ORIGIN to the frontend URL after the first deploy.
+services:
+  - type: web
+    name: ledgerlens-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: LLM_MODE
+        value: cache_only
+      - key: CORS_ORIGIN
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false

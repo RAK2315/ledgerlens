@@ -41,6 +41,8 @@ def evaluate(ds, findings: list[dict], periods: tuple[str, ...] | None = None) -
     traps = labels[labels["is_benign"]]
     reported = pd.DataFrame([{"finding_type": f["finding_type"], "entity_id": f["entity_id"], "period": f["period"],
                               "others": [r["id"] for r in f["record_refs"]]} for f in findings])
+    # Compare like with like: a Finding belongs to the period of the record it is about, as its label does.
+    reported["period"] = reported["entity_id"].map(where).fillna(reported["period"])
     rows = []
     for finding_type in sorted(set(planted["issue_type"]) | set(reported["finding_type"])):
         truth = planted[planted["issue_type"] == finding_type]

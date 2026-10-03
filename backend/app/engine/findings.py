@@ -99,8 +99,9 @@ def tax_split(invoice: pd.Series, impact_paise: int) -> dict[str, int]:
 def finding(finding_type: str, period: str, entity_id: str, impact_type: str, impact_paise: int, title: str, reason: str,
             refs: list[tuple[str, str]], left: dict, right: dict | None = None, expected: dict | None = None,
             diffs: list[dict] | None = None, party_id: str | None = None, confidence: float = 1.0, deadline: str | None = None,
-            split: dict[str, int] | None = None, invoice_id: str | None = None, impacts: dict[str, dict[str, int]] | None = None) -> dict:
-    label, category, severity, rule_ref, rule_text, what_to_do, _ = META[finding_type]
+            split: dict[str, int] | None = None, invoice_id: str | None = None, impacts: dict[str, dict[str, int]] | None = None,
+            what_to_do: str | None = None) -> dict:
+    label, category, severity, rule_ref, rule_text, default_fix, _ = META[finding_type]
     # impacts maps each invoice (or the entity) to its share of the impact by tax type, so money is never counted twice.
     if impacts is None:
         impacts = {invoice_id or entity_id: split or {"other": int(impact_paise)}}
@@ -108,7 +109,7 @@ def finding(finding_type: str, period: str, entity_id: str, impact_type: str, im
         "finding_type": finding_type, "label": label, "category": category, "severity": severity, "period": period,
         "entity_id": entity_id, "invoice_id": invoice_id, "impact_type": impact_type, "impact_paise": int(impact_paise),
         "confidence": float(confidence), "deadline": deadline, "party_id": party_id, "title": title, "reason": reason,
-        "rule_ref": rule_ref, "rule_text": rule_text, "what_to_do": what_to_do,
+        "rule_ref": rule_ref, "rule_text": rule_text, "what_to_do": what_to_do or default_fix,
         "record_refs": [{"table": t, "id": i} for t, i in refs],
         "evidence": {"left": left, "right": right, "expected": expected, "impacts": impacts},
         "diff": diffs or [],

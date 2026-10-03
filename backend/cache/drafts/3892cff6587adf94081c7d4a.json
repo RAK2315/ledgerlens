@@ -1,0 +1,4 @@
+{
+ "subject": "Issue with GSTIN on invoice INV-2526-01296",
+ "body": "Dear Royal Components & Co team,\n\nWe are reconciling our purchases with GSTR-2B and found an issue with invoice INV-2526-01296 dated 9 Sep 2025. The GSTIN on the invoice is 27FXQLM9955V5ZO, which is not valid. Our party master shows GSTIN 09FXQLM9955V5ZO. Rs 0 of input tax credit depends on this correction. Please update the GSTIN and reissue the invoice, then confirm once corrected.\n\nAccounts team\nSharma Traders Pvt Ltd\nGSTIN 07AAACS1234F1ZU"
+}

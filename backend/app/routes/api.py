@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import threading
 from functools import lru_cache
 
 from fastapi import APIRouter, Query
@@ -15,6 +16,7 @@ from ..engine import analyse, evaluate, findings as views, money, rings, run as 
 from ..engine.labels import META
 
 router = APIRouter(prefix="/api")
+_draft_lock = threading.Lock()
 LLM_LABEL = {"live": "live", "cache_only": "cache", "template_only": "template"}
 
 
@@ -218,10 +220,17 @@ def get_match(match_id: str) -> dict:
 @router.post("/findings/{finding_id}/draft")
 def create_draft(finding_id: str) -> dict:
     f = _finding(finding_id)
-    existing = db.draft_of(finding_id)
-    if existing:
-        return existing
-    text = llm.write(f, _names(_run(f["run_id"])).get(f["party_id"]))
+    names = _names(_run(f["run_id"]))
+    # One Draft per Finding even when two requests arrive together.
+    with _draft_lock:
+        existing = db.draft_of(finding_id)
+        if existing:
+            return existing
+        text = llm.write(f, names.get(f["party_id"]))
+        return _save_draft(finding_id, text)
+
+
+def _save_draft(finding_id: str, text: dict) -> dict:
     draft = {"id": db.new_id("drf"), "finding_id": finding_id, "kind": text["kind"], "recipient": text["recipient"], "subject": text["subject"],
              "body": text["body"], "source": text["source"], "status": "draft", "approved_at": None, "note": None}
     db.save_draft(draft)

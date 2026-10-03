@@ -28,7 +28,8 @@ After phase 7 the demo has a story (load and dashboard). After phase 8 it has th
 
 ## Progress
 
-- Phases 1 to 5 done. Next: phase 6 (frontend).
+- Phases 1 to 13 built. Next: demo script after the user approves the frontend, then phase 14 leftovers (presenter next-step control), phase 15 quality passes, deploy, V2.
+- Frontend choices made for speed: plain Tailwind components instead of shadcn/ui, an SVG donut and CSS bars instead of Recharts, plain tables instead of TanStack Table. Cytoscape draws the ring view with hand-placed positions. TypeScript is 5.9 (the Next.js scaffold default). The Chrome extension was not connected, so browser checks use Playwright with the installed Chrome.
 - Changes from the plan made while building the backend: all routes live in backend/app/routes/api.py; the engine analyses the whole year once (about 20 seconds, cached to backend/cache) and a Run reads its Return period from that, so a Run takes about 5 seconds; anomaly rules live in backend/app/engine/anomalies.py; Drafts use Groq (model openai/gpt-oss-120b), not Claude; GET /api/runs/latest was added so the frontend can find the last Run after a reload.
 
 ## Notes from phases 1 and 2 for the phases that follow

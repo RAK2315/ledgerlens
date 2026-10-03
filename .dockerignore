@@ -1,0 +1,11 @@
+**/.venv
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+.git
+frontend
+deck
+plan
+backend/.env
+backend/data
+backend/cache/analysis_*.pkl

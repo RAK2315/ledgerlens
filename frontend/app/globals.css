@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #ffefd8;
+  --cream-2: #fff7ec;
+  --paper: #ffffff;
+  --app-bg: #fbf8f5;
+  --ink: #24110c;
+  --ink-2: #5b4339;
+  --ink-3: #8c7368;
+  --line: rgba(36, 17, 12, 0.13);
+  --line-2: rgba(36, 17, 12, 0.07);
+  --side: #1f1714;
+  --orange: #f28c3a;
+  --orange-deep: #d2601a;
+  --orange-soft: #fdddbf;
+  --ok: #2e9d6a;
+  --ok-soft: #ddf3e8;
+  --bad: #d64545;
+  --bad-soft: #fbe1df;
+  --dup: #c98a12;
+  --dup-soft: #fbefd2;
+  --miss: #6957d6;
+  --miss-soft: #e6e2fb;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-cream-2: var(--cream-2);
+  --color-paper: var(--paper);
+  --color-app-bg: var(--app-bg);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-side: var(--side);
+  --color-orange: var(--orange);
+  --color-orange-deep: var(--orange-deep);
+  --color-orange-soft: var(--orange-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-dup: var(--dup);
+  --color-dup-soft: var(--dup-soft);
+  --color-miss: var(--miss);
+  --color-miss-soft: var(--miss-soft);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-spartan), var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --shadow-float: 0 20px 40px -20px rgba(80, 30, 10, 0.35);
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 9px;
+  padding: 8px 14px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+.btn:hover {
+  background: var(--cream-2);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--orange-deep);
+  border-color: var(--orange-deep);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: #bb5415;
+}
+.btn:focus-visible,
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--orange-deep);
+  outline-offset: 2px;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--line-2), var(--line), var(--line-2));
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes slide-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+.drawer {
+  animation: slide-in 0.18s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton,
+  .drawer {
+    animation: none;
+  }
+}
