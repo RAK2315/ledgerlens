@@ -1,6 +1,6 @@
 # 00 Overview
 
-Vocabulary: CONTEXT.md. Conventions and stack: CLAUDE.md. ML recipe: ML_BUILD.md. This file fixes what the demo must show; 01 to 06 are still to be written (see CLAUDE.md status).
+Vocabulary: CONTEXT.md. Conventions and stack: CLAUDE.md. ML recipe: ML_BUILD.md. This file fixes what the demo must show; 01 to 06 cover features, architecture, data model, design system, build plan and risks.
 
 ## Problem
 
