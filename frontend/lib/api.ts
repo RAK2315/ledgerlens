@@ -1,5 +1,5 @@
 // The only file that knows backend URLs.
-import type { DatasetInfo, Draft, EvalReport, FindingDetail, FindingRow, Graph, Health, Liability, MatchDetail, MatchRow, RunInfo, Summary } from "./types";
+import type { DatasetInfo, DatasetOverview, Draft, EvalReport, RecordPage, RecordTable, FindingDetail, FindingRow, Graph, Health, Liability, MatchDetail, MatchRow, RunInfo, Summary } from "./types";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
@@ -51,4 +51,6 @@ export const api = {
   liability: (runId: string) => request<Liability>(`/api/runs/${runId}/liability`),
   graph: (runId: string) => request<Graph>(`/api/runs/${runId}/graph`),
   evalReport: () => request<EvalReport>("/api/eval"),
+  dataset: () => request<DatasetOverview>("/api/dataset"),
+  records: (table: RecordTable, filters: Record<string, string | number | undefined> = {}) => request<RecordPage>(`/api/records/${table}${query(filters)}`),
 };

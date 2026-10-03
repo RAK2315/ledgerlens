@@ -12,7 +12,7 @@ from pydantic import BaseModel
 
 from .. import db, settings
 from ..drafts import llm
-from ..engine import analyse, evaluate, findings as views, money, rings, run as runs
+from ..engine import analyse, dataset_view, evaluate, findings as views, money, rings, run as runs
 from ..engine.labels import META
 
 router = APIRouter(prefix="/api")
@@ -145,6 +145,13 @@ async def run_events(run_id: str) -> StreamingResponse:
             await asyncio.sleep(0.15)
 
     return StreamingResponse(stream(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+
+@router.get("/dataset")
+def dataset_overview() -> dict:
+    if db.latest_dataset() is None:
+        raise ApiError(404, "dataset_not_found", "Load the demo company first")
+    return dataset_view.overview()
 
 
 @router.get("/records/{table}")

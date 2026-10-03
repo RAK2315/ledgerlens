@@ -108,4 +108,27 @@ export type EvalRow = {
   false_alarm_rate: number | null;
   source: "engine" | "ml";
 };
+export type PlantedType = {
+  issue_type: string;
+  label: string;
+  category: string;
+  source: "workbook" | "augment";
+  benign: boolean;
+  count: number;
+  example: { entity_type: string; entity_id: string; field: string | null; expected: string | null; recorded: string | null; description: string | null; impact_paise: number };
+};
+export type DatasetOverview = {
+  sha256: string;
+  sheets: { name: string; rows: number }[];
+  workbook_labels: number;
+  planted: PlantedType[];
+  gstr2b: {
+    seed: number;
+    rates: { filing_behaviour: Record<string, number>; id_variant: number; value_mismatch: number; date_shift: number; extra_lines: number };
+    counts: { id_variants: number; value_mismatches: number; date_shifts: number; purchase_invoices: number; gstr2b_lines: number; extra_lines: number; labels: Record<string, number> };
+    behaviours: Record<string, number>;
+  };
+};
+export type RecordTable = "invoices" | "ledger_entries" | "bank_transactions" | "gstr2b_lines";
+export type RecordPage = { items: Record<string, FieldValue>[]; total: number };
 export type EvalReport = { split: string; rows: EvalRow[]; generated_at: string };

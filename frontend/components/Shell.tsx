@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { BadgeCheck, LayoutDashboard, ListChecks, Network, ScrollText, Scale, Search, Zap } from "lucide-react";
+import { BadgeCheck, Database, LayoutDashboard, ListChecks, Network, ScrollText, Scale, Search, Zap } from "lucide-react";
 import { useRun } from "@/lib/run-store";
 import { periodName } from "@/lib/format";
 import { ErrorState, Skeleton } from "./ui";
@@ -16,6 +16,7 @@ const NAV = [
   { href: "/graph", label: "Ring view", icon: Network },
   { href: "/liability", label: "Liability", icon: Scale },
   { href: "/proof", label: "Proof", icon: BadgeCheck },
+  { href: "/data", label: "Data", icon: Database },
 ];
 
 export function Logo({ dark = false }: { dark?: boolean }) {

@@ -65,6 +65,23 @@ def test_run_streams_real_records_inside_their_stage(client, run_id):
     assert any(message.split()[0] in known for message in read)
 
 
+def test_dataset_overview_and_records(client, loaded):
+    body = client.get("/api/dataset").json()
+    assert set(body) == {"sha256", "sheets", "workbook_labels", "planted", "gstr2b"}
+    rows = {s["name"]: s["rows"] for s in body["sheets"]}
+    assert rows["invoices"] == loaded["counts"]["invoices"] and rows["gstr2b"] == loaded["counts"]["gstr2b_lines"]
+    assert any(p["benign"] for p in body["planted"]) and any(p["source"] == "augment" for p in body["planted"])
+    assert all(p["count"] > 0 and p["label"] and p["example"]["entity_id"] for p in body["planted"])
+    assert set(body["gstr2b"]) == {"seed", "rates", "counts", "behaviours"}
+
+    page = client.get("/api/records/invoices", params={"period": "2025-09", "page_size": 5}).json()
+    assert page["total"] >= len(page["items"]) > 0 and all(row["period"] == "2025-09" and "dataset_id" not in row for row in page["items"])
+    one = page["items"][0]["id"]
+    found = client.get("/api/records/invoices", params={"q": one}).json()
+    assert any(row["id"] == one for row in found["items"])
+    assert client.get("/api/records/drafts").status_code == 404
+
+
 def test_run_errors(client, loaded):
     assert client.post("/api/runs", json={"dataset_id": "ds_nope", "period": "2025-09"}).status_code == 404
     bad = client.post("/api/runs", json={"dataset_id": loaded["dataset_id"], "period": "1999-01"})

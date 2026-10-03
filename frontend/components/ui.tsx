@@ -84,6 +84,16 @@ export function Skeleton({ className = "" }: { className?: string }) {
   return <div className={`skeleton ${className}`} aria-hidden />;
 }
 
+/** The heading of one section of a page: a title on a heavy rule, with an optional note on the right. */
+export function Heading({ children, note }: { children: React.ReactNode; note?: React.ReactNode }) {
+  return (
+    <div className="flex items-baseline justify-between gap-6 border-b-2 border-ink pb-3">
+      <h2 className="font-display text-[28px] font-bold leading-tight">{children}</h2>
+      {note && <span className="text-[14px] text-ink-2">{note}</span>}
+    </div>
+  );
+}
+
 export function PageTitle({ title, lead, right }: { title: string; lead: string; right?: React.ReactNode }) {
   return (
     <div className="mb-8 flex items-end justify-between gap-6 px-2">

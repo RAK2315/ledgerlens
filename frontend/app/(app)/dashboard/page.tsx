@@ -8,7 +8,7 @@ import { useRun } from "@/lib/run-store";
 import { IMPACT_WORDS, date, periodName, rupees, rupeesShort } from "@/lib/format";
 import type { Category, FindingRow, Liability, Summary } from "@/lib/types";
 import { FindingDrawer } from "@/components/FindingDrawer";
-import { CATEGORY_NAME, EmptyState, Skeleton } from "@/components/ui";
+import { CATEGORY_NAME, EmptyState, Heading, Skeleton } from "@/components/ui";
 
 const CATEGORY_NOTE: Record<Category, string> = {
   missing: "not in GSTR-2B, books or bank",
@@ -18,15 +18,6 @@ const CATEGORY_NOTE: Record<Category, string> = {
   duplicate: "entered, booked or paid twice",
   filing: "the filed return",
 };
-
-function Heading({ children, note }: { children: React.ReactNode; note?: React.ReactNode }) {
-  return (
-    <div className="flex items-baseline justify-between gap-6 border-b-2 border-ink pb-3">
-      <h2 className="font-display text-[28px] font-bold leading-tight">{children}</h2>
-      {note && <span className="text-[14px] text-ink-2">{note}</span>}
-    </div>
-  );
-}
 
 function Donut({ summary }: { summary: Summary }) {
   const c = summary.match_counts;
