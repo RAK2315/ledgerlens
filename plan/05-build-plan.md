@@ -64,6 +64,15 @@ The user is not sure which direction to take. So: use the impeccable skill, make
 - Hosted deploy: Dockerfile and render.yaml are untried; needs the user's accounts.
 - Quality passes (deslop, simplify, code review) and the answer_key liability test.
 
+## Second round of requests from the user (3 Oct 2026, 11:40 PM)
+
+Asked for after seeing the rebuilt app. None of these is started. Do not push any of the look changes until the user has seen them locally.
+
+1. README.md for people who are not technical: walk from the problem to the solution and the USP, using sentences from the organisers' problem statement (docs/PROBLEM_STATEMENT.md), with images. The seven capabilities the statement lists should each be answered by what LedgerLens does. It still needs the run steps and the hosted copy section, lower down.
+2. Dashboard buttons must look like buttons on hover. Today the action lines (Start here, Rate change), the Findings rows and the text links only underline or tint faintly.
+3. Corners are too rounded in many places, which the user reads as the AI look. Radii in use: 9px buttons, 14 to 20px panels and bands, rounded-xl and rounded-full in several places (globals.css and the components).
+4. A new visual direction for every UI element, in the user's words: "Light Minimalism + Swiss/Editorial + subtle Glassmorphism + Bento". This replaces parts of the bold direction picked earlier (PRODUCT.md and the notes below describe it). Two tensions to raise once, in a line, and then build what was asked: Bento means content in boxes, which the first review listed as an AI tell ("everything boxed in a rounded card"), and item 3 asks for less rounding, so the boxes need small radii and real hierarchy between them; glass should stay subtle and rare (a header or an overlay), not a default surface. Update PRODUCT.md when the direction settles.
+
 ## Notes from the review fixes
 
 - Look: PRODUCT.md is the design brief. Sections sit on a heavy rule (the card class) instead of in boxes, Pill is a dot and a label, PageTitle and Heading in components/ui.tsx carry the type scale. The panel class is for surfaces that float (the Run overlay).
